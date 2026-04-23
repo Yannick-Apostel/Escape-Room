@@ -1,0 +1,9 @@
+START;Foyer;Du bist im Foyer.;
+ROOM;Flur;Ein langer Flur;
+ROOM;Labor;Ein chemisches Labor;
+
+
+EXIT;Foyer;n;Flur;
+EXIT;Flur;s;Foyer;
+EXIT;Flur;e;Labor;
+EXIT;Labor;w;Flur;
