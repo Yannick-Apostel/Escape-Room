@@ -1,8 +1,10 @@
+package RaumSystem;
 
 public class Room {
 
     private String name;
     private String description;
+    private Boolean istVerschlossen;
 
     private Room north;
     private Room south;
