@@ -4,16 +4,23 @@ public class Room {
 
     private String name;
     private String description;
-    private Boolean istVerschlossen;
+    private boolean istVerschlossen;
 
     private Room north;
     private Room south;
     private Room east;
     private Room west;
 
+    @Deprecated
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Room(String name, String description, boolean istVerschlossen){
+        this.name = name;
+        this.description = description;
+        this.istVerschlossen = istVerschlossen;
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -50,4 +57,7 @@ public class Room {
     public String getName() {
         return name;
     }
+
+    public boolean getIstVerschlossen(){return this.istVerschlossen;}
+    public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
 }
