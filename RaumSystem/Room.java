@@ -1,10 +1,16 @@
 package RaumSystem;
 
+import Items.Item;
+import Items.Schlussel;
+
+import java.util.ArrayList;
+
 public class Room {
 
     private String name;
     private String description;
     private boolean istVerschlossen;
+    private ArrayList<Item> items;
 
     private Room north;
     private Room south;
@@ -17,10 +23,13 @@ public class Room {
         this.description = description;
     }
 
-    public Room(String name, String description, boolean istVerschlossen){
+    public Room(String name, String description, boolean istVerschlossen, char item){
+        this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
         this.istVerschlossen = istVerschlossen;
+        addItemToList(item);
+
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -60,4 +69,17 @@ public class Room {
 
     public boolean getIstVerschlossen(){return this.istVerschlossen;}
     public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
+
+    private void addItemToList(char name){
+        if(name == 'S'){
+            Schlussel schlussel = new Schlussel();
+            items.add(schlussel);
+        }
+    }
+
+    public ArrayList<Item> getItemsFromRoom(){
+        return this.items;
+    }
 }
+
+
