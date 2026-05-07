@@ -1,4 +1,7 @@
 
+import RaumSystem.Room;
+import Spieler.Player;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -68,8 +71,14 @@ public class Game {
             if (nextRoom == null) {
                 System.out.println(("Dort ist kein Ausgang"));
             } else {
-                player.setCurrentRoom(nextRoom);
-                System.out.println(player.getCurrentRoom().getDescription());
+                //TODO: Überprüfen, ob ein Schlüssel im Inventar ist
+                if(!nextRoom.getIstVerschlossen()){
+                    player.setCurrentRoom(nextRoom);
+                    System.out.println(player.getCurrentRoom().getDescription());
+                }else{
+                    System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+                }
+
             }
 
         } else {
@@ -101,8 +110,8 @@ public class Game {
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2]);
-                case "ROOM" -> rooms.add(parts[1] + "," + parts[2]);
+                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2]); // Startraum ist nicht verschlossen
+                case "ROOM" -> rooms.add(parts[1] + "," + parts[2]+ "," + parts[3]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
         }
@@ -113,10 +122,11 @@ public class Game {
 
     private void createRooms(ArrayList<String> rooms) {
         for (String line : rooms) {
-            String[] parts = line.split(",", 2);
+            String[] parts = line.split(",", 6);
             String name = parts[0];
             String description = parts[1];
-            this.rooms.add(new Room(name, description));
+            boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
+            this.rooms.add(new Room(name, description, istVerschlossen));
         }
     }
 
