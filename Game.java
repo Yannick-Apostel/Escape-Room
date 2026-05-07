@@ -57,7 +57,7 @@ public class Game {
 
     private void handleCommand(String command) {
         if (command.equals("hilfe")) {
-            System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w'");
+            System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
         } else if (command.equals("schau")) {
             System.out.println(player.getCurrentRoom().getDescription());
 
@@ -81,6 +81,8 @@ public class Game {
 
             }
 
+        } else if (command.equals("inventar")) {
+            System.out.println(player.getInventar());
         } else {
             System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
         }
