@@ -11,7 +11,8 @@ public class Gegner implements Event{
 
     @Override
     public void angriff() {
-        //Hier ANgriff
+        //TODO Zufallsgen.
+       System.out.println("Gegner besiegt - Glückwunsch");
     }
 
 

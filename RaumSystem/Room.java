@@ -134,6 +134,9 @@ public class Room {
             if(weapons.isEmpty()){
                 System.out.println("Du kannst deinen Gegner nicht angreifen.");
                 System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+            }else{
+                event.angriff();
+                this.event = null;
             }
         }
     }
