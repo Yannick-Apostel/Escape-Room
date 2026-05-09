@@ -1,9 +1,8 @@
 package Items;
 
-public class Schlussel implements Item{
-
-    private final String name = "Schlussel";
-    private final boolean isWeapon = false;
+public class Baseballschlaeger implements Item{
+    private final String name = "Baseballschlaeger";
+    private final boolean isWeapon = true;
 
     @Override
     public void function() {

@@ -1,5 +1,6 @@
 package RaumSystem;
 
+import Items.Baseballschlaeger;
 import Items.Item;
 import Items.Schlussel;
 import RaumSystem.Event.Event;
@@ -80,6 +81,9 @@ public class Room {
         if(name == 'S'){
             Schlussel schlussel = new Schlussel();
             items.add(schlussel);
+        } else if(name == 'B'){
+            Baseballschlaeger basi = new Baseballschlaeger();
+            items.add(basi);
         }
     }
 
@@ -109,16 +113,28 @@ public class Room {
         }
     }
 
-    private boolean hasEvent(){
+    public boolean hasEvent(){
         if(this.event != null)
             return true;
 
         return false;
     }
 
-    public void startEvent(){
+    public void startEvent(ArrayList<Item> inventar){
         if(hasEvent()){
             this.event.function();
+
+            ArrayList<Item> weapons = new ArrayList<>();
+            for(Item item : inventar){
+                if(item.getIsWeapon()){
+                    weapons.add(item);
+                }
+            }
+
+            if(weapons.isEmpty()){
+                System.out.println("Du kannst deinen Gegner nicht angreifen.");
+                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+            }
         }
     }
 }

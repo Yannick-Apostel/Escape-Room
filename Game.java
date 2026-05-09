@@ -73,7 +73,7 @@ public class Game {
                 if (nextRoom == null) {
                     System.out.println(("Dort ist kein Ausgang"));
                 } else {
-
+                        //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
 

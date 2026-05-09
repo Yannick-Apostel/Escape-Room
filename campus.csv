@@ -1,6 +1,6 @@
 START;Foyer;Du bist im Foyer.;false;N;N;
 ROOM;Flur;Ein langer Flur;false;S;N;
-ROOM;Labor;Ein chemisches Labor;true;N;N;
+ROOM;Labor;Ein chemisches Labor;true;B;N;
 ROOM;Lagerraum;Ein dunkler Lagerraum;false;N;Z;
 
 EXIT;Foyer;n;Flur;
