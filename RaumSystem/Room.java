@@ -21,6 +21,9 @@ public class Room {
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
+
+        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
+        this.items = new ArrayList<>();
     }
 
     public Room(String name, String description, boolean istVerschlossen, char item){
@@ -79,6 +82,19 @@ public class Room {
 
     public ArrayList<Item> getItemsFromRoom(){
         return this.items;
+    }
+
+    public void removeItemsFromRoom(){
+        //Nach Aufsammeln der Items soll der Raum keine Items mehr beinhalten
+        this.items.clear();
+    }
+
+    public boolean hasRoomItems(){
+        if(this.items.isEmpty()){
+            return false;
+        }else {
+            return true;
+        }
     }
 }
 

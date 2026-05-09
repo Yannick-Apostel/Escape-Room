@@ -57,44 +57,58 @@ public class Game {
     }
 
     private void handleCommand(String command) {
-        if (command.equals("hilfe")) {
-            System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w'");
-        } else if (command.equals("schau")) {
-            System.out.println(player.getCurrentRoom().getDescription());
+        if(!command.isEmpty()){
+            if (command.equals("hilfe")) {
+                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w'");
+            } else if (command.equals("schau")) {
+                System.out.println(player.getCurrentRoom().getDescription());
 
-        } else if (command.equals("ende")) {
-            running = false;
-        } else if (command.substring(0, 4).equals("gehe")) {
+            } else if (command.equals("ende")) {
+                running = false;
+            } else if (command.substring(0, 4).equals("gehe")) {
 
-            String direction = command.substring(5, 6);
-            Room nextRoom = player.getCurrentRoom().getExit(direction);
+                String direction = command.substring(5, 6);
+                Room nextRoom = player.getCurrentRoom().getExit(direction);
 
-            if (nextRoom == null) {
-                System.out.println(("Dort ist kein Ausgang"));
-            } else {
-
-                if (!nextRoom.getIstVerschlossen()) {
-                    player.setCurrentRoom(nextRoom);
-                    this.addItemToInventar();
-                    System.out.println(player.getCurrentRoom().getDescription());
+                if (nextRoom == null) {
+                    System.out.println(("Dort ist kein Ausgang"));
                 } else {
-                    if (this.player.existiertItemImInventar("Schlussel")) {
-                        System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
-                        this.player.deleteItemFromInventar("Schlussel");
+
+                    if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
-                        player.getCurrentRoom().setIstVerschlossen();
-                        this.addItemToInventar();
-                    }else{
-                        System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+
+                        if (nextRoom.hasRoomItems()) {
+                            this.addItemToInventar();
+                        }
+
+                        System.out.println(player.getCurrentRoom().getDescription());
+                    } else {
+                        if (this.player.existiertItemImInventar("Schlussel")) {
+                            System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
+                            this.player.deleteItemFromInventar("Schlussel");
+                            player.setCurrentRoom(nextRoom);
+                            player.getCurrentRoom().setIstVerschlossen();
+
+                            if (nextRoom.hasRoomItems()) {
+                                this.addItemToInventar();
+                            }
+
+                            System.out.println(player.getCurrentRoom().getDescription());
+                        } else {
+                            System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+                        }
+
                     }
 
                 }
 
+            } else {
+                System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
             }
-
-        } else {
-            System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+        }else{
+            System.out.println("Keine Eingabe erkannt! Bitte gebe etwas ein oder tippe 'hilfe'");
         }
+
     }
 
     private ArrayList<String> readCSV() throws FileNotFoundException {
@@ -210,10 +224,12 @@ public class Game {
     public void addItemToInventar() {
         System.out.println("Du findest: ");
         ArrayList<Item> itemList = this.player.getCurrentRoom().getItemsFromRoom();
-        for (Item item : itemList){
+        for (Item item : itemList) {
             System.out.println(item.getName());
             this.player.addItem(item);
         }
+        //Methode muss hier aufgerufen werden weil getItemsFromRoom() returned
+        this.player.getCurrentRoom().removeItemsFromRoom();
     }
 
 
