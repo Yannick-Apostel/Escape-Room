@@ -135,8 +135,8 @@ public class Game {
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2]); // Startraum ist nicht verschlossen
-                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4]);
+                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2]); // Startraum ist nicht verschlossen und hat keine Events
+                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
         }
@@ -152,7 +152,8 @@ public class Game {
             String description = parts[1];
             boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
             char item = Character.toUpperCase(parts[3].charAt(0));
-            this.rooms.add(new Room(name, description, istVerschlossen, item));
+            char event = Character.toUpperCase(parts[4].charAt(0));
+            this.rooms.add(new Room(name, description, istVerschlossen, item, event));
         }
     }
 

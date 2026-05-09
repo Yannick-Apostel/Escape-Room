@@ -2,6 +2,8 @@ package RaumSystem;
 
 import Items.Item;
 import Items.Schlussel;
+import RaumSystem.Event.Event;
+import RaumSystem.Event.Gegner;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ public class Room {
     private String description;
     private boolean istVerschlossen;
     private ArrayList<Item> items;
+    private Event event;
 
     private Room north;
     private Room south;
@@ -26,13 +29,13 @@ public class Room {
         this.items = new ArrayList<>();
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item){
+    public Room(String name, String description, boolean istVerschlossen, char item, char event){
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
         this.istVerschlossen = istVerschlossen;
         addItemToList(item);
-
+        createEvent(event);
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -94,6 +97,13 @@ public class Room {
             return false;
         }else {
             return true;
+        }
+    }
+
+    public void createEvent(char event){
+        if(event == 'Z'){
+            this.event= new Gegner();
+            System.out.println("Zombie erstellt");
         }
     }
 }
