@@ -22,6 +22,7 @@ public class Player {
 
     public void setCurrentRoom(Room room) {
         currentRoom = room;
+        currentRoom.startEvent();
     }
 
     public ArrayList<Item> getInventar(){

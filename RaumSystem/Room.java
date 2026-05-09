@@ -104,6 +104,21 @@ public class Room {
         if(event == 'Z'){
             this.event= new Gegner();
             System.out.println("Zombie erstellt");
+        }else{
+            this.event = null;
+        }
+    }
+
+    private boolean hasEvent(){
+        if(this.event != null)
+            return true;
+
+        return false;
+    }
+
+    public void startEvent(){
+        if(hasEvent()){
+            this.event.function();
         }
     }
 }
