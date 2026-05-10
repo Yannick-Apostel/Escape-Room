@@ -1,5 +1,6 @@
 package Spieler;
 
+import Items.Item;
 import RaumSystem.Room;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class Player {
             System.out.println("Fehler beim Speichern der Datei.");
         }
 
+        currentRoom.startEvent(inventar);
     }
 
     public ArrayList<Item> getInventar(){
@@ -57,4 +59,31 @@ public class Player {
             System.out.println("Dein Inventar ist voll. Bitte leere dein Inventar, bevor du ein neues Item hinzufügst");
         }
     }
+
+    public boolean existiertItemImInventar(String name){
+        for(Item element : this.inventar){
+            if(element.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private  int getIndexFromItemImInventar(String name){
+        if(existiertItemImInventar(name)){
+           for(int i =0; i<this.inventar.size(); i++){
+               if(this.inventar.get(i).getName().equals(name)){
+                   return i;
+               }
+           }
+        }
+        throw new RuntimeException("Fehler - Item konnte nicht gefunden werde");
+    }
+
+    public void deleteItemFromInventar(String name){
+        int index = getIndexFromItemImInventar(name);
+        this.inventar.remove(index);
+    }
+
+
 }

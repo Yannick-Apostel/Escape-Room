@@ -1,9 +1,11 @@
-START;Foyer;Du bist im Foyer.;false;
-ROOM;Flur;Ein langer Flur;false;
-ROOM;Labor;Ein chemisches Labor;true;
-
+START;Foyer;Du bist im Foyer.;false;N;N;
+ROOM;Flur;Ein langer Flur;false;S;N;
+ROOM;Labor;Ein chemisches Labor;true;B;N;
+ROOM;Lagerraum;Ein dunkler Lagerraum;false;N;Z;
 
 EXIT;Foyer;n;Flur;
 EXIT;Flur;s;Foyer;
 EXIT;Flur;e;Labor;
 EXIT;Labor;w;Flur;
+EXIT;Labor;n;Lagerraum;
+EXIT;Lagerraum;s;Labor;

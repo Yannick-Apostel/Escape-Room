@@ -1,10 +1,20 @@
 package RaumSystem;
 
+import Items.Baseballschlaeger;
+import Items.Item;
+import Items.Schlussel;
+import RaumSystem.Event.Event;
+import RaumSystem.Event.Gegner;
+
+import java.util.ArrayList;
+
 public class Room {
 
     private String name;
     private String description;
     private boolean istVerschlossen;
+    private ArrayList<Item> items;
+    private Event event;
 
     private Room north;
     private Room south;
@@ -15,12 +25,18 @@ public class Room {
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
+
+        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
+        this.items = new ArrayList<>();
     }
 
-    public Room(String name, String description, boolean istVerschlossen){
+    public Room(String name, String description, boolean istVerschlossen, char item, char event){
+        this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
         this.istVerschlossen = istVerschlossen;
+        addItemToList(item);
+        createEvent(event);
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -60,4 +76,70 @@ public class Room {
 
     public boolean getIstVerschlossen(){return this.istVerschlossen;}
     public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
+
+    private void addItemToList(char name){
+        if(name == 'S'){
+            Schlussel schlussel = new Schlussel();
+            items.add(schlussel);
+        } else if(name == 'B'){
+            Baseballschlaeger basi = new Baseballschlaeger();
+            items.add(basi);
+        }
+    }
+
+    public ArrayList<Item> getItemsFromRoom(){
+        return this.items;
+    }
+
+    public void removeItemsFromRoom(){
+        //Nach Aufsammeln der Items soll der Raum keine Items mehr beinhalten
+        this.items.clear();
+    }
+
+    public boolean hasRoomItems(){
+        if(this.items.isEmpty()){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public void createEvent(char event){
+        if(event == 'Z'){
+            this.event= new Gegner();
+            System.out.println("Zombie erstellt");
+        }else{
+            this.event = null;
+        }
+    }
+
+    public boolean hasEvent(){
+        if(this.event != null)
+            return true;
+
+        return false;
+    }
+
+    public void startEvent(ArrayList<Item> inventar){
+        if(hasEvent()){
+            this.event.function();
+
+            ArrayList<Item> weapons = new ArrayList<>();
+            for(Item item : inventar){
+                if(item.getIsWeapon()){
+                    weapons.add(item);
+                }
+            }
+
+            if(weapons.isEmpty()){
+                System.out.println("Du kannst deinen Gegner nicht angreifen.");
+                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+            }else{
+                event.angriff();
+                this.event = null;
+            }
+        }
+    }
 }
+
+
