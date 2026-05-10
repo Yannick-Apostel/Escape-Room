@@ -57,41 +57,27 @@ public class Game {
     }
 
     private void handleCommand(String command) {
-        if (command.equals("hilfe")) {
-            System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
-        } else if (command.equals("schau")) {
-            System.out.println(player.getCurrentRoom().getDescription());
-        if(!command.isEmpty()){
-            if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w'");
-            } else if (command.equals("schau")) {
-                System.out.println(player.getCurrentRoom().getDescription());
+        if (!command.isEmpty()) {
 
-            } else if (command.equals("ende")) {
-                running = false;
-            } else if (command.substring(0, 4).equals("gehe")) {
 
-                String direction = command.substring(5, 6);
-                Room nextRoom = player.getCurrentRoom().getExit(direction);
+                if (command.equals("hilfe")) {
+                    System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
+                } else if (command.equals("schau")) {
+                    System.out.println(player.getCurrentRoom().getDescription());
 
-                if (nextRoom == null) {
-                    System.out.println(("Dort ist kein Ausgang"));
-                } else {
-                        //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
-                    if (!nextRoom.getIstVerschlossen()) {
-                        player.setCurrentRoom(nextRoom);
+                } else if (command.equals("ende")) {
+                    running = false;
+                } else if (command.substring(0, 4).equals("gehe")) {
 
-                        if (nextRoom.hasRoomItems()) {
-                            this.addItemToInventar();
-                        }
+                    String direction = command.substring(5, 6);
+                    Room nextRoom = player.getCurrentRoom().getExit(direction);
 
-                        System.out.println(player.getCurrentRoom().getDescription());
+                    if (nextRoom == null) {
+                        System.out.println(("Dort ist kein Ausgang"));
                     } else {
-                        if (this.player.existiertItemImInventar("Schlussel")) {
-                            System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
-                            this.player.deleteItemFromInventar("Schlussel");
+                        //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
+                        if (!nextRoom.getIstVerschlossen()) {
                             player.setCurrentRoom(nextRoom);
-                            player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {
                                 this.addItemToInventar();
@@ -99,22 +85,39 @@ public class Game {
 
                             System.out.println(player.getCurrentRoom().getDescription());
                         } else {
-                            System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+                            if (this.player.existiertItemImInventar("Schlussel")) {
+                                System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
+                                this.player.deleteItemFromInventar("Schlussel");
+                                player.setCurrentRoom(nextRoom);
+                                player.getCurrentRoom().setIstVerschlossen();
+
+                                if (nextRoom.hasRoomItems()) {
+                                    this.addItemToInventar();
+                                }
+
+                                System.out.println(player.getCurrentRoom().getDescription());
+                            } else {
+                                System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+                            }
+
                         }
 
                     }
 
+                } else if (command.equals("inventar")) {
+                    System.out.print("Inventar: ");
+                    for(Item item : this.player.getInventar()){
+                        System.out.print(item.getName() + " ");
+                    }
+                    System.out.println();
+                } else {
+                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
                 }
 
             } else {
                 System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
             }
 
-        } else if (command.equals("inventar")) {
-            System.out.println(player.getInventar());
-        } else {
-            System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
-        }
 
     }
 
@@ -239,6 +242,4 @@ public class Game {
         //Methode muss hier aufgerufen werden weil getItemsFromRoom() returned
         this.player.getCurrentRoom().removeItemsFromRoom();
     }
-
-
 }

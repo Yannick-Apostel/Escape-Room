@@ -49,7 +49,10 @@ public class Player {
 
             try {
                 FileWriter writer = new FileWriter("saveData.csv");
-                writer.write("Items;" + this.getInventar(0) + this.getInventar(1) + this.getInventar(2) + this.getInventar(3) + this.getInventar(4));
+                writer.write("Items:" );
+                for(Item item: inventar){
+                    writer.write(item.getName()+";");
+                }
                 writer.close();
             } catch(IOException e) {
                 System.out.println("Fehler beim Speichern der Datei.");
