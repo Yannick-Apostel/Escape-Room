@@ -150,7 +150,7 @@ public class Game {
             findRoom(name).setExits(direction, findRoom(exitname));
         }
     }
-
+//change for commit
     private Room findRoom(String name) {
         for (Room room : rooms) {
             if (room.getName().equals(name)) {
