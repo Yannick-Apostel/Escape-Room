@@ -13,7 +13,7 @@ public class Gegner implements Event{
     @Override
     public void angriff() {
         //TODO Zufallsgen.
-       System.out.println("Gegner besiegt - Glückwunsch");
+       System.out.println("Gegner besiegt - Glückwunsch");   //TODO konsultation mit yannick(warum genau "angriff" und nicht genereller z.b. "aktion")
     }
 
     @Override
