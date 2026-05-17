@@ -22,7 +22,10 @@ public class Player {
 
     public void setCurrentRoom(Room room) {
         currentRoom = room;
-        currentRoom.startEvent(inventar);
+
+        if(currentRoom.isForcedEvent()) {
+            currentRoom.startEvent(inventar);
+        }
     }
 
     public ArrayList<Item> getInventar(){

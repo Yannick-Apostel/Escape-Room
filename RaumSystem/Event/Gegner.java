@@ -2,6 +2,7 @@ package RaumSystem.Event;
 
 public class Gegner implements Event{
     private final String name = "Zombie";
+    private final boolean forcedEvent = true;
 
     @Override
     public void function() {
@@ -15,9 +16,13 @@ public class Gegner implements Event{
        System.out.println("Gegner besiegt - Glückwunsch");
     }
 
-
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public boolean isForced() {
+        return this.forcedEvent;
     }
 }

@@ -113,6 +113,13 @@ public class Room {
         }
     }
 
+    public boolean isForcedEvent() {
+        if (this.event != null) {
+            return this.event.isForced();
+        }
+        return false;
+    }
+
     public boolean hasEvent(){
         if(this.event != null)
             return true;
@@ -124,20 +131,21 @@ public class Room {
         if(hasEvent()){
             this.event.function();
 
-            ArrayList<Item> weapons = new ArrayList<>();
-            for(Item item : inventar){
-                if(item.getIsWeapon()){
-                    weapons.add(item);
-                }
-            }
-
-            if(weapons.isEmpty()){
-                System.out.println("Du kannst deinen Gegner nicht angreifen.");
-                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
-            }else{
-                event.angriff();
-                this.event = null;
-            }
+            //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
+//            ArrayList<Item> weapons = new ArrayList<>();
+//            for(Item item : inventar){
+//                if(item.getIsWeapon()){
+//                    weapons.add(item);
+//                }
+//            }
+//
+//            if(weapons.isEmpty()){
+//                System.out.println("Du kannst deinen Gegner nicht angreifen.");
+//                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+//            }else{
+//                event.angriff();
+//                this.event = null;
+//            }
         }
     }
 }
