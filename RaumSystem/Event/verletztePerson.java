@@ -5,13 +5,13 @@ public class verletztePerson implements Event{
     private final boolean forcedEvent = false;
 
     @Override
-    public void function() {
-        System.out.println("Du siehst eine Person in der Ecke des Raumes.");
+    public void description() {
+        System.out.println("Eine Person in der Ecke des Raumes.");
         System.out.println("Sie scheint verletzt zu sein.");
     }
 
     @Override
-    public void angriff() {
+    public void aktion() {
 
     }
 

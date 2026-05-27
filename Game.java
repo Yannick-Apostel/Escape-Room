@@ -20,7 +20,7 @@ public class Game {
         rooms.add(new Room("START", "Ein initialer Startraum"));
         player = new Player(rooms.get(0));
     }
-
+ 
     public static void main(String[] args) throws FileNotFoundException {
         Game game = new Game();
         game.start();

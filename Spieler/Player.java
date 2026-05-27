@@ -23,9 +23,7 @@ public class Player {
     public void setCurrentRoom(Room room) {
         currentRoom = room;
 
-        if(currentRoom.isForcedEvent()) {
-            currentRoom.startEvent(inventar);
-        }
+        currentRoom.startEvent(inventar);    //TODO leben sollen mitgegeben werden
     }
 
     public ArrayList<Item> getInventar(){

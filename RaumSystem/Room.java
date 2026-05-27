@@ -129,7 +129,13 @@ public class Room {
 
     public void startEvent(ArrayList<Item> inventar){
         if(hasEvent()){
-            this.event.function();
+            if(isForcedEvent()) {
+                this.event.description();
+                this.event.aktion();
+            } else() {
+                this.event.description();
+            }
+
 
             //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
 //            ArrayList<Item> weapons = new ArrayList<>();

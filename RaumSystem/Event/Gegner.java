@@ -5,15 +5,16 @@ public class Gegner implements Event{
     private final boolean forcedEvent = true;
 
     @Override
-    public void function() {
-        System.out.println("Ich bin ein Zombie");
+    public void description() {
+        System.out.println("Ich bin ein Zombie!");
         System.out.println("Ich mach die platt, wenn du es nicht tust!");
     }
 
     @Override
-    public void angriff() {
+    public void aktion() {
+
         //TODO Zufallsgen.
-       System.out.println("Gegner besiegt - Glückwunsch");   //TODO konsultation mit yannick(warum genau "angriff" und nicht genereller z.b. "aktion")
+       //System.out.println("Gegner besiegt - Glückwunsch");
     }
 
     @Override

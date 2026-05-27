@@ -5,9 +5,9 @@ public interface Event {
     boolean forcedEvent = false;
 
     //TODO: Funktion mit Usecase hinzufügen
-    public void function();
+    public void description();
 
-    public void angriff();
+    public void aktion();
 
     public String getName();
 
