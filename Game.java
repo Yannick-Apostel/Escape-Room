@@ -15,22 +15,23 @@ public class Game {
     private ArrayList<Room> rooms;
 
     //TODO Konstruktor erstellen
-    public Game() throws FileNotFoundException {
+    public Game(Scanner input) throws FileNotFoundException {
         rooms = new ArrayList<>();
         rooms.add(new Room("START", "Ein initialer Startraum"));
-        player = new Player(rooms.get(0));
+        player = new Player(rooms.get(0), input);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Game game = new Game();
-        game.start();
+        Scanner scanner = new Scanner(System.in);
+        Game game = new Game(scanner);
+        game.start(scanner);
 
     }
 
-    public void start() throws FileNotFoundException {
+    public void start(Scanner scanner) throws FileNotFoundException {
         rooms = new ArrayList<>();
 
-        filterCSVInput(readCSV());
+        filterCSVInput(readCSV(), scanner);
         /*
         if(checkRoomConnection()){
             System.out.println("Alle Raeume haben einen gueltigen Ausgang");
@@ -38,7 +39,7 @@ public class Game {
             System.out.println("FEHLER - Raeume haben Fehler im Ausgang");
         }*/
 
-        Scanner scanner = new Scanner(System.in);
+
         running = true;
 
         System.out.println("Willkommen bei EscapeCampus!");
@@ -46,38 +47,63 @@ public class Game {
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
+            try {
+                System.out.print("> ");
+                // Überprüfen, ob der Scanner noch offen ist
+                if (scanner.hasNextLine()) {
+                    String command = scanner.nextLine();
+                    handleCommand(command);
+                } else {
+                    // Wenn hasNextLine() false ist, ist der Stream oft zu Ende oder geschlossen
+                    break;
+                }
+            } catch (IllegalStateException e) {
+                System.err.println("Der Scanner wurde unerwartet geschlossen.");
+                break;
+            } catch (Exception e) {
+                System.err.println("Ein Fehler ist aufgetreten: " + e.getMessage());
+                e.printStackTrace();
+            }
 
-            System.out.print("> ");
-            String command = scanner.nextLine();
-
-            handleCommand(command);
         }
 
-        scanner.close();
+        // scanner.close();
     }
 
     private void handleCommand(String command) {
         if (!command.isEmpty()) {
 
 
-                if (command.equals("hilfe")) {
-                    System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
-                } else if (command.equals("schau")) {
-                    System.out.println(player.getCurrentRoom().getDescription());
+            if (command.equals("hilfe")) {
+                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
+            } else if (command.equals("schau")) {
+                System.out.println(player.getCurrentRoom().getDescription());
 
-                } else if (command.equals("ende")) {
-                    running = false;
-                } else if (command.substring(0, 4).equals("gehe")) {
+            } else if (command.equals("ende")) {
+                running = false;
+            } else if (command.substring(0, 4).equals("gehe")) {
 
-                    String direction = command.substring(5, 6);
-                    Room nextRoom = player.getCurrentRoom().getExit(direction);
+                String direction = command.substring(5, 6);
+                Room nextRoom = player.getCurrentRoom().getExit(direction);
 
-                    if (nextRoom == null) {
-                        System.out.println(("Dort ist kein Ausgang"));
+                if (nextRoom == null) {
+                    System.out.println(("Dort ist kein Ausgang"));
+                } else {
+                    //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
+                    if (!nextRoom.getIstVerschlossen()) {
+                        player.setCurrentRoom(nextRoom);
+
+                        if (nextRoom.hasRoomItems()) {
+                            this.addItemToInventar();
+                        }
+
+                        System.out.println(player.getCurrentRoom().getDescription());
                     } else {
-                        //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
-                        if (!nextRoom.getIstVerschlossen()) {
+                        if (this.player.existiertItemImInventar("Schlussel")) {
+                            System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
+                            this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
+                            player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {
                                 this.addItemToInventar();
@@ -85,38 +111,26 @@ public class Game {
 
                             System.out.println(player.getCurrentRoom().getDescription());
                         } else {
-                            if (this.player.existiertItemImInventar("Schlussel")) {
-                                System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
-                                this.player.deleteItemFromInventar("Schlussel");
-                                player.setCurrentRoom(nextRoom);
-                                player.getCurrentRoom().setIstVerschlossen();
-
-                                if (nextRoom.hasRoomItems()) {
-                                    this.addItemToInventar();
-                                }
-
-                                System.out.println(player.getCurrentRoom().getDescription());
-                            } else {
-                                System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
-                            }
-
+                            System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
                         }
 
                     }
 
-                } else if (command.equals("inventar")) {
-                    System.out.print("Inventar: ");
-                    for(Item item : this.player.getInventar()){
-                        System.out.print(item.getName() + " ");
-                    }
-                    System.out.println();
-                } else {
-                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
                 }
 
+            } else if (command.equals("inventar")) {
+                System.out.print("Inventar: ");
+                for (Item item : this.player.getInventar()) {
+                    System.out.print(item.getName() + " ");
+                }
+                System.out.println();
             } else {
                 System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
             }
+
+        } else {
+            System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+        }
 
 
     }
@@ -129,7 +143,7 @@ public class Game {
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
             }
-            scanner.close();
+            //scanner.close();
             return lines;
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Datei konnte nicht gefunden werden! " + e.getMessage());
@@ -138,14 +152,15 @@ public class Game {
         }
     }
 
-    private void filterCSVInput(ArrayList<String> lines) {
+    private void filterCSVInput(ArrayList<String> lines, Scanner input) {
         ArrayList<String> rooms = new ArrayList<>();
         ArrayList<String> exits = new ArrayList<>();
 
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2]); // Startraum ist nicht verschlossen und hat keine Events
+                case "START" ->
+                        createStartroomAndPlayer(parts[1] + "," + parts[2], input); // Startraum ist nicht verschlossen und hat keine Events
                 case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
@@ -167,13 +182,13 @@ public class Game {
         }
     }
 
-    private void createStartroomAndPlayer(String start) {
+    private void createStartroomAndPlayer(String start, Scanner input) {
         String[] parts = start.split(",", 2);
         String name = parts[0];
         String description = parts[1];
         this.rooms.add(new Room(name, description));
 
-        player = new Player(findRoom(name));
+        player = new Player(findRoom(name), input);
     }
 
     private void createExits(ArrayList<String> exits) {
@@ -235,11 +250,13 @@ public class Game {
     public void addItemToInventar() {
         System.out.println("Du findest: ");
         ArrayList<Item> itemList = this.player.getCurrentRoom().getItemsFromRoom();
-        for (Item item : itemList) {
-            System.out.println(item.getName());
-            this.player.addItem(item);
+        ArrayList<Item> tempItemList = itemList; // Muss erstellt werden, weil eine liste nicht gleichzeitig geaendert und durch iteriert werden darf
+
+        for(int i=0; i<itemList.size(); i++){
+            if (this.player.addItemErfolgreich(itemList.get(i))) {
+                tempItemList.remove(itemList.get(i));
+            }
         }
-        //Methode muss hier aufgerufen werden weil getItemsFromRoom() returned
-        this.player.getCurrentRoom().removeItemsFromRoom();
+        this.player.getCurrentRoom().setItems(tempItemList);
     }
 }
