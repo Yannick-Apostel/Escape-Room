@@ -7,6 +7,7 @@ import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Room {
 
@@ -128,12 +129,19 @@ public class Room {
     }
 
     public void startEvent(ArrayList<Item> inventar){
+        Scanner scanner = new Scanner(System.in);
+
         if(hasEvent()){
             if(isForcedEvent()) {
                 this.event.description();
                 this.event.aktion(inventar);
             } else {
                 this.event.description();
+                System.out.print("> ");
+                String eventInput = scanner.nextLine();
+
+
+
             }
 
 

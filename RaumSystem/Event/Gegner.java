@@ -24,9 +24,9 @@ public class Gegner implements Event{
             }
         }
 
-        if (hasWeapon == true) {
+        if (hasWeapon) {
             System.out.println("Zombie besiegt!");
-        } else if (hasWeapon == false) {
+        } else {
             System.out.println("TOT!");
         }
     }
