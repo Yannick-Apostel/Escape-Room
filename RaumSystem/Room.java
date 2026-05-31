@@ -131,8 +131,8 @@ public class Room {
         if(hasEvent()){
             if(isForcedEvent()) {
                 this.event.description();
-                this.event.aktion();
-            } else() {
+                this.event.aktion(inventar);
+            } else {
                 this.event.description();
             }
 

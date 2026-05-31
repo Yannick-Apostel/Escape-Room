@@ -1,5 +1,7 @@
 package RaumSystem.Event;
 
+import java.util.ArrayList;
+
 public class verletztePerson implements Event{
     private final String name = "person";
     private final boolean forcedEvent = false;
@@ -11,7 +13,7 @@ public class verletztePerson implements Event{
     }
 
     @Override
-    public void aktion() {
+    public void aktion(ArrayList<Item> inventory) {
 
     }
 

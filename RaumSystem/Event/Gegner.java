@@ -1,5 +1,9 @@
 package RaumSystem.Event;
 
+import Items.Item;
+
+import java.util.ArrayList;
+
 public class Gegner implements Event{
     private final String name = "Zombie";
     private final boolean forcedEvent = true;
@@ -11,10 +15,20 @@ public class Gegner implements Event{
     }
 
     @Override
-    public void aktion() {
+    public void aktion(ArrayList<Item> inventory) {
+        boolean hasWeapon = false;
 
-        //TODO Zufallsgen.
-       //System.out.println("Gegner besiegt - Glückwunsch");
+        for(Item item : inventory){
+            if(item.getIsWeapon()){
+                hasWeapon = true;
+            }
+        }
+
+        if (hasWeapon == true) {
+            System.out.println("Zombie besiegt!");
+        } else if (hasWeapon == false) {
+            System.out.println("TOT!");
+        }
     }
 
     @Override
