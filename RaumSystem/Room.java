@@ -74,71 +74,90 @@ public class Room {
         return name;
     }
 
-    public boolean getIstVerschlossen(){return this.istVerschlossen;}
-    public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
+    public boolean getIstVerschlossen() {
+        return this.istVerschlossen;
+    }
 
-    private void addItemToList(char name){
-        if(name == 'S'){
+    public void setIstVerschlossen() {
+        this.istVerschlossen = !this.istVerschlossen;
+    }
+
+    private void addItemToList(char name) {
+        if (name == 'S') {
             Schlussel schlussel = new Schlussel();
             items.add(schlussel);
-        } else if(name == 'B'){
+        } else if (name == 'B') {
             Baseballschlaeger basi = new Baseballschlaeger();
             items.add(basi);
         }
     }
+    public void addItemToList(Item item) {
+        items.add(item);
+    }
 
-    public ArrayList<Item> getItemsFromRoom(){
+    public ArrayList<Item> getItemsFromRoom() {
         return this.items;
     }
 
-    public void removeItemsFromRoom(){
+    public void removeItemsFromRoom(Item item) {
         //Nach Aufsammeln der Items soll der Raum keine Items mehr beinhalten
-        this.items.clear();
+        try {
+            int index = this.items.indexOf(item);
+            this.items.remove(index); 
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException("DER FEHLER");
+        }
+
     }
 
-    public boolean hasRoomItems(){
-        if(this.items.isEmpty()){
+    public boolean hasRoomItems() {
+        if (this.items.isEmpty()) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    public void createEvent(char event){
-        if(event == 'Z'){
-            this.event= new Gegner();
+    public void createEvent(char event) {
+        if (event == 'Z') {
+            this.event = new Gegner();
             System.out.println("Zombie erstellt");
-        }else{
+        } else {
             this.event = null;
         }
     }
 
-    public boolean hasEvent(){
-        if(this.event != null)
+    public boolean hasEvent() {
+        if (this.event != null)
             return true;
 
         return false;
     }
 
-    public void startEvent(ArrayList<Item> inventar){
-        if(hasEvent()){
+    public void startEvent(ArrayList<Item> inventar) {
+        if (hasEvent()) {
             this.event.function();
 
             ArrayList<Item> weapons = new ArrayList<>();
-            for(Item item : inventar){
-                if(item.getIsWeapon()){
+            for (Item item : inventar) {
+                if (item.getIsWeapon()) {
                     weapons.add(item);
                 }
             }
 
-            if(weapons.isEmpty()){
+            if (weapons.isEmpty()) {
                 System.out.println("Du kannst deinen Gegner nicht angreifen.");
                 System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
-            }else{
+            } else {
                 event.angriff();
                 this.event = null;
             }
         }
+    }
+
+    public void setItems(ArrayList<Item> newItems){
+        this.items = newItems;
     }
 }
 
