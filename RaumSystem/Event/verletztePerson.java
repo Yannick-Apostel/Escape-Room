@@ -1,6 +1,7 @@
 package RaumSystem.Event;
 
 import Items.Item;
+import Items.Schlussel;
 import Spieler.Player;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class verletztePerson implements Event{
     public void aktion(ArrayList<Item> inventory) {
         boolean hasHealingItem = false;
         String itemName = "";
+
 
         System.out.println("Du: Halli Hallo!");
         System.out.println("???: Ich bin stark verletzt!");
@@ -46,6 +48,9 @@ public class verletztePerson implements Event{
 
                 System.out.println("Danke bro, hier, ich hab das gefunden, du kannst es haben!");
 
+                inventory.add(new Schlussel());
+
+                System.out.println("Du hast einen schlüssel bekommen!");
             }
 
         }
