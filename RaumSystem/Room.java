@@ -140,7 +140,9 @@ public class Room {
                 System.out.print("> ");
                 String eventInput = scanner.nextLine();
 
-
+                if (eventInput.equals("y")) {
+                    this.event.aktion(inventar);
+                }
 
             }
 

@@ -1,10 +1,9 @@
 package Items;
 
-public class Schlussel implements Item{
-
-    private final String name = "Schlussel";
+public class Heilungstrank implements Item{
+    private final String name = "Heilungstrank";
     private final boolean isWeapon = false;
-    private final boolean isHealingItem = false;
+    private final boolean isHealingItem = true;
 
     @Override
     public void function() {
@@ -22,5 +21,5 @@ public class Schlussel implements Item{
     }
 
     @Override
-    public boolean getIsHealingItem() {return this.isHealingItem;}
+    public boolean getIsHealingItem() { return this.isHealingItem; }
 }
