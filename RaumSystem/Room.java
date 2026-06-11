@@ -91,6 +91,9 @@ public class Room {
             items.add(basi);
         }
     }
+    public void addItemToList(Item item) {
+        items.add(item);
+    }
 
     public ArrayList<Item> getItemsFromRoom() {
         return this.items;

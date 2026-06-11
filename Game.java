@@ -94,7 +94,7 @@ public class Game {
                         player.setCurrentRoom(nextRoom);
 
                         if (nextRoom.hasRoomItems()) {
-                            this.addItemToInventar();
+                            this.player.addItemToInventar();
                         }
 
                         System.out.println(player.getCurrentRoom().getDescription());
@@ -106,7 +106,7 @@ public class Game {
                             player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {
-                                this.addItemToInventar();
+                                this.player.addItemToInventar();
                             }
 
                             System.out.println(player.getCurrentRoom().getDescription());
@@ -247,16 +247,4 @@ public class Game {
         return false;
     }
 
-    public void addItemToInventar() {
-        System.out.println("Du findest: ");
-        ArrayList<Item> itemList = this.player.getCurrentRoom().getItemsFromRoom();
-        ArrayList<Item> tempItemList = itemList; // Muss erstellt werden, weil eine liste nicht gleichzeitig geaendert und durch iteriert werden darf
-
-        for(int i=0; i<itemList.size(); i++){
-            if (this.player.addItemErfolgreich(itemList.get(i))) {
-                tempItemList.remove(itemList.get(i));
-            }
-        }
-        this.player.getCurrentRoom().setItems(tempItemList);
-    }
 }
