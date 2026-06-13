@@ -1,10 +1,12 @@
 package RaumSystem;
 
 import Items.Baseballschlaeger;
+import Items.Heilungstrank;
 import Items.Item;
 import Items.Schlussel;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
+import RaumSystem.Event.verletztePerson;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,6 +87,9 @@ public class Room {
         } else if(name == 'B'){
             Baseballschlaeger basi = new Baseballschlaeger();
             items.add(basi);
+        } else if(name == 'H'){
+            Heilungstrank heilTrank = new Heilungstrank();
+            items.add(heilTrank);
         }
     }
 
@@ -109,6 +114,8 @@ public class Room {
         if(event == 'Z'){
             this.event= new Gegner();
             System.out.println("Zombie erstellt");
+        }else if(event == 'V'){
+            this.event = new verletztePerson();
         }else{
             this.event = null;
         }

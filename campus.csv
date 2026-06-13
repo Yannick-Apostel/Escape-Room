@@ -1,7 +1,11 @@
 START;Foyer;Du bist im Foyer.;false;N;N;
 ROOM;Flur;Ein langer Flur;false;S;N;
-ROOM;Labor;Ein chemisches Labor;true;B;N;
+ROOM;Labor;Ein chemisches Labor;true;B;V;
 ROOM;Lagerraum;Ein dunkler Lagerraum;false;N;Z;
+ROOM;Bibliothek;Eine ruhige Bibliothek mit alten Buechern;false;N;N;
+ROOM;Cafeteria;Eine verlassene Cafeteria mit umgestellten Tischen;false;N;N;
+ROOM;Buero;Ein kleines Buero mit durchsuchten Schubladen;false;N;N;
+ROOM;Krankenstation;Eine kleine Krankenstation mit kaltem Neonlicht;false;H;N;
 
 EXIT;Foyer;n;Flur;
 EXIT;Flur;s;Foyer;
@@ -9,3 +13,11 @@ EXIT;Flur;e;Labor;
 EXIT;Labor;w;Flur;
 EXIT;Labor;n;Lagerraum;
 EXIT;Lagerraum;s;Labor;
+EXIT;Flur;w;Bibliothek;
+EXIT;Bibliothek;e;Flur;
+EXIT;Bibliothek;n;Buero;
+EXIT;Buero;s;Bibliothek;
+EXIT;Flur;n;Cafeteria;
+EXIT;Cafeteria;s;Flur;
+EXIT;Cafeteria;e;Krankenstation;
+EXIT;Krankenstation;w;Cafeteria;

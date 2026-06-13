@@ -59,7 +59,7 @@ public class Game {
     private void handleCommand(String command) {
         if(!command.isEmpty()){
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w'");
+                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', 'inventar'");
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
 
@@ -102,7 +102,13 @@ public class Game {
 
                 }
 
-            } else {
+            } else if (command.equals("inventar")) {
+                System.out.print("Inventar: ");
+                for (Item item : this.player.getInventar()) {
+                    System.out.print(item.getName() + " ");
+                }
+                System.out.println();
+                } else {
                 System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
             }
         }else{

@@ -36,7 +36,7 @@ public class verletztePerson implements Event{
         }
 
         if(hasHealingItem){
-            System.out.println("Möchtest du der Person deinen " + itemName + " geben?");
+            System.out.println("Möchtest du der Person deinen " + itemName + " geben?[y/n]");
             System.out.print("> ");
             Scanner scanner = new Scanner(System.in);
             String giveItem = scanner.nextLine();
