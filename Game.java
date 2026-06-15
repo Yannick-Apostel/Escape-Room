@@ -1,4 +1,5 @@
 
+import HighScore.HighScoreController;
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
@@ -42,7 +43,7 @@ public class Game {
 
 
         running = true;
-
+        HighScoreController highScoreController = new HighScoreController(scanner);
         System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD+ " EscapeCampus!" + ConsoleColors.RESET);
         System.out.println("Tippe"+ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'"+ ConsoleColors.RESET+" für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
