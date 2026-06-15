@@ -5,6 +5,7 @@ import Items.Item;
 import Items.Schlussel;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
+import helper.ConsoleColors;
 
 import java.util.ArrayList;
 
@@ -122,7 +123,6 @@ public class Room {
     public void createEvent(char event) {
         if (event == 'Z') {
             this.event = new Gegner();
-            System.out.println("Zombie erstellt");
         } else {
             this.event = null;
         }
@@ -147,8 +147,8 @@ public class Room {
             }
 
             if (weapons.isEmpty()) {
-                System.out.println("Du kannst deinen Gegner nicht angreifen.");
-                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+                System.out.println("Du kannst deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "nicht angreifen.");
+                System.out.println("Suche etwas womit du deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "angreifen kannst!");
             } else {
                 event.angriff();
                 this.event = null;

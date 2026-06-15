@@ -2,6 +2,7 @@
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
+import helper.ConsoleColors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,8 +43,8 @@ public class Game {
 
         running = true;
 
-        System.out.println("Willkommen bei EscapeCampus!");
-        System.out.println("Tippe 'hilfe' für Befehle.");
+        System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD+ " EscapeCampus!" + ConsoleColors.RESET);
+        System.out.println("Tippe"+ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'"+ ConsoleColors.RESET+" für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
@@ -75,7 +76,7 @@ public class Game {
 
 
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar");
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
 
@@ -87,7 +88,7 @@ public class Game {
                 Room nextRoom = player.getCurrentRoom().getExit(direction);
 
                 if (nextRoom == null) {
-                    System.out.println(("Dort ist kein Ausgang"));
+                    System.out.println((ConsoleColors.RED_BACKGROUND+ ConsoleColors.WHITE_BOLD_BRIGHT+  "Dort ist kein Ausgang!"+ConsoleColors.RESET));
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
@@ -100,7 +101,7 @@ public class Game {
                         System.out.println(player.getCurrentRoom().getDescription());
                     } else {
                         if (this.player.existiertItemImInventar("Schlussel")) {
-                            System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
+                            System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
                             player.getCurrentRoom().setIstVerschlossen();
@@ -111,7 +112,7 @@ public class Game {
 
                             System.out.println(player.getCurrentRoom().getDescription());
                         } else {
-                            System.out.println("Diese Tür ist verschlossen. Suche nach einen Schlüssel!");
+                            System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
                         }
 
                     }
