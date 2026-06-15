@@ -20,17 +20,6 @@ public class Player {
         currentRoom = startRoom;
         inventar = new ArrayList<>();
         this.input = input;
-        Item baseballschlaeger = new Baseballschlaeger();
-        Item baseballschlaeger1 = new Baseballschlaeger();
-        Item baseballschlaeger2 = new Baseballschlaeger();
-        Item baseballschlaeger3 = new Baseballschlaeger();
-        Item baseballschlaeger4 = new Baseballschlaeger();
-        inventar.add(baseballschlaeger);
-        inventar.add(baseballschlaeger1);
-        inventar.add(baseballschlaeger2);
-        inventar.add(baseballschlaeger3);
-        inventar.add(baseballschlaeger4);
-
     }
 
     public Room getCurrentRoom() {
