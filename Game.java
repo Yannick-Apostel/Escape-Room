@@ -162,8 +162,8 @@ public class Game {
             String[] parts = line.split(";");
             switch (parts[0]) {
                 case "START" ->
-                        createStartroomAndPlayer(parts[1] + "," + parts[2], input); // Startraum ist nicht verschlossen und hat keine Events
-                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5]);
+                        createStartroomAndPlayer(parts[1] + "," + parts[2]+ "," + parts[3], input); // Startraum ist nicht verschlossen und hat keine Events
+                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
         }
@@ -176,18 +176,19 @@ public class Game {
         for (String line : rooms) {
             String[] parts = line.split(",", 6);
             String name = parts[0];
-            String description = parts[1];
-            boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
-            char item = Character.toUpperCase(parts[3].charAt(0));
-            char event = Character.toUpperCase(parts[4].charAt(0));
-            this.rooms.add(new Room(name, description, istVerschlossen, item, event));
+            String description = parts[2];
+            boolean istVerschlossen = Boolean.parseBoolean(parts[3]);
+            char item = Character.toUpperCase(parts[4].charAt(0));
+            char event = Character.toUpperCase(parts[5].charAt(0));
+            int punkte = Integer.parseInt(parts[1]);
+            this.rooms.add(new Room(name, description, istVerschlossen, item, event, punkte));
         }
     }
 
     private void createStartroomAndPlayer(String start, Scanner input) {
-        String[] parts = start.split(",", 2);
+        String[] parts = start.split(",", 3);
         String name = parts[0];
-        String description = parts[1];
+        String description = parts[2];
         this.rooms.add(new Room(name, description));
 
         player = new Player(findRoom(name), input);
