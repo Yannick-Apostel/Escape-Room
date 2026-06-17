@@ -94,14 +94,20 @@ public class Game {
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
-                        player.setCurrentRoom(nextRoom);
-                        highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
+                        if(nextRoom.getIsEnde()){
+                            endeErreicht();
+                            running = false;
+                        }else{
+                            player.setCurrentRoom(nextRoom);
+                            highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
 
-                        if (nextRoom.hasRoomItems()) {
-                            this.player.addItemToInventar();
+                            if (nextRoom.hasRoomItems()) {
+                                this.player.addItemToInventar();
+                            }
+
+                            System.out.println(player.getCurrentRoom().getDescription());
                         }
 
-                        System.out.println(player.getCurrentRoom().getDescription());
                     } else {
                         if (this.player.existiertItemImInventar("Schlussel")) {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
@@ -109,11 +115,17 @@ public class Game {
                             player.setCurrentRoom(nextRoom);
                             player.getCurrentRoom().setIstVerschlossen();
 
-                            if (nextRoom.hasRoomItems()) {
-                                this.player.addItemToInventar();
+                            if(player.getCurrentRoom().getIsEnde()){
+                                endeErreicht();
+                                running = false;
+                            }else {
+                                if (nextRoom.hasRoomItems()) {
+                                    this.player.addItemToInventar();
+                                }
+
+                                System.out.println(player.getCurrentRoom().getDescription());
                             }
 
-                            System.out.println(player.getCurrentRoom().getDescription());
                         } else {
                             System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
                         }
@@ -167,6 +179,7 @@ public class Game {
                         createStartroomAndPlayer(parts[1] + "," + parts[2]+ "," + parts[3], input); // Startraum ist nicht verschlossen und hat keine Events
                 case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
+                case "ENDE" -> createEndRoom(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6]);
             }
         }
 
@@ -194,6 +207,12 @@ public class Game {
         this.rooms.add(new Room(name, description));
 
         player = new Player(findRoom(name), input);
+    }
+    private void createEndRoom(String ende){
+        String[] parts = ende.split(",", 3);
+        String name = parts[0];
+        String description = parts[2];
+        this.rooms.add(new Room(name, description, true));
     }
 
     private void createExits(ArrayList<String> exits) {
@@ -250,6 +269,12 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void endeErreicht(){
+        System.out.println(ConsoleColors.BLUE_BOLD_BRIGHT+ "DU HAST DEN AUSGANG GEFUNDEN!!!");
+        System.out.println("GLÜCKWUNSCH");
+        System.out.println("DU HAST "+ highScoreController.getHighscore() +" PUNKTE ERREICHT"+ ConsoleColors.RESET);
     }
 
 }

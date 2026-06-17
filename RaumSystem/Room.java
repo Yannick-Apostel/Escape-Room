@@ -16,6 +16,7 @@ public class Room {
     private boolean istVerschlossen;
     private ArrayList<Item> items;
     private Event event;
+    private boolean isEnde;
 
     private int punkte;
 
@@ -32,6 +33,7 @@ public class Room {
         //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
         this.items = new ArrayList<>();
         this.punkte=0;
+        this.isEnde = false;
     }
 
     public Room(String name, String description, boolean istVerschlossen, char item, char event, int punkte){
@@ -42,6 +44,17 @@ public class Room {
         addItemToList(item);
         createEvent(event);
         this.punkte = punkte;
+        this.isEnde = false;
+    }
+
+    public Room(String name, String description, boolean isEnde) {
+        this.name = name;
+        this.description = description;
+
+        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
+        this.items = new ArrayList<>();
+        this.punkte=0;
+        this.isEnde = isEnde;
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -171,6 +184,8 @@ public class Room {
     public int getPunkte(){
         return this.punkte;
     }
+
+    public boolean getIsEnde(){return  this.isEnde;}
 }
 
 

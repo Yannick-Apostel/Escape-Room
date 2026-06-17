@@ -2,7 +2,6 @@ START;Foyer;0;Du bist im Foyer.;false;N;N;
 ROOM;Flur;5;Ein langer Flur;false;S;N;
 ROOM;Labor;15;Ein chemisches Labor;true;B;N;
 ROOM;Lagerraum;15;Ein dunkler Lagerraum;false;N;Z;
-
 ROOM;Bibliothek;10;Eine staubige alte Bibliothek;false;N;N;
 ROOM;Kantine;20;Hier riecht es nach abgestandenem Essen;false;N;Z;
 ROOM;Sicherheitsbüro;25;Ein kleiner Raum mit vielen Monitoren;true;N;N;
@@ -10,14 +9,13 @@ ROOM;Serverraum;30;Ein lauter Raum voller blinkender Server.;true;S;Z;
 ROOM;Entwickler-Büro;20;Hier liegen überall leere Kaffeebecher.;false;B;N;
 ROOM;Archiv;10;Ein staubiger Ort mit alten Dokumentationen.;false;N;N;
 
+ENDE;EndRaum;100;Ein heller Raum Mit Fenster und einer Tür die nach draussen zeigt.;false;N;N;
 EXIT;Foyer;n;Flur;
 EXIT;Flur;s;Foyer;
 EXIT;Flur;e;Labor;
 EXIT;Labor;w;Flur;
 EXIT;Labor;n;Lagerraum;
 EXIT;Lagerraum;s;Labor;
-
-
 EXIT;Flur;n;Bibliothek;
 EXIT;Bibliothek;s;Flur;
 EXIT;Bibliothek;e;Kantine;
@@ -30,3 +28,4 @@ EXIT;Serverraum;n;Entwickler-Büro;
 EXIT;Entwickler-Büro;s;Serverraum;
 EXIT;Entwickler-Büro;e;Archiv;
 EXIT;Archiv;w;Entwickler-Büro;
+EXIT;Foyer;s;EndRaum;
