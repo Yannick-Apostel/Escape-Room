@@ -15,6 +15,7 @@ public class Game {
     private Player player;
     private boolean running;
     private ArrayList<Room> rooms;
+    private HighScoreController highScoreController;
 
     //TODO Konstruktor erstellen
     public Game(Scanner input) throws FileNotFoundException {
@@ -43,7 +44,7 @@ public class Game {
 
 
         running = true;
-        HighScoreController highScoreController = new HighScoreController(scanner);
+        highScoreController = new HighScoreController(scanner);
         System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD+ " EscapeCampus!" + ConsoleColors.RESET);
         System.out.println("Tippe"+ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'"+ ConsoleColors.RESET+" für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
@@ -94,6 +95,7 @@ public class Game {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
+                        highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
 
                         if (nextRoom.hasRoomItems()) {
                             this.player.addItemToInventar();
