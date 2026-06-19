@@ -1,35 +1,71 @@
-START;Foyer;Du bist im Foyer.;false;N;N;
-ROOM;Flur;Ein langer Flur;false;S;N;
-ROOM;Bibliothek;Eine ruhige Bibliothek mit alten Buechern;false;N;N;
-ROOM;Buero;Ein kleines Buero mit durchsuchten Schubladen;false;N;N;
-ROOM;Cafeteria;Eine verlassene Cafeteria mit umgestellten Tischen;false;N;N;
-ROOM;Krankenstation;Eine kleine Krankenstation mit kaltem Neonlicht;false;H;N;
-ROOM;Flur2;Ein weiterer Flur mit flackernden Lampen;false;N;N;
-ROOM;Labor;Ein chemisches Labor;true;N;V;
-ROOM;Lagerraum;Ein dunkler Lagerraum;false;N;Z;
-ROOM;Labor2;Ein kleines Nebenlabor mit kaputten Geraeten;false;B;N;
-ROOM;Seminarraum;Ein leerer Seminarraum mit verschobenen Stuehlen;false;S;N;
-ROOM;Archiv;Ein staubiges Archiv voller alter Akten;true;N;N;
+# LEGENDE
+# Format rooms: START/ROOM;Name;Beschreibung;verschlossen(true/false);Item;Event;
+# Format exits: EXIT;Raum;Richtung(n/s/e/w);Zielraum
+# Items: N = kein Item, S = Schluessel, B = Baseballschlaeger, H = Heilungstrank
+# Events: N = kein Event, Z = Gegner/Zombie, V = verletzte Person
 
-EXIT;Foyer;n;Flur;
-EXIT;Flur;s;Foyer;
-EXIT;Flur;e;Bibliothek;
-EXIT;Bibliothek;w;Flur;
-EXIT;Bibliothek;n;Buero;
-EXIT;Buero;s;Bibliothek;
-EXIT;Buero;e;Cafeteria;
-EXIT;Cafeteria;w;Buero;
-EXIT;Cafeteria;s;Krankenstation;
-EXIT;Krankenstation;n;Cafeteria;
-EXIT;Krankenstation;e;Flur2;
-EXIT;Flur2;w;Krankenstation;
-EXIT;Flur2;n;Labor;
-EXIT;Labor;s;Flur2;
-EXIT;Labor;e;Lagerraum;
-EXIT;Lagerraum;w;Labor;
-EXIT;Lagerraum;s;Labor2;
-EXIT;Labor2;n;Lagerraum;
-EXIT;Labor2;e;Seminarraum;
-EXIT;Seminarraum;w;Labor2;
-EXIT;Seminarraum;n;Archiv;
-EXIT;Archiv;s;Seminarraum;
+START;Foyer;Du bist im Foyer.;false;N;N;
+
+ROOM;Flur01;Ein kalter Flur.;false;N;N;
+ROOM;Flur02;Ein kalter Flur.;false;N;N;
+ROOM;Flur03;Ein kalter Flur.;false;N;N;
+ROOM;Flur04;Ein kalter Flur.;false;N;N;
+ROOM;Flur05;Ein kalter Flur.;false;N;N;
+ROOM;Flur06;Ein kalter Flur.;false;N;N;
+ROOM;Flur07;Ein kalter Flur.;false;N;N;
+
+ROOM;Lager1;Ein Lagerraum mit alten Kisten.;false;N;Z;
+ROOM;Lager2;Ein zweiter Lagerraum.;false;N;N;
+ROOM;Büro;Ein kleines Büro.;false;B;N;
+ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher.;false;S;N;
+ROOM;Krankenstation;Eine verlassene Krankenstation.;false;H;N;
+ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente.;false;N;Z;
+ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;Z;
+
+ROOM;Ausgang;Du hast den Ausgang erreicht.;false;N;N;
+
+EXIT;Foyer;n;Flur01
+EXIT;Foyer;s;Flur03
+
+EXIT;Flur01;s;Foyer
+EXIT;Flur01;n;Flur02
+EXIT;Flur01;e;Flur04
+
+EXIT;Flur02;s;Flur01
+EXIT;Flur02;n;Büro
+EXIT;Flur02;w;Lager1
+
+EXIT;Büro;s;Flur02
+
+EXIT;Lager1;e;Flur02
+EXIT;Lager1;w;Lager2
+
+EXIT;Lager2;e;Lager1
+
+EXIT;Flur04;w;Flur01
+EXIT;Flur04;e;Bibliothek
+
+EXIT;Bibliothek;w;Flur04
+
+EXIT;Flur03;n;Foyer
+EXIT;Flur03;w;Krankenstation
+EXIT;Flur03;e;Flur05
+
+EXIT;Krankenstation;e;Flur03
+
+EXIT;Flur05;w;Flur03
+EXIT;Flur05;e;Flur06
+
+EXIT;Flur06;w;Flur05
+EXIT;Flur06;e;Flur07
+EXIT;Flur06;s;Archiv
+
+EXIT;Archiv;n;Flur06
+
+EXIT;Flur07;w;Flur06
+EXIT;Flur07;n;Bossraum
+
+EXIT;Bossraum;s;Flur07
+EXIT;Bossraum;n;Ausgang
+
+EXIT;Ausgang;s;Bossraum
