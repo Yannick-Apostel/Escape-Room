@@ -13,12 +13,14 @@ public class Game {
     private Player player;
     private boolean running;
     private ArrayList<Room> rooms;
+    private Karte karte;
 
     //TODO Konstruktor erstellen
     public Game() throws FileNotFoundException {
         rooms = new ArrayList<>();
         rooms.add(new Room("START", "Ein initialer Startraum"));
         player = new Player(rooms.get(0));
+        karte = new Karte();
     }
  
     public static void main(String[] args) throws FileNotFoundException {
@@ -31,6 +33,8 @@ public class Game {
         rooms = new ArrayList<>();
 
         filterCSVInput(readCSV());
+        karte = new Karte();
+        karte.raumErkunden(player.getCurrentRoom());
         /*
         if(checkRoomConnection()){
             System.out.println("Alle Raeume haben einen gueltigen Ausgang");
@@ -59,13 +63,20 @@ public class Game {
     private void handleCommand(String command) {
         if(!command.isEmpty()){
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe', 'n|s|o|w', 'inventar'");
+                System.out.println("Folgende Eingaben sind valide: 'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte'");
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
 
             } else if (command.equals("ende")) {
                 running = false;
-            } else if (command.substring(0, 4).equals("gehe")) {
+            } else if(command.equals("karte")) {
+                System.out.println("Karte:");
+                karte.anzeigen(player.getCurrentRoom());
+            } else if (command.startsWith("gehe")) {
+                if (command.length() < 6) {
+                    System.out.println("Bitte gib eine Richtung an: gehe n|s|o|w");
+                    return;
+                }
 
                 String direction = command.substring(5, 6);
                 Room nextRoom = player.getCurrentRoom().getExit(direction);
@@ -76,6 +87,7 @@ public class Game {
                         //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
+                        karte.raumErkunden(player.getCurrentRoom());
 
                         if (nextRoom.hasRoomItems()) {
                             this.addItemToInventar();
@@ -87,6 +99,7 @@ public class Game {
                             System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
+                            karte.raumErkunden(player.getCurrentRoom());
                             player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {
@@ -108,7 +121,7 @@ public class Game {
                     System.out.print(item.getName() + " ");
                 }
                 System.out.println();
-                } else {
+            } else {
                 System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
             }
         }else{
