@@ -291,6 +291,8 @@ public class Game {
         System.out.println(ConsoleColors.BLUE_BOLD_BRIGHT+ "DU HAST DEN AUSGANG GEFUNDEN!!!");
         System.out.println("GLÜCKWUNSCH");
         System.out.println("DU HAST "+ highScoreController.getHighscore() +" PUNKTE ERREICHT"+ ConsoleColors.RESET);
+        highScoreController.saveHighScore();
+        highScoreController.loadHighscore();
     }
 
 }
