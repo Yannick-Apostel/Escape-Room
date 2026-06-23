@@ -1,4 +1,5 @@
 
+import HighScore.HighScoreController;
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
@@ -32,7 +33,7 @@ public class Game {
 
     public void start(Scanner scanner) throws FileNotFoundException {
         rooms = new ArrayList<>();
-
+        highScoreController = new HighScoreController(scanner);
         filterCSVInput(readCSV(), scanner);
         /*
         if(checkRoomConnection()){
