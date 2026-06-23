@@ -1,5 +1,4 @@
 
-import HighScore.HighScoreController;
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
@@ -44,9 +43,25 @@ public class Game {
 
 
         running = true;
-        highScoreController = new HighScoreController(scanner);
-        System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD+ " EscapeCampus!" + ConsoleColors.RESET);
-        System.out.println("Tippe"+ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'"+ ConsoleColors.RESET+" für Befehle.");
+
+        System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD );
+        System.out.println();
+        String escapeCampus = """
+                 /        |/      \\ /      \\ /      \\/       \\/        |       /      \\ /      \\/  \\     /  /       \\/  |  /  |/      \\\s
+                $$$$$$$$//$$$$$$  /$$$$$$  /$$$$$$  $$$$$$$  $$$$$$$$/       /$$$$$$  /$$$$$$  $$  \\   /$$ $$$$$$$  $$ |  $$ /$$$$$$  |
+                $$ |__   $$ \\__$$/$$ |  $$/$$ |__$$ $$ |__$$ $$ |__          $$ |  $$/$$ |__$$ $$$  \\ /$$$ $$ |__$$ $$ |  $$ $$ \\__$$/\s
+                $$    |  $$      \\$$ |     $$    $$ $$    $$/$$    |         $$ |     $$    $$ $$$$  /$$$$ $$    $$/$$ |  $$ $$      \\\s
+                $$$$$/    $$$$$$  $$ |   __$$$$$$$$ $$$$$$$/ $$$$$/          $$ |   __$$$$$$$$ $$ $$ $$/$$ $$$$$$$/ $$ |  $$ |$$$$$$  |
+                $$ |_____/  \\__$$ $$ \\__/  $$ |  $$ $$ |     $$ |_____       $$ \\__/  $$ |  $$ $$ |$$$/ $$ $$ |     $$ \\__$$ /  \\__$$ |
+                $$       $$    $$/$$    $$/$$ |  $$ $$ |     $$       |      $$    $$/$$ |  $$ $$ | $/  $$ $$ |     $$    $$/$$    $$/\s
+                $$$$$$$$/ $$$$$$/  $$$$$$/ $$/   $$/$$/      $$$$$$$$/        $$$$$$/ $$/   $$/$$/      $$/$$/       $$$$$$/  $$$$$$/ \s
+                
+                
+                
+                """;
+
+        System.out.println(escapeCampus);
+        System.out.println(ConsoleColors.RESET+"Tippe" + ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'" + ConsoleColors.RESET + " für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
@@ -78,7 +93,7 @@ public class Game {
 
 
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:" + ConsoleColors.GREEN_BOLD_BRIGHT + "'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar" + ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
 
@@ -110,7 +125,7 @@ public class Game {
 
                     } else {
                         if (this.player.existiertItemImInventar("Schlussel")) {
-                            System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
+                            System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET + " - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
                             player.getCurrentRoom().setIstVerschlossen();
@@ -127,7 +142,7 @@ public class Game {
                             }
 
                         } else {
-                            System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
+                            System.out.println("Diese Tür ist" + ConsoleColors.RED_BRIGHT + " verschlossen" + ConsoleColors.RESET + ". Suche nach einen " + ConsoleColors.GREEN_BRIGHT + "Schlüssel" + ConsoleColors.RESET + "!");
                         }
 
                     }
