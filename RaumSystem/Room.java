@@ -1,13 +1,16 @@
 package RaumSystem;
 
 import Items.Baseballschlaeger;
+import Items.Heilungstrank;
 import Items.Item;
 import Items.Schlussel;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
+import RaumSystem.Event.verletztePerson;
 import helper.ConsoleColors;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Room {
 
@@ -16,6 +19,9 @@ public class Room {
     private boolean istVerschlossen;
     private ArrayList<Item> items;
     private Event event;
+    private int x;
+    private int y;
+    private String mapState = "hidden";
 
     private Room north;
     private Room south;
@@ -31,11 +37,13 @@ public class Room {
         this.items = new ArrayList<>();
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item, char event){
+    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y){
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
         this.istVerschlossen = istVerschlossen;
+        this.x = x;
+        this.y = y;
         addItemToList(item);
         createEvent(event);
     }
@@ -62,7 +70,7 @@ public class Room {
     public Room getExit(String direction) {
         if (direction.equals("n")) return north;
         if (direction.equals("s")) return south;
-        if (direction.equals("o")) return east;
+        if (direction.equals("e") || direction.equals("o")) return east;
         if (direction.equals("w")) return west;
         return null;
     }
@@ -75,13 +83,24 @@ public class Room {
         return name;
     }
 
-    public boolean getIstVerschlossen() {
-        return this.istVerschlossen;
+    public int getX() {
+        return x;
     }
 
-    public void setIstVerschlossen() {
-        this.istVerschlossen = !this.istVerschlossen;
+    public int getY() {
+        return y;
     }
+
+    public String getMapState() {
+        return mapState;
+    }
+
+    public void setMapState(String mapState) {
+        this.mapState = mapState;
+    }
+
+    public boolean getIstVerschlossen(){return this.istVerschlossen;}
+    public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
 
     private void addItemToList(char name) {
         if (name == 'S') {
@@ -90,6 +109,9 @@ public class Room {
         } else if (name == 'B') {
             Baseballschlaeger basi = new Baseballschlaeger();
             items.add(basi);
+        } else if(name == 'H'){
+            Heilungstrank heilTrank = new Heilungstrank();
+            items.add(heilTrank);
         }
     }
     public void addItemToList(Item item) {
@@ -120,39 +142,71 @@ public class Room {
         }
     }
 
-    public void createEvent(char event) {
-        if (event == 'Z') {
-            this.event = new Gegner();
-        } else {
+    public void createEvent(char event){
+        if(event == 'Z'){
+            this.event= new Gegner();
+            System.out.println("Zombie erstellt");
+        }else if(event == 'V'){
+            this.event = new verletztePerson();
+        }else{
             this.event = null;
         }
     }
 
-    public boolean hasEvent() {
-        if (this.event != null)
+    public boolean isForcedEvent() {
+        if (this.event != null) {
+            return this.event.isForced();
+        }
+        return false;
+    }
+
+    public boolean hasEvent(){
+        if(this.event != null)
             return true;
 
         return false;
     }
 
-    public void startEvent(ArrayList<Item> inventar) {
-        if (hasEvent()) {
-            this.event.function();
+    public void startEvent(ArrayList<Item> inventar){
+        Scanner scanner = new Scanner(System.in);
 
-            ArrayList<Item> weapons = new ArrayList<>();
-            for (Item item : inventar) {
-                if (item.getIsWeapon()) {
-                    weapons.add(item);
+        if(hasEvent()){
+            if(isForcedEvent()) {
+                this.event.description();
+                this.event.aktion(inventar);
+            } else {
+                this.event.description();
+                System.out.print("> ");
+                String eventInput = scanner.nextLine();
+
+                if (eventInput.equals("y")) {
+                    this.event.aktion(inventar);
                 }
-            }
 
-            if (weapons.isEmpty()) {
+            /*if (weapons.isEmpty()) {
                 System.out.println("Du kannst deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "nicht angreifen.");
                 System.out.println("Suche etwas womit du deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "angreifen kannst!");
             } else {
                 event.angriff();
                 this.event = null;
-            }
+            }*/   //TODO vernünftig mergen
+
+
+            //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
+//            ArrayList<Item> weapons = new ArrayList<>();
+//            for(Item item : inventar){
+//                if(item.getIsWeapon()){
+//                    weapons.add(item);
+//                }
+//            }
+//
+//            if(weapons.isEmpty()){
+//                System.out.println("Du kannst deinen Gegner nicht angreifen.");
+//                System.out.println("Suche etwas womit du deinen Gegner angreifen kannst!");
+//            }else{
+//                event.angriff();
+//                this.event = null;
+//            }
         }
     }
 

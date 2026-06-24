@@ -2,6 +2,7 @@
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
+import Karte.Karte;
 import helper.ConsoleColors;
 
 import java.io.File;
@@ -14,6 +15,7 @@ public class Game {
     private Player player;
     private boolean running;
     private ArrayList<Room> rooms;
+    private Karte Karte;
 
     //TODO Konstruktor erstellen
     public Game(Scanner input) throws FileNotFoundException {
@@ -21,7 +23,7 @@ public class Game {
         rooms.add(new Room("START", "Ein initialer Startraum"));
         player = new Player(rooms.get(0), input);
     }
-
+ 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
         Game game = new Game(scanner);
@@ -33,6 +35,10 @@ public class Game {
         rooms = new ArrayList<>();
 
         filterCSVInput(readCSV(), scanner);
+        Karte = new Karte(rooms);
+        Karte.setExplored(player.getCurrentRoom());
+        Karte.setUnknown(player.getCurrentRoom());
+
         /*
         if(checkRoomConnection()){
             System.out.println("Alle Raeume haben einen gueltigen Ausgang");
@@ -76,23 +82,47 @@ public class Game {
 
 
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe', 'n|s|o|w', inventar"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte'"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
 
             } else if (command.equals("ende")) {
                 running = false;
-            } else if (command.substring(0, 4).equals("gehe")) {
+            } else if(command.equals("karte")) {
+                Karte.spielerKarte();
+            } else if (command.equals("fullmap")) {
+                Karte.fullKarte();
+            } else if (command.startsWith("gehe")) {
+                if (command.length() < 6) {
+                    System.out.println("Bitte gib eine Richtung an: gehe n|s|o|w");
+                    return;
+                }
 
                 String direction = command.substring(5, 6);
                 Room nextRoom = player.getCurrentRoom().getExit(direction);
 
                 if (nextRoom == null) {
                     System.out.println((ConsoleColors.RED_BACKGROUND+ ConsoleColors.WHITE_BOLD_BRIGHT+  "Dort ist kein Ausgang!"+ConsoleColors.RESET));
+                    int x = player.getCurrentRoom().getX();
+                    int y = player.getCurrentRoom().getY();
+
+                    if (direction.toLowerCase().equals("n")) {
+                        Karte.setHidden(x, y + 1);
+                    } else if (direction.toLowerCase().equals("s")) {
+                        Karte.setHidden(x, y - 1);
+                    } else if (direction.toLowerCase().equals("o")) {
+                        Karte.setHidden(x + 1, y);
+                    } else if (direction.toLowerCase().equals("w")) {
+                        Karte.setHidden(x - 1, y);
+                    }
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
+                        Karte.setExplored(player.getCurrentRoom());
+
+                        player.getCurrentRoom().setMapState("explored");
+                        Karte.setUnknown(player.getCurrentRoom());
 
                         if (nextRoom.hasRoomItems()) {
                             this.player.addItemToInventar();
@@ -104,6 +134,8 @@ public class Game {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
+                            Karte.setExplored(player.getCurrentRoom());
+                            Karte.setUnknown(player.getCurrentRoom());
                             player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {
@@ -160,9 +192,8 @@ public class Game {
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" ->
-                        createStartroomAndPlayer(parts[1] + "," + parts[2], input); // Startraum ist nicht verschlossen und hat keine Events
-                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5]);
+                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + input + "," + parts[6] + "," + parts[7]); // Startraum ist nicht verschlossen und hat keine Events
+                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
         }
@@ -173,21 +204,26 @@ public class Game {
 
     private void createRooms(ArrayList<String> rooms) {
         for (String line : rooms) {
-            String[] parts = line.split(",", 6);
+            String[] parts = line.split(",", 7);
             String name = parts[0];
             String description = parts[1];
             boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
             char item = Character.toUpperCase(parts[3].charAt(0));
             char event = Character.toUpperCase(parts[4].charAt(0));
-            this.rooms.add(new Room(name, description, istVerschlossen, item, event));
+            int x = Integer.parseInt(parts[5]);
+            int y = Integer.parseInt(parts[6]);
+            this.rooms.add(new Room(name, description, istVerschlossen, item, event, x, y));
         }
     }
 
     private void createStartroomAndPlayer(String start, Scanner input) {
-        String[] parts = start.split(",", 2);
+        String[] parts = start.split(",", 4);
         String name = parts[0];
         String description = parts[1];
-        this.rooms.add(new Room(name, description));
+        int x = Integer.parseInt(parts[2]);
+        int y = Integer.parseInt(parts[3]);
+
+        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y));
 
         player = new Player(findRoom(name), input);
     }
@@ -201,7 +237,7 @@ public class Game {
             findRoom(name).setExits(direction, findRoom(exitname));
         }
     }
-
+//change for commit
     private Room findRoom(String name) {
         for (Room room : rooms) {
             if (room.getName().equals(name)) {
