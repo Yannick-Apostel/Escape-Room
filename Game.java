@@ -34,7 +34,7 @@ public class Game {
 
         filterCSVInput(readCSV());
         Karte = new Karte(rooms);
-        player.getCurrentRoom().setMapState("explored");
+        Karte.setExplored(player.getCurrentRoom());
         Karte.setUnknown(player.getCurrentRoom());
 
         /*
@@ -89,13 +89,20 @@ public class Game {
                     int x = player.getCurrentRoom().getX();
                     int y = player.getCurrentRoom().getY();
 
-                    if(direction.toLowerCase().equals("n")) {
+                    if (direction.toLowerCase().equals("n")) {
                         Karte.setHidden(x, y + 1);
+                    } else if (direction.toLowerCase().equals("s")) {
+                        Karte.setHidden(x, y - 1);
+                    } else if (direction.toLowerCase().equals("o")) {
+                        Karte.setHidden(x + 1, y);
+                    } else if (direction.toLowerCase().equals("w")) {
+                        Karte.setHidden(x - 1, y);
                     }
                 } else {
                         //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         player.setCurrentRoom(nextRoom);
+                        Karte.setExplored(player.getCurrentRoom());
 
                         player.getCurrentRoom().setMapState("explored");
                         Karte.setUnknown(player.getCurrentRoom());
@@ -110,6 +117,8 @@ public class Game {
                             System.out.println("Du hast einen Schlüssel - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
                             player.setCurrentRoom(nextRoom);
+                            Karte.setExplored(player.getCurrentRoom());
+                            Karte.setUnknown(player.getCurrentRoom());
                             player.getCurrentRoom().setIstVerschlossen();
 
                             if (nextRoom.hasRoomItems()) {

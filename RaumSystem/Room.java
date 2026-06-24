@@ -69,7 +69,7 @@ public class Room {
     public Room getExit(String direction) {
         if (direction.equals("n")) return north;
         if (direction.equals("s")) return south;
-        if (direction.equals("o")) return east;
+        if (direction.equals("e") || direction.equals("o")) return east;
         if (direction.equals("w")) return west;
         return null;
     }
