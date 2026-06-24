@@ -7,6 +7,7 @@ import Items.Schlussel;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
 import RaumSystem.Event.verletztePerson;
+import helper.ConsoleColors;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -101,11 +102,11 @@ public class Room {
     public boolean getIstVerschlossen(){return this.istVerschlossen;}
     public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
 
-    private void addItemToList(char name){
-        if(name == 'S'){
+    private void addItemToList(char name) {
+        if (name == 'S') {
             Schlussel schlussel = new Schlussel();
             items.add(schlussel);
-        } else if(name == 'B'){
+        } else if (name == 'B') {
             Baseballschlaeger basi = new Baseballschlaeger();
             items.add(basi);
         } else if(name == 'H'){
@@ -113,20 +114,30 @@ public class Room {
             items.add(heilTrank);
         }
     }
+    public void addItemToList(Item item) {
+        items.add(item);
+    }
 
-    public ArrayList<Item> getItemsFromRoom(){
+    public ArrayList<Item> getItemsFromRoom() {
         return this.items;
     }
 
-    public void removeItemsFromRoom(){
+    public void removeItemsFromRoom(Item item) {
         //Nach Aufsammeln der Items soll der Raum keine Items mehr beinhalten
-        this.items.clear();
+        try {
+            int index = this.items.indexOf(item);
+            this.items.remove(index); 
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException("DER FEHLER");
+        }
+
     }
 
-    public boolean hasRoomItems(){
-        if(this.items.isEmpty()){
+    public boolean hasRoomItems() {
+        if (this.items.isEmpty()) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -172,7 +183,13 @@ public class Room {
                     this.event.aktion(inventar);
                 }
 
-            }
+            /*if (weapons.isEmpty()) {
+                System.out.println("Du kannst deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "nicht angreifen.");
+                System.out.println("Suche etwas womit du deinen " + ConsoleColors.RED_BRIGHT  + "Gegner " +ConsoleColors.RESET+ "angreifen kannst!");
+            } else {
+                event.angriff();
+                this.event = null;
+            }*/   //TODO vernünftig mergen
 
 
             //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
@@ -191,6 +208,10 @@ public class Room {
 //                this.event = null;
 //            }
         }
+    }
+
+    public void setItems(ArrayList<Item> newItems){
+        this.items = newItems;
     }
 }
 

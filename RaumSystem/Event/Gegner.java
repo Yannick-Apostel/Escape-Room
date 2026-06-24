@@ -3,15 +3,16 @@ package RaumSystem.Event;
 import Items.Item;
 
 import java.util.ArrayList;
+import helper.ConsoleColors;
 
 public class Gegner implements Event{
     private final String name = "Zombie";
     private final boolean forcedEvent = true;
 
     @Override
-    public void description() {
-        System.out.println("Ich bin ein Zombie!");
-        System.out.println("Ich mach die platt, wenn du es nicht tust!");
+    public void function() {
+        System.out.println("Ich bin ein "+ ConsoleColors.YELLOW + "Zombie" + ConsoleColors.RESET);
+        System.out.println("Ich mach dich platt, wenn du es nicht tust!");
     }
 
     @Override
