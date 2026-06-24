@@ -1,28 +1,28 @@
 # LEGENDE
-# Format rooms: START/ROOM;Name;Beschreibung;verschlossen(true/false);Item;Event;
+# Format rooms: START/ROOM;Name;Beschreibung;verschlossen(true/false);Item;Event;X;Y;
 # Format exits: EXIT;Raum;Richtung(n/s/e/w);Zielraum
 # Items: N = kein Item, S = Schluessel, B = Baseballschlaeger, H = Heilungstrank
 # Events: N = kein Event, Z = Gegner/Zombie, V = verletzte Person
 
-START;Foyer;Du bist im Foyer.;false;N;N;
+START;Foyer;Du bist im Foyer.;false;N;N;2;2;
 
-ROOM;Flur01;Ein kalter Flur.;false;N;N;
-ROOM;Flur02;Ein kalter Flur.;false;N;N;
-ROOM;Flur03;Ein kalter Flur.;false;N;N;
-ROOM;Flur04;Ein kalter Flur.;false;N;N;
-ROOM;Flur05;Ein kalter Flur.;false;N;N;
-ROOM;Flur06;Ein kalter Flur.;false;N;N;
-ROOM;Flur07;Ein kalter Flur.;false;N;N;
+ROOM;Flur01;Ein kalter Flur.;false;N;N;2;3;
+ROOM;Flur02;Ein kalter Flur.;false;N;N;2;4;
+ROOM;Flur03;Ein kalter Flur.;false;N;N;2;1;
+ROOM;Flur04;Ein kalter Flur.;false;N;N;3;3;
+ROOM;Flur05;Ein kalter Flur.;false;N;N;3;1;
+ROOM;Flur06;Ein kalter Flur.;false;N;N;4;1;
+ROOM;Flur07;Ein kalter Flur.;false;N;N;5;1;
 
-ROOM;Lager1;Ein Lagerraum mit alten Kisten.;false;N;Z;
-ROOM;Lager2;Ein zweiter Lagerraum.;false;N;N;
-ROOM;Büro;Ein kleines Büro.;false;B;N;
-ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher.;false;S;N;
-ROOM;Krankenstation;Eine verlassene Krankenstation.;false;H;N;
-ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente.;false;N;Z;
-ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;Z;
+ROOM;Lager1;Ein Lagerraum mit alten Kisten.;false;N;Z;1;4;
+ROOM;Lager2;Ein zweiter Lagerraum.;false;N;N;0;4;
+ROOM;Büro;Ein kleines Büro.;false;B;N;2;5;
+ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher.;false;S;N;4;3;
+ROOM;Krankenstation;Eine verlassene Krankenstation.;false;H;N;1;1;
+ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente.;false;N;Z;4;0;
+ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;Z;5;2;
 
-ROOM;Ausgang;Du hast den Ausgang erreicht.;false;N;N;
+ROOM;Ausgang;Du hast den Ausgang erreicht.;false;N;N;5;3;
 
 EXIT;Foyer;n;Flur01
 EXIT;Foyer;s;Flur03

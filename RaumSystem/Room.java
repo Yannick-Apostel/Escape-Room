@@ -18,6 +18,9 @@ public class Room {
     private boolean istVerschlossen;
     private ArrayList<Item> items;
     private Event event;
+    private int x;
+    private int y;
+    private String mapState = "hidden";
 
     private Room north;
     private Room south;
@@ -33,11 +36,13 @@ public class Room {
         this.items = new ArrayList<>();
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item, char event){
+    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y){
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
         this.istVerschlossen = istVerschlossen;
+        this.x = x;
+        this.y = y;
         addItemToList(item);
         createEvent(event);
     }
@@ -64,7 +69,7 @@ public class Room {
     public Room getExit(String direction) {
         if (direction.equals("n")) return north;
         if (direction.equals("s")) return south;
-        if (direction.equals("o")) return east;
+        if (direction.equals("e") || direction.equals("o")) return east;
         if (direction.equals("w")) return west;
         return null;
     }
@@ -75,6 +80,22 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String getMapState() {
+        return mapState;
+    }
+
+    public void setMapState(String mapState) {
+        this.mapState = mapState;
     }
 
     public boolean getIstVerschlossen(){return this.istVerschlossen;}
