@@ -37,7 +37,7 @@ public class HighScoreController {
         File highscoreDatei = new File(dateiName);
         String tabellenFormat = "| %-15s | %-10s | %-20s |%n";
 
-        // Prüfen, ob die Datei überhaupt existiert
+
         if (!highscoreDatei.exists()) {
             System.out.println("Keine Highscore-Datei gefunden.");
             return;
@@ -51,7 +51,7 @@ public class HighScoreController {
             String zeile;
             boolean ersteZeile = true;
 
-            // Definition des Zielformats (z.B. 23.06.2026 21:15)
+
             DateTimeFormatter zielFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
             while ((zeile = br.readLine()) != null) {
@@ -69,15 +69,15 @@ public class HighScoreController {
                     String anzuzeigendesDatum;
 
                     try {
-                        // Versuche das ISO-Datum zu parsen und deutsch zu formatieren
+
                         LocalDateTime datumObjekt = LocalDateTime.parse(rohesDatum);
                         anzuzeigendesDatum = datumObjekt.format(zielFormat);
                     } catch (DateTimeParseException e) {
-                        // Falls das Datum ein unerwartetes Format hat, nutzen wir den Rohwert
+
                         anzuzeigendesDatum = rohesDatum;
                     }
 
-                    // Ausgabe als sauber formatierte Tabellenzeile
+
                     System.out.printf(tabellenFormat, name, highscore, anzuzeigendesDatum);
                 }
             }
