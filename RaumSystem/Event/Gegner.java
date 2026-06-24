@@ -10,7 +10,7 @@ public class Gegner implements Event{
     private final boolean forcedEvent = true;
 
     @Override
-    public void function() {
+    public void description() {
         System.out.println("Ich bin ein "+ ConsoleColors.YELLOW + "Zombie" + ConsoleColors.RESET);
         System.out.println("Ich mach dich platt, wenn du es nicht tust!");
     }

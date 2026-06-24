@@ -192,7 +192,7 @@ public class Game {
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + input + "," + parts[6] + "," + parts[7]); // Startraum ist nicht verschlossen und hat keine Events
+                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + parts[6] + "," + parts[7], input); // Startraum ist nicht verschlossen und hat keine Events
                 case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
             }
