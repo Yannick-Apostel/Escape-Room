@@ -8,6 +8,8 @@ import helper.ConsoleColors;
 public class Gegner implements Event{
     private final String name = "Zombie";
     private final boolean forcedEvent = true;
+    private int attackDamage = 2;
+    private int leben = 15;
 
     @Override
     public void description() {

@@ -51,6 +51,12 @@ public class Player {
     public boolean addItemErfolgreich(Item newItem) {
         if (this.inventar.size() < maxSizeInventar) {
             if (frageObItemInsInventar(newItem.getName())) {
+                if(newItem.getIsWeapon()) {
+                    if(playerWeapon() != null) {
+                        System.out.println("Du hast schon eine Waffe, willst du sie austauschen? [y/n]");
+
+                    }
+                }
                 this.inventar.add(newItem);
 
                 try {
@@ -174,4 +180,15 @@ public class Player {
         System.out.println("]");
     }
     public void setLeben(int leben)  { this.Leben = leben; }
+
+    public Item playerWeapon() {
+        Item weapon = null;
+        
+        for(Item item : inventar){
+            if(item.getIsWeapon()){
+                weapon = item;
+            }
+        }
+        return weapon;
+    }
 }
