@@ -15,6 +15,7 @@ public class Player {
     private ArrayList<Item> inventar;
     private int maxSizeInventar = 5;
     private Scanner input;
+    private int Leben = 20;
 
     public Player(Room startRoom, Scanner input) {
         currentRoom = startRoom;
@@ -163,5 +164,14 @@ public class Player {
                 }
         }
     }
-
+    public int getLeben() { return this.Leben; }
+    public void showLeben() {
+        System.out.print("Leben: ");
+        System.out.print("[");
+        for (int i = 0; i < this.Leben; i++) {
+            System.out.print("■");
+        }
+        System.out.println("]");
+    }
+    public void setLeben(int leben)  { this.Leben = leben; }
 }

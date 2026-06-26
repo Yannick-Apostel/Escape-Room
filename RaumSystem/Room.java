@@ -42,7 +42,7 @@ public class Room {
         this.isEnde = false;
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y, int punkte) {
+    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y, int punkte, boolean isEnde) {
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
@@ -52,10 +52,10 @@ public class Room {
         addItemToList(item);
         createEvent(event);
         this.punkte = punkte;
-        this.isEnde = false;
+        this.isEnde = isEnde;
     }
 
-    public Room(String name, String description, boolean isEnde) {
+    /*public Room(String name, String description, boolean isEnde) {
         this.name = name;
         this.description = description;
 
@@ -63,7 +63,7 @@ public class Room {
         this.items = new ArrayList<>();
         this.punkte=0;
         this.isEnde = isEnde;
-    }
+    }*/
 
     public void setExits(Room north, Room south, Room east, Room west) {
         this.north = north;

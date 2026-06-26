@@ -99,10 +99,11 @@ public class Game {
 
 
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte'"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte', 'leben'"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
-
+            } else if (command.equals("leben")) {
+                player.showLeben();
             } else if (command.equals("ende")) {
                 running = false;
             } else if(command.equals("karte")) {
@@ -226,7 +227,7 @@ public class Game {
                 case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + parts[6] + "," + parts[7] + "," + parts[8], input); // Startraum ist nicht verschlossen und hat keine Events
                 case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7] + "," + parts[8]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
-                case "ENDE" -> createEndRoom(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6]);
+                case "ENDE" -> createEndRoom(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7] + "," + parts[8]);
             }
         }
 
@@ -246,7 +247,7 @@ public class Game {
             int y = Integer.parseInt(parts[6]);
             int punkte = Integer.parseInt(parts[7]);
 
-            this.rooms.add(new Room(name, description, istVerschlossen, item, event, x, y, punkte));
+            this.rooms.add(new Room(name, description, istVerschlossen, item, event, x, y, punkte, false));
         }
     }
 
@@ -257,15 +258,18 @@ public class Game {
         int x = Integer.parseInt(parts[2]);
         int y = Integer.parseInt(parts[3]);
         int punkte = Integer.parseInt(parts[4]);
-        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y, punkte));
+        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y, punkte, false));
 
         player = new Player(findRoom(name), input);
     }
     private void createEndRoom(String ende){
-        String[] parts = ende.split(",", 3);
+        String[] parts = ende.split(",", 8);
         String name = parts[0];
         String description = parts[2];
-        this.rooms.add(new Room(name, description, true));
+        int x = Integer.parseInt(parts[5]);
+        int y = Integer.parseInt(parts[6]);
+        int punkte = Integer.parseInt(parts[7]);
+        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y, punkte, true));
     }
 
     private void createExits(ArrayList<String> exits) {
