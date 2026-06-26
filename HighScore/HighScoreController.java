@@ -95,4 +95,6 @@ public class HighScoreController {
     public int getHighscore() {
         return this.highscore;
     }
+
+    public String getName() { return this.name; }
 }

@@ -1,4 +1,3 @@
-
 import HighScore.HighScoreController;
 import Items.Item;
 import RaumSystem.Room;
@@ -172,6 +171,7 @@ public class Game {
                                 }
 
                             System.out.println(player.getCurrentRoom().getDescription());
+                            }
                         } else {
                             System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
                         }
@@ -187,7 +187,9 @@ public class Game {
                 }
                 System.out.println();
             } else {
-                System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+                if(!command.equals(highScoreController.getName())) {
+                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+                }
             }
 
         } else {
@@ -234,7 +236,7 @@ public class Game {
 
     private void createRooms(ArrayList<String> rooms) {
         for (String line : rooms) {
-            String[] parts = line.split(",", 7);
+            String[] parts = line.split(",", 8);
             String name = parts[0];
             String description = parts[1];
             boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
@@ -249,13 +251,13 @@ public class Game {
     }
 
     private void createStartroomAndPlayer(String start, Scanner input) {
-        String[] parts = start.split(",", 4);
+        String[] parts = start.split(",", 5);
         String name = parts[0];
         String description = parts[1];
         int x = Integer.parseInt(parts[2]);
         int y = Integer.parseInt(parts[3]);
-
-        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y));
+        int punkte = Integer.parseInt(parts[4]);
+        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y, punkte));
 
         player = new Player(findRoom(name), input);
     }
