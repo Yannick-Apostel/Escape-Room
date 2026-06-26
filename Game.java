@@ -1,4 +1,4 @@
-
+import HighScore.HighScoreController;
 import Items.Item;
 import RaumSystem.Room;
 import Spieler.Player;
@@ -16,6 +16,7 @@ public class Game {
     private boolean running;
     private ArrayList<Room> rooms;
     private Karte Karte;
+    private HighScoreController highScoreController;
 
     //TODO Konstruktor erstellen
     public Game(Scanner input) throws FileNotFoundException {
@@ -23,7 +24,7 @@ public class Game {
         rooms.add(new Room("START", "Ein initialer Startraum"));
         player = new Player(rooms.get(0), input);
     }
- 
+
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
         Game game = new Game(scanner);
@@ -33,7 +34,7 @@ public class Game {
 
     public void start(Scanner scanner) throws FileNotFoundException {
         rooms = new ArrayList<>();
-
+        highScoreController = new HighScoreController(scanner);
         filterCSVInput(readCSV(), scanner);
         Karte = new Karte(rooms);
         Karte.setExplored(player.getCurrentRoom());
@@ -49,8 +50,24 @@ public class Game {
 
         running = true;
 
-        System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD+ " EscapeCampus!" + ConsoleColors.RESET);
-        System.out.println("Tippe"+ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'"+ ConsoleColors.RESET+" für Befehle.");
+        System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD );
+        System.out.println();
+        String escapeCampus = """
+                 /        |/      \\ /      \\ /      \\/       \\/        |       /      \\ /      \\/  \\     /  /       \\/  |  /  |/      \\\s
+                $$$$$$$$//$$$$$$  /$$$$$$  /$$$$$$  $$$$$$$  $$$$$$$$/       /$$$$$$  /$$$$$$  $$  \\   /$$ $$$$$$$  $$ |  $$ /$$$$$$  |
+                $$ |__   $$ \\__$$/$$ |  $$/$$ |__$$ $$ |__$$ $$ |__          $$ |  $$/$$ |__$$ $$$  \\ /$$$ $$ |__$$ $$ |  $$ $$ \\__$$/\s
+                $$    |  $$      \\$$ |     $$    $$ $$    $$/$$    |         $$ |     $$    $$ $$$$  /$$$$ $$    $$/$$ |  $$ $$      \\\s
+                $$$$$/    $$$$$$  $$ |   __$$$$$$$$ $$$$$$$/ $$$$$/          $$ |   __$$$$$$$$ $$ $$ $$/$$ $$$$$$$/ $$ |  $$ |$$$$$$  |
+                $$ |_____/  \\__$$ $$ \\__/  $$ |  $$ $$ |     $$ |_____       $$ \\__/  $$ |  $$ $$ |$$$/ $$ $$ |     $$ \\__$$ /  \\__$$ |
+                $$       $$    $$/$$    $$/$$ |  $$ $$ |     $$       |      $$    $$/$$ |  $$ $$ | $/  $$ $$ |     $$    $$/$$    $$/\s
+                $$$$$$$$/ $$$$$$/  $$$$$$/ $$/   $$/$$/      $$$$$$$$/        $$$$$$/ $$/   $$/$$/      $$/$$/       $$$$$$/  $$$$$$/ \s
+                
+                
+                
+                """;
+
+        System.out.println(escapeCampus);
+        System.out.println(ConsoleColors.RESET+"Tippe" + ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'" + ConsoleColors.RESET + " für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
@@ -118,17 +135,24 @@ public class Game {
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
-                        player.setCurrentRoom(nextRoom);
-                        Karte.setExplored(player.getCurrentRoom());
+                        if(nextRoom.getIsEnde()){
+                            endeErreicht();
+                            running = false;
+                        } else {
+                            player.setCurrentRoom(nextRoom);
+                            Karte.setExplored(player.getCurrentRoom());
 
-                        player.getCurrentRoom().setMapState("explored");
-                        Karte.setUnknown(player.getCurrentRoom());
+                            highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
 
-                        if (nextRoom.hasRoomItems()) {
-                            this.player.addItemToInventar();
+                            player.getCurrentRoom().setMapState("explored");
+                            Karte.setUnknown(player.getCurrentRoom());
+
+                            if (nextRoom.hasRoomItems()) {
+                                this.player.addItemToInventar();
+                            }
+
+                            System.out.println(player.getCurrentRoom().getDescription());
                         }
-
-                        System.out.println(player.getCurrentRoom().getDescription());
                     } else {
                         if (this.player.existiertItemImInventar("Schlussel")) {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
@@ -138,11 +162,16 @@ public class Game {
                             Karte.setUnknown(player.getCurrentRoom());
                             player.getCurrentRoom().setIstVerschlossen();
 
-                            if (nextRoom.hasRoomItems()) {
-                                this.player.addItemToInventar();
-                            }
+                            if(player.getCurrentRoom().getIsEnde()){
+                                endeErreicht();
+                                running = false;
+                            }else {
+                                if (nextRoom.hasRoomItems()) {
+                                    this.player.addItemToInventar();
+                                }
 
                             System.out.println(player.getCurrentRoom().getDescription());
+                            }
                         } else {
                             System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
                         }
@@ -158,7 +187,9 @@ public class Game {
                 }
                 System.out.println();
             } else {
-                System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+                if(!command.equals(highScoreController.getName())) {
+                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
+                }
             }
 
         } else {
@@ -192,9 +223,10 @@ public class Game {
         for (String line : lines) {
             String[] parts = line.split(";");
             switch (parts[0]) {
-                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + input + "," + parts[6] + "," + parts[7]); // Startraum ist nicht verschlossen und hat keine Events
-                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7]);
+                case "START" -> createStartroomAndPlayer(parts[1] + "," + parts[2] + "," + parts[6] + "," + parts[7] + "," + parts[8], input); // Startraum ist nicht verschlossen und hat keine Events
+                case "ROOM" -> rooms.add(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7] + "," + parts[8]);
                 case "EXIT" -> exits.add(parts[1] + "," + parts[2] + "," + parts[3]);
+                case "ENDE" -> createEndRoom(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6]);
             }
         }
 
@@ -204,7 +236,7 @@ public class Game {
 
     private void createRooms(ArrayList<String> rooms) {
         for (String line : rooms) {
-            String[] parts = line.split(",", 7);
+            String[] parts = line.split(",", 8);
             String name = parts[0];
             String description = parts[1];
             boolean istVerschlossen = Boolean.parseBoolean(parts[2]);
@@ -212,20 +244,28 @@ public class Game {
             char event = Character.toUpperCase(parts[4].charAt(0));
             int x = Integer.parseInt(parts[5]);
             int y = Integer.parseInt(parts[6]);
-            this.rooms.add(new Room(name, description, istVerschlossen, item, event, x, y));
+            int punkte = Integer.parseInt(parts[7]);
+
+            this.rooms.add(new Room(name, description, istVerschlossen, item, event, x, y, punkte));
         }
     }
 
     private void createStartroomAndPlayer(String start, Scanner input) {
-        String[] parts = start.split(",", 4);
+        String[] parts = start.split(",", 5);
         String name = parts[0];
         String description = parts[1];
         int x = Integer.parseInt(parts[2]);
         int y = Integer.parseInt(parts[3]);
-
-        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y));
+        int punkte = Integer.parseInt(parts[4]);
+        this.rooms.add(new Room(name, description, false, 'N', 'N', x, y, punkte));
 
         player = new Player(findRoom(name), input);
+    }
+    private void createEndRoom(String ende){
+        String[] parts = ende.split(",", 3);
+        String name = parts[0];
+        String description = parts[2];
+        this.rooms.add(new Room(name, description, true));
     }
 
     private void createExits(ArrayList<String> exits) {
@@ -237,7 +277,7 @@ public class Game {
             findRoom(name).setExits(direction, findRoom(exitname));
         }
     }
-//change for commit
+
     private Room findRoom(String name) {
         for (Room room : rooms) {
             if (room.getName().equals(name)) {
@@ -282,6 +322,14 @@ public class Game {
         }
 
         return false;
+    }
+
+    public void endeErreicht(){
+        System.out.println(ConsoleColors.BLUE_BOLD_BRIGHT+ "DU HAST DEN AUSGANG GEFUNDEN!!!");
+        System.out.println("GLÜCKWUNSCH");
+        System.out.println("DU HAST "+ highScoreController.getHighscore() +" PUNKTE ERREICHT"+ ConsoleColors.RESET);
+        highScoreController.saveHighScore();
+        highScoreController.loadHighscore();
     }
 
 }

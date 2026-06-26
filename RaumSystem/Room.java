@@ -22,6 +22,9 @@ public class Room {
     private int x;
     private int y;
     private String mapState = "hidden";
+    private boolean isEnde;
+
+    private int punkte;
 
     private Room north;
     private Room south;
@@ -35,9 +38,11 @@ public class Room {
 
         //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
         this.items = new ArrayList<>();
+        this.punkte=0;
+        this.isEnde = false;
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y){
+    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y, int punkte) {
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
@@ -46,6 +51,18 @@ public class Room {
         this.y = y;
         addItemToList(item);
         createEvent(event);
+        this.punkte = punkte;
+        this.isEnde = false;
+    }
+
+    public Room(String name, String description, boolean isEnde) {
+        this.name = name;
+        this.description = description;
+
+        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
+        this.items = new ArrayList<>();
+        this.punkte=0;
+        this.isEnde = isEnde;
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -70,7 +87,7 @@ public class Room {
     public Room getExit(String direction) {
         if (direction.equals("n")) return north;
         if (direction.equals("s")) return south;
-        if (direction.equals("e") || direction.equals("o")) return east;
+        if (direction.equals("o")) return east;
         if (direction.equals("w")) return west;
         return null;
     }
@@ -99,8 +116,13 @@ public class Room {
         this.mapState = mapState;
     }
 
-    public boolean getIstVerschlossen(){return this.istVerschlossen;}
-    public void setIstVerschlossen(){this.istVerschlossen = !this.istVerschlossen;}
+    public boolean getIstVerschlossen() {
+        return this.istVerschlossen;
+    }
+
+    public void setIstVerschlossen() {
+        this.istVerschlossen = !this.istVerschlossen;
+    }
 
     private void addItemToList(char name) {
         if (name == 'S') {
@@ -109,11 +131,12 @@ public class Room {
         } else if (name == 'B') {
             Baseballschlaeger basi = new Baseballschlaeger();
             items.add(basi);
-        } else if(name == 'H'){
+        } else if (name == 'H') {
             Heilungstrank heilTrank = new Heilungstrank();
             items.add(heilTrank);
         }
     }
+
     public void addItemToList(Item item) {
         items.add(item);
     }
@@ -126,7 +149,7 @@ public class Room {
         //Nach Aufsammeln der Items soll der Raum keine Items mehr beinhalten
         try {
             int index = this.items.indexOf(item);
-            this.items.remove(index); 
+            this.items.remove(index);
 
         } catch (RuntimeException e) {
             throw new RuntimeException("DER FEHLER");
@@ -142,13 +165,13 @@ public class Room {
         }
     }
 
-    public void createEvent(char event){
-        if(event == 'Z'){
-            this.event= new Gegner();
+    public void createEvent(char event) {
+        if (event == 'Z') {
+            this.event = new Gegner();
             System.out.println("Zombie erstellt");
-        }else if(event == 'V'){
+        } else if (event == 'V') {
             this.event = new verletztePerson();
-        }else{
+        } else {
             this.event = null;
         }
     }
@@ -160,18 +183,18 @@ public class Room {
         return false;
     }
 
-    public boolean hasEvent(){
-        if(this.event != null)
+    public boolean hasEvent() {
+        if (this.event != null)
             return true;
 
         return false;
     }
 
-    public void startEvent(ArrayList<Item> inventar){
+    public void startEvent(ArrayList<Item> inventar) {
         Scanner scanner = new Scanner(System.in);
 
-        if(hasEvent()){
-            if(isForcedEvent()) {
+        if (hasEvent()) {
+            if (isForcedEvent()) {
                 this.event.description();
                 this.event.aktion(inventar);
             } else {
@@ -192,7 +215,7 @@ public class Room {
             }*/   //TODO vernünftig mergen
 
 
-            //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
+                //TODO Kompatibilität mit anderen Events(nicht nur Gegner event)
 //            ArrayList<Item> weapons = new ArrayList<>();
 //            for(Item item : inventar){
 //                if(item.getIsWeapon()){
@@ -207,12 +230,23 @@ public class Room {
 //                event.angriff();
 //                this.event = null;
 //            }
+            }
         }
     }
 
     public void setItems(ArrayList<Item> newItems){
         this.items = newItems;
     }
+
+    public void setPunkteZuNull(){
+        this.punkte=0;
+    }
+
+    public int getPunkte(){
+        return this.punkte;
+    }
+
+    public boolean getIsEnde(){return  this.isEnde;}
 }
 
 
