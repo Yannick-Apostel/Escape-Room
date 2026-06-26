@@ -22,6 +22,9 @@ public class Room {
     private int x;
     private int y;
     private String mapState = "hidden";
+    private boolean isEnde;
+
+    private int punkte;
 
     private Room north;
     private Room south;
@@ -35,9 +38,11 @@ public class Room {
 
         //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
         this.items = new ArrayList<>();
+        this.punkte=0;
+        this.isEnde = false;
     }
 
-    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y) {
+    public Room(String name, String description, boolean istVerschlossen, char item, char event, int x, int y, int punkte) {
         this.items = new ArrayList<>();
         this.name = name;
         this.description = description;
@@ -46,6 +51,18 @@ public class Room {
         this.y = y;
         addItemToList(item);
         createEvent(event);
+        this.punkte = punkte;
+        this.isEnde = false;
+    }
+
+    public Room(String name, String description, boolean isEnde) {
+        this.name = name;
+        this.description = description;
+
+        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
+        this.items = new ArrayList<>();
+        this.punkte=0;
+        this.isEnde = isEnde;
     }
 
     public void setExits(Room north, Room south, Room east, Room west) {
@@ -70,7 +87,7 @@ public class Room {
     public Room getExit(String direction) {
         if (direction.equals("n")) return north;
         if (direction.equals("s")) return south;
-        if (direction.equals("e") || direction.equals("o")) return east;
+        if (direction.equals("o")) return east;
         if (direction.equals("w")) return west;
         return null;
     }
@@ -215,12 +232,21 @@ public class Room {
 //            }
             }
         }
-
-
     }
+
     public void setItems(ArrayList<Item> newItems){
         this.items = newItems;
     }
+
+    public void setPunkteZuNull(){
+        this.punkte=0;
+    }
+
+    public int getPunkte(){
+        return this.punkte;
+    }
+
+    public boolean getIsEnde(){return  this.isEnde;}
 }
 
 
