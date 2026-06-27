@@ -4,10 +4,12 @@ import Items.Baseballschlaeger;
 import Items.Heilungstrank;
 import Items.Item;
 import Items.Schlussel;
+import RaumSystem.Event.BossGegner;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
 import RaumSystem.Event.verletztePerson;
 import helper.ConsoleColors;
+import Spieler.Player;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -171,6 +173,8 @@ public class Room {
             System.out.println("Zombie erstellt");
         } else if (event == 'V') {
             this.event = new verletztePerson();
+        } else if (event == 'B') {
+            this.event = new BossGegner();
         } else {
             this.event = null;
         }
@@ -190,20 +194,21 @@ public class Room {
         return false;
     }
 
-    public void startEvent(ArrayList<Item> inventar) {
+    public void startEvent(ArrayList<Item> inventar, Player player) {
         Scanner scanner = new Scanner(System.in);
 
         if (hasEvent()) {
             if (isForcedEvent()) {
                 this.event.description();
-                this.event.aktion(inventar);
+                this.event.aktion(inventar, player);
+                this.event = null;
             } else {
                 this.event.description();
                 System.out.print("> ");
                 String eventInput = scanner.nextLine();
 
                 if (eventInput.equals("y")) {
-                    this.event.aktion(inventar);
+                    this.event.aktion(inventar, player);
                 }
 
             /*if (weapons.isEmpty()) {

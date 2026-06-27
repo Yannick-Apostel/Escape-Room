@@ -1,7 +1,7 @@
 package Spieler;
 
-import Items.Baseballschlaeger;
 import Items.Item;
+import Items.Weapon;
 import RaumSystem.Room;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class Player {
             System.out.println("Fehler beim Speichern der Datei.");
         }
 
-        currentRoom.startEvent(inventar);
+        currentRoom.startEvent(inventar, this);
     }
 
     public ArrayList<Item> getInventar() {
@@ -51,6 +51,12 @@ public class Player {
     public boolean addItemErfolgreich(Item newItem) {
         if (this.inventar.size() < maxSizeInventar) {
             if (frageObItemInsInventar(newItem.getName())) {
+                if(newItem.getIsWeapon()) {
+                    if(playerWeapon() != null) {
+                        System.out.println("Du hast schon eine Waffe, willst du sie austauschen? [y/n]");
+
+                    }
+                }
                 this.inventar.add(newItem);
 
                 try {
@@ -74,7 +80,7 @@ public class Player {
 
     public boolean inventarItemErsetzen(Item itemZuErstzen) {
         System.out.println("Dein Inventar ist voll. Bitte leere dein Inventar, bevor du ein neues Item hinzufügst");
-        System.out.println("Moechtest du das Item mit ein Item aus deinen Inventar tauschen J/N");
+        System.out.println("Möchtest du das Item mit ein Item aus deinen Inventar tauschen? [y/n]");
         if (frageJNFrage()) {
             zeigeInventar();
             System.out.println("Welches Item möchtest du entfernen? 1-" + inventar.size());
@@ -123,14 +129,14 @@ public class Player {
 
     private boolean frageObItemInsInventar(String name) { //Fehler bei fehlerhafte eingabe
         this.input = new Scanner(System.in);
-        System.out.println("Soll das Item:" + name + " in das Inventar aufgenommen werden? J/N");
+        System.out.println("Soll das Item:" + name + " in das Inventar aufgenommen werden? [y/n]");
         return frageJNFrage();
     }
 
     private boolean frageJNFrage() {
         try {
             String in = input.next();
-            return in.equalsIgnoreCase("j");
+            return in.equalsIgnoreCase("y");
         } catch (Exception e) {
             throw new RuntimeException("Fehler bei Antwortentscheidung einer Ja Nein Frage - " + e.getMessage());
         }
@@ -165,6 +171,7 @@ public class Player {
         }
     }
     public int getLeben() { return this.Leben; }
+
     public void showLeben() {
         System.out.print("Leben: ");
         System.out.print("[");
@@ -174,4 +181,13 @@ public class Player {
         System.out.println("]");
     }
     public void setLeben(int leben)  { this.Leben = leben; }
+
+    public Weapon playerWeapon() {
+        for (Item item : inventar) {
+            if (item instanceof Weapon) {
+                return (Weapon) item;
+            }
+        }
+        return null;
+    }
 }

@@ -15,11 +15,11 @@ public class verletztePerson implements Event{
     public void description() {
         System.out.println("Eine Person liegt in der Ecke des Raumes.");
         System.out.println("Sie scheint verletzt zu sein.");
-        System.out.println("Möchtest du die ansprechen?[y/n]");
+        System.out.println("Möchtest du die ansprechen? [y/n]");
     }
 
     @Override
-    public void aktion(ArrayList<Item> inventory) {
+    public void aktion(ArrayList<Item> inventory, Player player) {
         boolean hasHealingItem = false;
         String itemName = "";
 
@@ -36,7 +36,7 @@ public class verletztePerson implements Event{
         }
 
         if(hasHealingItem){
-            System.out.println("Möchtest du der Person deinen " + itemName + " geben?[y/n]");
+            System.out.println("Möchtest du der Person deinen " + itemName + " geben? [y/n]");
             System.out.print("> ");
             Scanner scanner = new Scanner(System.in);
             String giveItem = scanner.nextLine();
@@ -53,6 +53,8 @@ public class verletztePerson implements Event{
                 System.out.println("Du hast einen schlüssel bekommen!");
             }
 
+        } else {
+            System.out.println("Du hast kein Item um die person zu heilen...");
         }
     }
 

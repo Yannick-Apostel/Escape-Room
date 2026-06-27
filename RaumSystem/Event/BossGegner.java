@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import helper.ConsoleColors;
 import Spieler.Player;
 
-public class Gegner implements Enemy{
-    private final String name = "Zombie";
-    private final boolean forcedEvent = true;
-    private int attackDamage = 2;
-    private int leben = 15;
+public class BossGegner implements Enemy{
+    private final String name = "Boss";
+    private final boolean forcedEvent = false;
+    private int attackDamage = 5;
+    private int leben = 30;
 
     @Override
     public void description() {
