@@ -140,6 +140,7 @@ public class Game {
                             endeErreicht();
                             running = false;
                         } else {
+                            System.out.println(player.getCurrentRoom().getDescription());
                             player.setCurrentRoom(nextRoom);
                             Karte.setExplored(player.getCurrentRoom());
 
@@ -151,16 +152,18 @@ public class Game {
                             if (nextRoom.hasRoomItems()) {
                                 this.player.addItemToInventar();
                             }
-
-                            System.out.println(player.getCurrentRoom().getDescription());
                         }
                     } else {
                         if (this.player.existiertItemImInventar("Schlussel")) {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
+
+                            System.out.println(player.getCurrentRoom().getDescription());
                             player.setCurrentRoom(nextRoom);
+
                             Karte.setExplored(player.getCurrentRoom());
                             Karte.setUnknown(player.getCurrentRoom());
+
                             player.getCurrentRoom().setIstVerschlossen();
 
                             if(player.getCurrentRoom().getIsEnde()){
@@ -170,8 +173,6 @@ public class Game {
                                 if (nextRoom.hasRoomItems()) {
                                     this.player.addItemToInventar();
                                 }
-
-                            System.out.println(player.getCurrentRoom().getDescription());
                             }
                         } else {
                             System.out.println("Diese Tür ist"+ConsoleColors.RED_BRIGHT+ " verschlossen"+ConsoleColors.RESET+". Suche nach einen "+ConsoleColors.GREEN_BRIGHT+"Schlüssel"+ConsoleColors.RESET+"!");
