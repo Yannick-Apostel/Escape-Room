@@ -1,6 +1,8 @@
 package Items;
 
 public class Staerketrank implements Item {
+    private static final String ORANGE = "\033[38;5;208m";
+    private static final String RESET = "\033[0m";
     private final String name = "Staerketrank";
     private final boolean isWeapon = false;
     private final boolean isHealingItem = false;
@@ -26,6 +28,11 @@ public class Staerketrank implements Item {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getColoredName() {
+        return ORANGE + this.name + RESET;
     }
 
     @Override

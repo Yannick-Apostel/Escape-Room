@@ -1,5 +1,7 @@
 package Items;
 
+import helper.ConsoleColors;
+
 public class Schwert implements Weapon {
     private final String name = "Schwert";
     private final boolean isWeapon = true;
@@ -18,14 +20,20 @@ public class Schwert implements Weapon {
         System.out.println("║ Schaden: 7                             ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Ein altes, leicht angerostetes         ║");
-        System.out.println("║ Schwert. Es wirkt noch gefährlich.     ║");
+        System.out.println("║ Ein qualitativ hochwertiges Schwert    ║");
+        System.out.println("║ mit scharfer Klinge. Es liegt gut in   ║");
+        System.out.println("║ der Hand und wirkt sehr zuverlässig.   ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getColoredName() {
+        return ConsoleColors.BLUE_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override

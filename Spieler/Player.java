@@ -51,14 +51,26 @@ public class Player {
 
     public boolean addItemErfolgreich(Item newItem) {
         if (this.inventar.size() < maxSizeInventar) {
-            if (frageObItemInsInventar(newItem.getName())) {
+            if (frageObItemInsInventar(newItem.getColoredName())) {
                 if(newItem.getIsWeapon()) {
                     if(playerWeapon() != null) {
                         System.out.println("Du hast schon eine Waffe, willst du sie austauschen? [y/n]");
 
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+
+                        if(answer.equals("y")) {
+                            this.inventar.remove(playerWeapon());
+                            this.inventar.add(newItem);
+                        } else if(answer.equals("n")) {
+                            return false;
+                        }
+                    } else {
+                        this.inventar.add(newItem);
                     }
+                } else {
+                    this.inventar.add(newItem);
                 }
-                this.inventar.add(newItem);
 
                 try {
                     FileWriter writer = new FileWriter("saveData.csv");
@@ -146,7 +158,7 @@ public class Player {
     public void zeigeInventar() {
         System.out.print("Dein Inventar beinhaltet: ");
         for (Item item : inventar) {
-            System.out.print(item.getName() + " ");
+            System.out.print("[" + item.getColoredName() + "]");
         }
         System.out.println();
     }
@@ -164,7 +176,7 @@ public class Player {
 
 
             for(int j =0; j<tempRoomItemsVorTausch.size(); j++){
-                System.out.print(getCurrentRoom().getItemsFromRoom().get(j).getName()+ " ");
+                System.out.print(getCurrentRoom().getItemsFromRoom().get(j).getColoredName()+ " ");
                 System.out.println();
                 if (addItemErfolgreich(getCurrentRoom().getItemsFromRoom().get(j))) {
                   tempRoomItemsVorTausch.remove(j);;

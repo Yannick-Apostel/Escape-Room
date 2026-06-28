@@ -9,6 +9,7 @@ public interface Item {
     public void function();
 
     public String getName();
+    public String getColoredName();
     public boolean getIsWeapon();
     public boolean getIsHealingItem();
 }

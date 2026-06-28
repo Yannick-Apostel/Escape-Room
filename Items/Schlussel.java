@@ -1,5 +1,7 @@
 package Items;
 
+import helper.ConsoleColors;
+
 public class Schlussel implements Item{
 
     private final String name = "Schlussel";
@@ -25,6 +27,11 @@ public class Schlussel implements Item{
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getColoredName() {
+        return ConsoleColors.GREEN_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override

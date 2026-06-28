@@ -1,5 +1,7 @@
 package Items;
 
+import helper.ConsoleColors;
+
 public class Heilungstrank implements Item{
     private final String name = "Heilungstrank";
     private final boolean isWeapon = false;
@@ -24,6 +26,11 @@ public class Heilungstrank implements Item{
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getColoredName() {
+        return ConsoleColors.RED_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override
