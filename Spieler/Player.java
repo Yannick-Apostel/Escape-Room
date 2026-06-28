@@ -16,6 +16,7 @@ public class Player {
     private int maxSizeInventar = 5;
     private Scanner input;
     private int Leben = 20;
+    private int attackDamage = 2;
 
     public Player(Room startRoom, Scanner input) {
         currentRoom = startRoom;
@@ -189,5 +190,13 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public void setAttackDamage(int attackDamage) {
+        this.attackDamage = attackDamage;
     }
 }
