@@ -2,6 +2,7 @@ package RaumSystem.Event;
 
 import Spieler.Player;
 import Items.Weapon;
+import helper.Sleeper;
 
 public class Kampf {
     private static final String RED = "\u001B[31m";
@@ -22,26 +23,14 @@ public class Kampf {
 
          System.out.println("Kampf START!");
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        Sleeper.sleep(500);
 
          while(playerHealth > 0 && enemyHealth > 0) {
-             try {
-                 Thread.sleep(500);
-             } catch (InterruptedException e) {
-                 Thread.currentThread().interrupt();
-             }
+             Sleeper.sleep(500);
 
              System.out.println("Du greifst an! Du machst " + RED + playerDamage + RESET + " schaden!");
 
-             try {
-                 Thread.sleep(500);
-             } catch (InterruptedException e) {
-                 Thread.currentThread().interrupt();
-             }
+             Sleeper.sleep(500);
 
              enemyHealth = enemyHealth - playerDamage;
              if (enemyHealth >= 0) {
@@ -52,19 +41,11 @@ public class Kampf {
                  System.out.println(YELLOW + gegner.getName() + RESET + " besiegt!");
                  break;
              }
-             try {
-                 Thread.sleep(500);
-             } catch (InterruptedException e) {
-                 Thread.currentThread().interrupt();
-             }
+             Sleeper.sleep(500);
 
              System.out.println("Der " + YELLOW + gegner.getName() + RESET + " greift an! Er macht " + RED + enemyDamage + RESET + " schaden!");
 
-             try {
-                 Thread.sleep(500);
-             } catch (InterruptedException e) {
-                 Thread.currentThread().interrupt();
-             }
+             Sleeper.sleep(500);
 
              playerHealth = playerHealth - enemyDamage;
 
