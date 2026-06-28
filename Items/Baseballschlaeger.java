@@ -8,7 +8,17 @@ public class Baseballschlaeger implements Weapon{
 
     @Override
     public void function() {
-
+        System.out.println("╔════════════════════════════════════╗");
+        System.out.println("║              ITEM INFO             ║");
+        System.out.println("╠════════════════════════════════════╣");
+        System.out.println("║ Name: Baseballschlaeger            ║");
+        System.out.println("║ Typ:  Waffe                        ║");
+        System.out.println("║ Schaden: 3                         ║");
+        System.out.println("║ Beschreibung:                      ║");
+        System.out.println("║ Ein rostiger Schlüssel. Er sieht   ║");
+        System.out.println("║ aus, als könnte er eine alte Tür   ║");
+        System.out.println("║ öffnen.                            ║");
+        System.out.println("╚════════════════════════════════════╝");
     }
 
     @Override

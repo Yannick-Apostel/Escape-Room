@@ -1,23 +1,25 @@
 package Items;
 
-public class Heilungstrank implements Item{
-    private final String name = "Heilungstrank";
+public class Staerketrank implements Item {
+    private final String name = "Staerketrank";
     private final boolean isWeapon = false;
-    private final boolean isHealingItem = true;
-    private int healing = 15;
+    private final boolean isHealingItem = false;
+    private int attackBoost = 5;
 
     @Override
     public void function() {
+        System.out.println();
+
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║               ITEM INFO                ║");
         System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Heilungstrank                    ║");
+        System.out.println("║ Name: Stärketrank                      ║");
         System.out.println("║ Typ:  Item                             ║");
-        System.out.println("║ Heilung: "+healing+"                            ║");
+        System.out.println("║ Schaden: +"+attackBoost+"                            ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Eine kleine Flasche mit roter          ║");
-        System.out.println("║ Flüssigkeit. Sie kann Wunden heilen.   ║");
+        System.out.println("║ Eine kleine Flasche mit grünem         ║");
+        System.out.println("║ Gebraeu. Erhöht deinen Angriff.        ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
@@ -32,7 +34,9 @@ public class Heilungstrank implements Item{
     }
 
     @Override
-    public boolean getIsHealingItem() { return this.isHealingItem; }
+    public boolean getIsHealingItem() {
+        return this.isHealingItem;
+    }
 
-    public int getHealing() { return this.healing; }
+    public int getAttackBoost() {return this.attackBoost;}
 }

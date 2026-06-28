@@ -1,23 +1,25 @@
 package Items;
 
-public class Heilungstrank implements Item{
-    private final String name = "Heilungstrank";
-    private final boolean isWeapon = false;
-    private final boolean isHealingItem = true;
-    private int healing = 15;
+public class Schwert implements Weapon {
+    private final String name = "Schwert";
+    private final boolean isWeapon = true;
+    private final boolean isHealingItem = false;
+    private int damage = 7;
 
     @Override
     public void function() {
+        System.out.println();
+
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║               ITEM INFO                ║");
         System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Heilungstrank                    ║");
-        System.out.println("║ Typ:  Item                             ║");
-        System.out.println("║ Heilung: "+healing+"                            ║");
+        System.out.println("║ Name: Schwert                          ║");
+        System.out.println("║ Typ:  Weapon                           ║");
+        System.out.println("║ Schaden: 7                             ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Eine kleine Flasche mit roter          ║");
-        System.out.println("║ Flüssigkeit. Sie kann Wunden heilen.   ║");
+        System.out.println("║ Ein altes, leicht angerostetes         ║");
+        System.out.println("║ Schwert. Es wirkt noch gefährlich.     ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
@@ -32,7 +34,12 @@ public class Heilungstrank implements Item{
     }
 
     @Override
-    public boolean getIsHealingItem() { return this.isHealingItem; }
+    public boolean getIsHealingItem() {
+        return this.isHealingItem;
+    }
 
-    public int getHealing() { return this.healing; }
+    @Override
+    public int getDamage() {
+        return this.damage;
+    }
 }

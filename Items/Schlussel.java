@@ -8,7 +8,18 @@ public class Schlussel implements Item{
 
     @Override
     public void function() {
+        System.out.println();
 
+        System.out.println("╔════════════════════════════════════════╗");
+        System.out.println("║               ITEM INFO                ║");
+        System.out.println("╠════════════════════════════════════════╣");
+        System.out.println("║ Name: Schlüssel                        ║");
+        System.out.println("║ Typ:  Item                             ║");
+        System.out.println("║                                        ║");
+        System.out.println("║ Beschreibung:                          ║");
+        System.out.println("║ Ein alter Metallschlüssel. Vielleicht  ║");
+        System.out.println("║ öffnet er eine verschlossene Tür.      ║");
+        System.out.println("╚════════════════════════════════════════╝");
     }
 
     @Override
