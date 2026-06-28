@@ -8,13 +8,13 @@ import Spieler.Player;
 
 public class BossGegner implements Enemy{
     private final String name = "Boss";
-    private final boolean forcedEvent = false;
+    private final boolean forcedEvent = true;
     private int attackDamage = 5;
     private int leben = 30;
 
     @Override
     public void description() {
-        System.out.println("Ich bin ein "+ ConsoleColors.YELLOW + "Zombie" + ConsoleColors.RESET);
+        System.out.println("Ich bin der "+ ConsoleColors.YELLOW + "Boss" + ConsoleColors.RESET);
         System.out.println("Ich mach dich platt, wenn du es nicht tust!");
     }
 

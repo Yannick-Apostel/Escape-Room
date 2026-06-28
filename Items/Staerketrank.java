@@ -1,5 +1,7 @@
 package Items;
 
+import Spieler.Player;
+
 public class Staerketrank implements Item {
     private static final String ORANGE = "\033[38;5;208m";
     private static final String RESET = "\033[0m";
@@ -46,4 +48,10 @@ public class Staerketrank implements Item {
     }
 
     public int getAttackBoost() {return this.attackBoost;}
+
+    @Override
+    public void use(Player player, Item useItem) {
+        player.setAttackDamage(player.getAttackDamage() + attackBoost);
+        System.out.println("Du machst jetzt "+attackBoost+" mehr Schaden!");
+    }
 }

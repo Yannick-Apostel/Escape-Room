@@ -1,5 +1,6 @@
 package Items;
 
+import Spieler.Player;
 import helper.ConsoleColors;
 
 public class Schwert implements Weapon {
@@ -49,5 +50,10 @@ public class Schwert implements Weapon {
     @Override
     public int getDamage() {
         return this.damage;
+    }
+
+    @Override
+    public void use(Player player, Item useItem) {
+
     }
 }

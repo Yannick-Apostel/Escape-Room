@@ -3,24 +3,26 @@ package Items;
 import Spieler.Player;
 import helper.ConsoleColors;
 
-public class Heilungstrank implements Item{
-    private final String name = "Heilungstrank";
+public class UpgradeStein implements Item{
+
+    private final String name = "Upgradestein";
     private final boolean isWeapon = false;
-    private final boolean isHealingItem = true;
-    private int healing = 15;
+    private final boolean isHealingItem = false;
 
     @Override
     public void function() {
+        System.out.println();
+
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║               ITEM INFO                ║");
         System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Heilungstrank                    ║");
+        System.out.println("║ Name: Upgradestein                     ║");
         System.out.println("║ Typ:  Item                             ║");
-        System.out.println("║ Heilung: "+healing+"                            ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Eine kleine Flasche mit roter          ║");
-        System.out.println("║ Flüssigkeit. Sie kann Wunden heilen.   ║");
+        System.out.println("║ Ein Seltenes Relikt! Versuche es zu    ║");
+        System.out.println("║ benutzen um deine Waffen oder deine    ║");
+        System.out.println("║ Rüstung zu verzaubern!                 ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
@@ -31,7 +33,7 @@ public class Heilungstrank implements Item{
 
     @Override
     public String getColoredName() {
-        return ConsoleColors.RED_BRIGHT + this.name + ConsoleColors.RESET;
+        return ConsoleColors.PURPLE_BOLD_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override
@@ -40,13 +42,10 @@ public class Heilungstrank implements Item{
     }
 
     @Override
-    public boolean getIsHealingItem() { return this.isHealingItem; }
-
-    public int getHealing() { return this.healing; }
+    public boolean getIsHealingItem() {return this.isHealingItem;}
 
     @Override
     public void use(Player player, Item useItem) {
-        player.setLeben(player.getLeben() + healing);
-        System.out.println("Du hast "+healing+" Leben geheilt!");
+        //TODO rüstung adden, abfrage welches verzaubert wird.
     }
 }

@@ -103,13 +103,30 @@ public class Game {
         command = command.trim();
         if (!command.isEmpty()) {
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'inspect <Item>', 'leben'"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'inspect <Item>', 'benutze <Item>,' 'status'"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
-            } else if (command.equals("leben")) {
+            } else if (command.equals("status")) {
                 player.showLeben();
+                if(player.playerWeapon() == null) {
+                    System.out.println("Du machst gerade: " + ConsoleColors.ORANGE + player.getAttackDamage() + " Schaden pro Angriff." + ConsoleColors.RESET);
+                } else {
+                    System.out.println("Du machst gerade: " + ConsoleColors.ORANGE + player.getAttackDamage() + "(+" + player.playerWeapon().getDamage() + ")" + " Schaden pro Angriff." + ConsoleColors.RESET);
+                }
+
             } else if (command.equals("ende")) {
                 running = false;
+            } else if (command.startsWith("benutze")) {
+                String itemName = command.substring(8).trim();
+
+                for (Item item : player.getInventar()) {
+                    if (item.getName().equals(itemName)) {
+                        item.use(player, item);
+                        player.deleteItemFromInventar(itemName);
+                        return;
+                    }
+                }
+
             } else if(command.startsWith("inspect")) {
                 String itemName = command.substring(8).trim();
 

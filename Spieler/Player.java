@@ -3,10 +3,12 @@ package Spieler;
 import Items.Item;
 import Items.Weapon;
 import RaumSystem.Room;
+import helper.ConsoleColors;
 
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.DoubleSummaryStatistics;
 import java.util.Scanner;
 
 public class Player {
@@ -192,6 +194,7 @@ public class Player {
             System.out.print("■");
         }
         System.out.println("]");
+        System.out.println( "Du hast " + ConsoleColors.RED + this.Leben + ConsoleColors.RESET + " Leben");
     }
     public void setLeben(int leben)  { this.Leben = leben; }
 
