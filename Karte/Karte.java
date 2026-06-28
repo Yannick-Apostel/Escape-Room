@@ -1,12 +1,16 @@
 package Karte;
 
 import RaumSystem.Room;
+import Spieler.Player;
+
 import java.util.ArrayList;
 
 public class Karte {
 
     private String[][] karte;
     private String[][] spielerKarte;
+    private static final String HELL_GRUEN = "\u001B[92m";
+    private static final String RESET = "\u001B[0m";
 
     public Karte(ArrayList<Room> rooms) {
         createKarte(rooms);
@@ -61,7 +65,7 @@ public class Karte {
         setUnknownAt(x - 1, y);
     }
 
-    public void spielerKarte() {
+    public void spielerKarte(Player player) {
         String trennlinie = "+---------------+";
         String leeresFeld = " ".repeat(17);
 
@@ -88,6 +92,11 @@ public class Karte {
                     int freiePlaetze = 15 - feldText.length();
                     int links = freiePlaetze / 2;
                     int rechts = freiePlaetze - links;
+
+                    if(player.getCurrentRoom().getName().equals(feld)) {
+                        feldText = HELL_GRUEN + feldText + RESET;
+                    }
+
 
                     System.out.print("|" + " ".repeat(links) + feldText + " ".repeat(rechts) + "|");
                 }

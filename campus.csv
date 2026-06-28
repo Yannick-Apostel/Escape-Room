@@ -1,7 +1,7 @@
 # LEGENDE
 # Format rooms: START/ROOM;Name;Beschreibung;verschlossen(true/false);Item;Event;X;Y;
 # Format exits: EXIT;Raum;Richtung(n/s/e/w);Zielraum
-# Items: N = kein Item, S = Schluessel, B = Baseballschlaeger, H = Heilungstrank
+# Items: N = kein Item, S = Schluessel, B = Baseballschlaeger, H = Heilungstrank, W = Schwert
 # Events: N = kein Event, Z = Gegner/Zombie, V = verletzte Person
 
 START;Foyer;Du bist im Foyer.;false;N;N;2;2;5;
@@ -20,7 +20,7 @@ ROOM;Büro;Ein kleines Büro.;false;B;N;2;5;20;
 ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher.;false;S;N;4;3;15;
 ROOM;Krankenstation;Eine verlassene Krankenstation.;false;H;V;1;1;20;
 ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente.;false;N;Z;4;0;15;
-ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;Z;5;2;50;
+ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;B;5;2;50;
 
 ENDE;Ausgang;Du hast den Ausgang erreicht.;false;N;N;5;3;100;
 

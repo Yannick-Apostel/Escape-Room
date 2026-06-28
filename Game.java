@@ -4,6 +4,7 @@ import RaumSystem.Room;
 import Spieler.Player;
 import Karte.Karte;
 import helper.ConsoleColors;
+import helper.Sleeper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,7 +51,9 @@ public class Game {
 
         running = true;
 
+        Sleeper.sleep(1000);
         System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD );
+        Sleeper.sleep(1000);
         System.out.println();
         String escapeCampus = """
                  /        |/      \\ /      \\ /      \\/       \\/        |       /      \\ /      \\/  \\     /  /       \\/  |  /  |/      \\\s
@@ -67,11 +70,13 @@ public class Game {
                 """;
 
         System.out.println(escapeCampus);
+        Sleeper.sleep(1000);
         System.out.println(ConsoleColors.RESET+"Tippe" + ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'" + ConsoleColors.RESET + " für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
             try {
+                Karte.spielerKarte(player);
                 System.out.print("> ");
                 // Überprüfen, ob der Scanner noch offen ist
                 if (scanner.hasNextLine()) {
@@ -95,19 +100,18 @@ public class Game {
     }
 
     private void handleCommand(String command) {
+        command = command.trim();
         if (!command.isEmpty()) {
-
-
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte', 'leben'"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'inspect <Item>', 'leben'"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
             } else if (command.equals("leben")) {
                 player.showLeben();
             } else if (command.equals("ende")) {
                 running = false;
-            } else if(command.equals("karte")) {
-                Karte.spielerKarte();
+            } else if(command.startsWith("inspect")) {
+
             } else if (command.equals("fullmap")) {
                 Karte.fullKarte();
             } else if (command.startsWith("gehe")) {
@@ -140,8 +144,8 @@ public class Game {
                             endeErreicht();
                             running = false;
                         } else {
-                            System.out.println(player.getCurrentRoom().getDescription());
                             player.setCurrentRoom(nextRoom);
+                            System.out.println(player.getCurrentRoom().getDescription());
                             Karte.setExplored(player.getCurrentRoom());
 
                             highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
@@ -158,8 +162,8 @@ public class Game {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
 
-                            System.out.println(player.getCurrentRoom().getDescription());
                             player.setCurrentRoom(nextRoom);
+                            System.out.println(player.getCurrentRoom().getDescription());
 
                             Karte.setExplored(player.getCurrentRoom());
                             Karte.setUnknown(player.getCurrentRoom());
@@ -189,13 +193,9 @@ public class Game {
                 }
                 System.out.println();
             } else {
-                if(!command.equals(highScoreController.getName())) {
-                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
-                }
+                System.out.println("Unbekannter Befehl! Tippe 'hilfe'");
             }
 
-        } else {
-            System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
         }
 
 

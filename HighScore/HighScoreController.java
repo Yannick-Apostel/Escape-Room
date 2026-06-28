@@ -17,7 +17,7 @@ public class HighScoreController {
     public HighScoreController(Scanner input) {
         System.out.print("Bitte tippe deinen " + ConsoleColors.WHITE_UNDERLINED + "Namen" + ConsoleColors.RESET + " ein: ");
         try {
-            name = input.next();
+            name = input.nextLine().trim();
             System.out.println();
         } catch (RuntimeException e) {
             throw new RuntimeException("Fehler beim parsen der Namenseingabe");

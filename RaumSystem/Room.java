@@ -4,12 +4,14 @@ import Items.Baseballschlaeger;
 import Items.Heilungstrank;
 import Items.Item;
 import Items.Schlussel;
+import Items.Schwert;
 import RaumSystem.Event.BossGegner;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
 import RaumSystem.Event.verletztePerson;
 import helper.ConsoleColors;
 import Spieler.Player;
+import helper.Sleeper;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -136,6 +138,9 @@ public class Room {
         } else if (name == 'H') {
             Heilungstrank heilTrank = new Heilungstrank();
             items.add(heilTrank);
+        } else if (name == 'W') {
+            Schwert schwert = new Schwert();
+            items.add(schwert);
         }
     }
 
@@ -170,6 +175,9 @@ public class Room {
     public void createEvent(char event) {
         if (event == 'Z') {
             this.event = new Gegner();
+
+            Sleeper.sleep(1000);
+
             System.out.println("Zombie erstellt");
         } else if (event == 'V') {
             this.event = new verletztePerson();
