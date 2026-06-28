@@ -1,5 +1,7 @@
 package Items;
 
+import helper.ConsoleColors;
+
 public class Baseballschlaeger implements Weapon{
     private final String name = "Baseballschlaeger";
     private final boolean isWeapon = true;
@@ -15,15 +17,20 @@ public class Baseballschlaeger implements Weapon{
         System.out.println("║ Typ:  Waffe                        ║");
         System.out.println("║ Schaden: 3                         ║");
         System.out.println("║ Beschreibung:                      ║");
-        System.out.println("║ Ein rostiger Schlüssel. Er sieht   ║");
-        System.out.println("║ aus, als könnte er eine alte Tür   ║");
-        System.out.println("║ öffnen.                            ║");
+        System.out.println("║ Beschreibung:                      ║");
+        System.out.println("║ Ein stabiler Baseballschläger aus  ║");
+        System.out.println("║ Holz. Nicht elegant, aber effektiv.║");
         System.out.println("╚════════════════════════════════════╝");
     }
 
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String getColoredName() {
+        return ConsoleColors.BLUE_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override

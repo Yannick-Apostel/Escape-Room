@@ -1,10 +1,6 @@
 package RaumSystem;
 
-import Items.Baseballschlaeger;
-import Items.Heilungstrank;
-import Items.Item;
-import Items.Schlussel;
-import Items.Schwert;
+import Items.*;
 import RaumSystem.Event.BossGegner;
 import RaumSystem.Event.Event;
 import RaumSystem.Event.Gegner;
@@ -58,16 +54,6 @@ public class Room {
         this.punkte = punkte;
         this.isEnde = isEnde;
     }
-
-    /*public Room(String name, String description, boolean isEnde) {
-        this.name = name;
-        this.description = description;
-
-        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
-        this.items = new ArrayList<>();
-        this.punkte=0;
-        this.isEnde = isEnde;
-    }*/
 
     public void setExits(Room north, Room south, Room east, Room west) {
         this.north = north;
@@ -141,6 +127,9 @@ public class Room {
         } else if (name == 'W') {
             Schwert schwert = new Schwert();
             items.add(schwert);
+        } else if (name == 'A') {
+            Staerketrank staerketrank = new Staerketrank();
+            items.add(staerketrank);
         }
     }
 
@@ -181,8 +170,16 @@ public class Room {
             System.out.println("Zombie erstellt");
         } else if (event == 'V') {
             this.event = new verletztePerson();
+
+            Sleeper.sleep(1000);
+
+            System.out.println("NPC erstellt");
         } else if (event == 'B') {
             this.event = new BossGegner();
+
+            Sleeper.sleep(1000);
+
+            System.out.println("Boss erstellt");
         } else {
             this.event = null;
         }

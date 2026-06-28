@@ -111,6 +111,15 @@ public class Game {
             } else if (command.equals("ende")) {
                 running = false;
             } else if(command.startsWith("inspect")) {
+                String itemName = command.substring(8).trim();
+
+                for (Item item : player.getInventar()) {
+                    if (item.getName().equals(itemName)) {
+                        item.function();
+                        return;
+                    }
+                }
+                System.out.println("Dieses Item existiert nicht.");
 
             } else if (command.equals("fullmap")) {
                 Karte.fullKarte();
@@ -187,11 +196,7 @@ public class Game {
                 }
 
             } else if (command.equals("inventar")) {
-                System.out.print("Inventar: ");
-                for (Item item : this.player.getInventar()) {
-                    System.out.print(item.getName() + " ");
-                }
-                System.out.println();
+                player.zeigeInventar();
             } else {
                 System.out.println("Unbekannter Befehl! Tippe 'hilfe'");
             }
