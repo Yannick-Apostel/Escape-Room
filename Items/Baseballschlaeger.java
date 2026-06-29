@@ -19,7 +19,7 @@ public class Baseballschlaeger implements Weapon{
         System.out.println("╠════════════════════════════════════╣");
         System.out.println("║ Name: Baseballschlaeger            ║");
         System.out.println("║ Typ:  Waffe                        ║");
-        System.out.println("║ Schaden: 3                         ║");
+        System.out.println("║ Schaden: "+damage+"                         ║");   //Platz hinter nummer: "                         "
         System.out.println("║                                    ║");
         System.out.println("║ Beschreibung:                      ║");
         System.out.println("║ Ein stabiler Baseballschläger aus  ║");
@@ -61,7 +61,8 @@ public class Baseballschlaeger implements Weapon{
                 System.out.println("Die verletzte Person wehrt sich, aber du besiegst ihn.");
                 Sleeper.sleep(1000);
                 System.out.println("Du findest einen Gegenstand in seiner Tasche!");
-                System.out.println("Du findest einen");
+                System.out.println("Du findest einen Upgradestein!");
+                player.addItemToInventar(UpgradeStein);
                 //TODO weitermachen
             }
         }

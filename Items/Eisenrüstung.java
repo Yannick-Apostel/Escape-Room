@@ -3,11 +3,12 @@ package Items;
 import Spieler.Player;
 import helper.ConsoleColors;
 
-public class Schwert implements Weapon {
-    private final String name = "Schwert";
-    private final boolean isWeapon = true;
+public class Eisenrüstung implements Armor {
+    private final String name = "Eisenruestung";
+    private final boolean isWeapon = false;
+    private final boolean isArmor = true;
     private final boolean isHealingItem = false;
-    private int damage = 7;
+    private int defense = 5;
 
     @Override
     public void function() {
@@ -16,9 +17,9 @@ public class Schwert implements Weapon {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║               ITEM INFO                ║");
         System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Schwert                          ║");
-        System.out.println("║ Typ:  Waffe                            ║");
-        System.out.println("║ Schaden: "+damage+"                             ║");
+        System.out.println("║ Name: Eisenruestung                    ║");
+        System.out.println("║ Typ:  Rüstung                          ║");
+        System.out.println("║ Schaden: "+defense+"                             ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
         System.out.println("║ Ein qualitativ hochwertiges Schwert    ║");
@@ -34,7 +35,7 @@ public class Schwert implements Weapon {
 
     @Override
     public String getColoredName() {
-        return ConsoleColors.BLUE_BRIGHT + this.name + ConsoleColors.RESET;
+        return ConsoleColors.YELLOW_BRIGHT + this.name + ConsoleColors.RESET;
     }
 
     @Override
@@ -48,12 +49,18 @@ public class Schwert implements Weapon {
     }
 
     @Override
-    public int getDamage() {
-        return this.damage;
+    public int getDefense() {
+        return this.defense;
     }
 
     @Override
     public void use(Player player, Item useItem) {
 
     }
+
+    @Override
+    public boolean isArmor() {
+        return this.isArmor;
+    }
+    //TODO raum hat leeren rüstungsständer, wenn diese rüstung im raum geused wird dann kannst du die rüstung darauf setzen, das öffnet ein secret, und zwar öffnet sich ein raum mit einer lootkiste
 }

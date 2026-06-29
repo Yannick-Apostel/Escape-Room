@@ -16,7 +16,7 @@ public class Heilungstrank implements Item{
         System.out.println("╠════════════════════════════════════════╣");
         System.out.println("║ Name: Heilungstrank                    ║");
         System.out.println("║ Typ:  Item                             ║");
-        System.out.println("║ Heilung: "+healing+"                            ║");
+        System.out.println("║ Heilung: "+healing+"                            ║");        //Platz hinter nummer: "                            "
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
         System.out.println("║ Eine kleine Flasche mit roter          ║");
