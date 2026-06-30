@@ -16,17 +16,32 @@ public class Baseballschlaeger implements Weapon{
 
     @Override
     public void function() {
-        System.out.println("╔════════════════════════════════════╗");
-        System.out.println("║              ITEM INFO             ║");
-        System.out.println("╠════════════════════════════════════╣");
-        System.out.println("║ Name: Baseballschlaeger            ║");
-        System.out.println("║ Typ:  Waffe                        ║");
-        System.out.println("║ Schaden: "+damage+"                         ║");   //Platz hinter nummer: "                         "
-        System.out.println("║                                    ║");
-        System.out.println("║ Beschreibung:                      ║");
-        System.out.println("║ Ein stabiler Baseballschläger aus  ║");
-        System.out.println("║ Holz. Nicht elegant, aber effektiv.║");
-        System.out.println("╚════════════════════════════════════╝");
+        if(!this.isEnchanted) {
+            System.out.println("╔════════════════════════════════════╗");
+            System.out.println("║              ITEM INFO             ║");
+            System.out.println("╠════════════════════════════════════╣");
+            System.out.println("║ Name: Baseballschlaeger(Verzaubert)║");
+            System.out.println("║ Typ:  Waffe                        ║");
+            System.out.println("║ Schaden: "+ConsoleColors.PURPLE_BOLD_BRIGHT+damage+ConsoleColors.RESET+"                         ║");   //Platz hinter nummer: "                         "
+            System.out.println("║                                    ║");
+            System.out.println("║ Beschreibung:                      ║");
+            System.out.println("║ Ein verzauberter Baseballschläger  ║");
+            System.out.println("║ aus Holz. Er leuchtet leicht       ║");
+            System.out.println("╚════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════╗");
+            System.out.println("║              ITEM INFO             ║");
+            System.out.println("╠════════════════════════════════════╣");
+            System.out.println("║ Name: Baseballschlaeger            ║");
+            System.out.println("║ Typ:  Waffe                        ║");
+            System.out.println("║ Schaden: "+damage+"                         ║");   //Platz hinter nummer: "                         "
+            System.out.println("║                                    ║");
+            System.out.println("║ Beschreibung:                      ║");
+            System.out.println("║ Ein stabiler Baseballschläger aus  ║");
+            System.out.println("║ Holz. Nicht elegant, aber effektiv.║");
+            System.out.println("╚════════════════════════════════════╝");
+        }
+
     }
 
     @Override
@@ -68,7 +83,6 @@ public class Baseballschlaeger implements Weapon{
                 System.out.println("Du findest einen Gegenstand in seiner Tasche!");
                 System.out.println("Du findest einen Upgradestein!");
                 player.addItemErfolgreich(new UpgradeStein());
-                //TODO weitermachen
             }
         }
     }
