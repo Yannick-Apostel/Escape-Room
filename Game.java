@@ -113,6 +113,11 @@ public class Game {
                 } else {
                     System.out.println("Du machst gerade: " + ConsoleColors.ORANGE + player.getAttackDamage() + "(+" + player.playerWeapon().getDamage() + ")" + " Schaden pro Angriff." + ConsoleColors.RESET);
                 }
+                if(player.playerArmor() == null) {
+                    System.out.println("Du hast gerade: " + ConsoleColors.BLUE + player.getDefense() + " Rüstung." + ConsoleColors.RESET);
+                } else {
+                    System.out.println("Du hast gerade: " + ConsoleColors.BLUE + player.getDefense() + "(+" + player.playerArmor().getDefense() + ")" + " Rüstung." + ConsoleColors.RESET);
+                }
 
             } else if (command.equals("ende")) {
                 running = false;

@@ -1,5 +1,6 @@
 package Spieler;
 
+import Items.Armor;
 import Items.Item;
 import Items.Weapon;
 import RaumSystem.Room;
@@ -19,6 +20,7 @@ public class Player {
     private Scanner input;
     private int Leben = 20;
     private int attackDamage = 2;
+    private int defense = 0;
 
     public Player(Room startRoom, Scanner input) {
         currentRoom = startRoom;
@@ -55,16 +57,32 @@ public class Player {
         if (this.inventar.size() < maxSizeInventar) {
             if (frageObItemInsInventar(newItem.getColoredName())) {
                 if(newItem.getIsWeapon()) {
-                    if(playerWeapon() != null) {
+                    if (playerWeapon() != null) {
                         System.out.println("Du hast schon eine Waffe, willst du sie austauschen? [y/n]");
 
                         Scanner scanner = new Scanner(System.in);
                         String answer = scanner.nextLine();
 
-                        if(answer.equals("y")) {
+                        if (answer.equals("y")) {
                             this.inventar.remove(playerWeapon());
                             this.inventar.add(newItem);
-                        } else if(answer.equals("n")) {
+                        } else if (answer.equals("n")) {
+                            return false;
+                        }
+                    } else {
+                        this.inventar.add(newItem);
+                    }
+                } else if (newItem instanceof Armor) {
+                    if(playerArmor() != null) {
+                        System.out.println("Du hast schon eine Rüstung, willst du sie austauschen? [y/n]");
+
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+
+                        if (answer.equals("y")) {
+                            this.inventar.remove(playerArmor());
+                            this.inventar.add(newItem);
+                        } else if (answer.equals("n")) {
                             return false;
                         }
                     } else {
@@ -207,11 +225,28 @@ public class Player {
         return null;
     }
 
+    public Armor playerArmor() {
+        for (Item item : inventar) {
+            if (item instanceof Armor) {
+                return (Armor) item;
+            }
+        }
+        return null;
+    }
+
     public int getAttackDamage() {
         return attackDamage;
     }
 
     public void setAttackDamage(int attackDamage) {
         this.attackDamage = attackDamage;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 }

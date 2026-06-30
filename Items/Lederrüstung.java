@@ -22,9 +22,9 @@ public class Lederrüstung implements Armor {
         System.out.println("║ Schaden: "+defense+"                             ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Ein qualitativ hochwertiges Schwert    ║");
-        System.out.println("║ mit scharfer Klinge. Es liegt gut in   ║");
-        System.out.println("║ der Hand und wirkt sehr zuverlässig.   ║");
+        System.out.println("║ Eine leichte Lederrüstung bietet       ║");
+        System.out.println("║ Schutz, ohne dich stark zu bremsen.    ║");
+        System.out.println("║ Sie ist abgenutzt, aber verlässlich.   ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 

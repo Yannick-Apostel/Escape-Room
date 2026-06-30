@@ -3,6 +3,9 @@ package Items;
 import Spieler.Player;
 import helper.ConsoleColors;
 
+import java.sql.SQLOutput;
+import java.util.Scanner;
+
 public class UpgradeStein implements Item{
 
     private final String name = "Upgradestein";
@@ -46,6 +49,16 @@ public class UpgradeStein implements Item{
 
     @Override
     public void use(Player player, Item useItem) {
-        //TODO rüstung adden, abfrage welches verzaubert wird.
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Du bist dabei einen " + ConsoleColors.PURPLE_BOLD_BRIGHT + this.name + ConsoleColors.RESET + " zu benutzen! Willst du das wirklich? [y/n]");
+        String answer = scanner.nextLine();
+
+        if(answer.equals("y")) {
+            System.out.println("Welches Item willst du verzaubern?");
+        }
+
+
+        //TODO logik für max 1 rüstung
     }
 }

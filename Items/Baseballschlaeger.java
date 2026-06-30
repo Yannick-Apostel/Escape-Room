@@ -3,6 +3,7 @@ package Items;
 import Spieler.Player;
 import helper.ConsoleColors;
 import helper.Sleeper;
+import Items.Item;
 
 import java.util.Scanner;
 
@@ -62,7 +63,7 @@ public class Baseballschlaeger implements Weapon{
                 Sleeper.sleep(1000);
                 System.out.println("Du findest einen Gegenstand in seiner Tasche!");
                 System.out.println("Du findest einen Upgradestein!");
-                player.addItemToInventar(UpgradeStein);
+                //player.addItemToInventar(UpgradeStein);
                 //TODO weitermachen
             }
         }

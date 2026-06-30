@@ -22,9 +22,9 @@ public class Eisenrüstung implements Armor {
         System.out.println("║ Schaden: "+defense+"                             ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Ein qualitativ hochwertiges Schwert    ║");
-        System.out.println("║ mit scharfer Klinge. Es liegt gut in   ║");
-        System.out.println("║ der Hand und wirkt sehr zuverlässig.   ║");
+        System.out.println("║ Eine schwere Eisenrüstung schützt      ║");
+        System.out.println("║ dich mit stabilen Metallplatten vor    ║");
+        System.out.println("║ harten Treffern im Kampf.              ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
