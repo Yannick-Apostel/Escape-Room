@@ -203,6 +203,19 @@ public class Player {
                 }
         }
     }
+
+    public void addItem(Item newItem) {
+        this.inventar.add(newItem);
+    }
+
+    public void addArmor(Armor newArmor) {
+        this.inventar.add(newArmor);
+    }
+
+    public void addWeapon(Weapon newWeapon) {
+        this.inventar.add(newWeapon);
+    }
+
     public int getLeben() { return this.Leben; }
 
     public void showLeben() {

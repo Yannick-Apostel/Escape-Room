@@ -56,9 +56,23 @@ public class UpgradeStein implements Item{
 
         if(answer.equals("y")) {
             System.out.println("Welches Item willst du verzaubern?");
+
+            String answer2 = scanner.nextLine();
+
+
+
+            for (Item item : player.getInventar()) {
+                if (item.getName().equals(answer2)) {
+                    if (item instanceof Weapon weapon) {
+                        weapon.setEnchanted();
+                    } else if (item instanceof Armor armor) {
+                        armor.setEnchanted();
+                    }
+                }
+            }
         }
 
 
-        //TODO logik für max 1 rüstung
+
     }
 }

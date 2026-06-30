@@ -1,5 +1,7 @@
 import HighScore.HighScoreController;
+import Items.Armor;
 import Items.Item;
+import Items.Weapon;
 import RaumSystem.Room;
 import Spieler.Player;
 import Karte.Karte;
@@ -127,7 +129,9 @@ public class Game {
                 for (Item item : player.getInventar()) {
                     if (item.getName().equals(itemName)) {
                         item.use(player, item);
-                        player.deleteItemFromInventar(itemName);
+                        if(!(item instanceof Weapon || item instanceof Armor)) {
+                            player.deleteItemFromInventar(itemName);
+                        }
                         return;
                     }
                 }
@@ -160,13 +164,13 @@ public class Game {
                     int y = player.getCurrentRoom().getY();
 
                     if (direction.toLowerCase().equals("n")) {
-                        Karte.setHidden(x, y + 1);
+                        Karte.setBlocked(x, y + 1);
                     } else if (direction.toLowerCase().equals("s")) {
-                        Karte.setHidden(x, y - 1);
+                        Karte.setBlocked(x, y - 1);
                     } else if (direction.toLowerCase().equals("o")) {
-                        Karte.setHidden(x + 1, y);
+                        Karte.setBlocked(x + 1, y);
                     } else if (direction.toLowerCase().equals("w")) {
-                        Karte.setHidden(x - 1, y);
+                        Karte.setBlocked(x - 1, y);
                     }
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich

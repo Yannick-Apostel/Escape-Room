@@ -8,6 +8,7 @@ public class Schwert implements Weapon {
     private final boolean isWeapon = true;
     private final boolean isHealingItem = false;
     private int damage = 7;
+    private boolean isEnchanted = false;
 
     @Override
     public void function() {
@@ -29,12 +30,15 @@ public class Schwert implements Weapon {
 
     @Override
     public String getName() {
+        if (isEnchanted) {
+            return "★" + this.name + "★";
+        }
         return this.name;
     }
 
     @Override
     public String getColoredName() {
-        return ConsoleColors.BLUE_BRIGHT + this.name + ConsoleColors.RESET;
+        return ConsoleColors.BLUE_BRIGHT + getName() + ConsoleColors.RESET;
     }
 
     @Override
@@ -55,5 +59,18 @@ public class Schwert implements Weapon {
     @Override
     public void use(Player player, Item useItem) {
 
+    }
+
+    @Override
+    public boolean isEnchanted() {
+        return this.isEnchanted;
+    }
+
+    @Override
+    public void setEnchanted() {
+        if (!this.isEnchanted) {
+            this.damage += 2;
+            this.isEnchanted = true;
+        }
     }
 }

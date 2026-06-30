@@ -50,6 +50,12 @@ public class Karte {
         }
     }
 
+    public void setBlocked(int x, int y) {
+        if (x >= 0 && x < spielerKarte.length && y >= 0 && y < spielerKarte[x].length) {
+            spielerKarte[x][y] = "blocked";
+        }
+    }
+
     private void setUnknownAt(int x, int y) {
         if (x >= 0 && x < spielerKarte.length && y >= 0 && y < spielerKarte[x].length) {
             if(spielerKarte[x][y].equals("hidden")) {
@@ -68,6 +74,10 @@ public class Karte {
         setUnknownAt(x - 1, y);
     }
 
+    private boolean isBlankField(String feld) {
+        return feld.equals("hidden") || feld.equals("blocked");
+    }
+
     public void spielerKarte(Player player) {
         String trennlinie = "+---------------+";
         String leeresFeld = " ".repeat(17);
@@ -76,7 +86,7 @@ public class Karte {
             for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     System.out.print(trennlinie);
@@ -88,7 +98,7 @@ public class Karte {
             for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     String feldText = formatFeld(feld);
@@ -110,7 +120,7 @@ public class Karte {
             for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     System.out.print(trennlinie);

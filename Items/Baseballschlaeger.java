@@ -12,6 +12,7 @@ public class Baseballschlaeger implements Weapon{
     private final boolean isWeapon = true;
     private final boolean isHealingItem = false;
     private int damage = 3;
+    private boolean isEnchanted = false;
 
     @Override
     public void function() {
@@ -30,12 +31,15 @@ public class Baseballschlaeger implements Weapon{
 
     @Override
     public String getName() {
+        if (isEnchanted) {
+            return "★" + this.name + "★";
+        }
         return this.name;
     }
 
     @Override
     public String getColoredName() {
-        return ConsoleColors.BLUE_BRIGHT + this.name + ConsoleColors.RESET;
+        return ConsoleColors.BLUE_BRIGHT + getName() + ConsoleColors.RESET;
     }
 
     @Override
@@ -63,9 +67,22 @@ public class Baseballschlaeger implements Weapon{
                 Sleeper.sleep(1000);
                 System.out.println("Du findest einen Gegenstand in seiner Tasche!");
                 System.out.println("Du findest einen Upgradestein!");
-                //player.addItemToInventar(UpgradeStein);
+                player.addItemErfolgreich(new UpgradeStein());
                 //TODO weitermachen
             }
+        }
+    }
+
+    @Override
+    public boolean isEnchanted() {
+        return isEnchanted;
+    }
+
+    @Override
+    public void setEnchanted() {
+        if (!this.isEnchanted) {
+            this.damage += 2;
+            this.isEnchanted = true;
         }
     }
 }
