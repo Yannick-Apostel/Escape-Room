@@ -2,6 +2,7 @@ package Items;
 
 import Spieler.Player;
 import helper.ConsoleColors;
+import helper.PlayerReady;
 import helper.Sleeper;
 import Items.Item;
 
@@ -16,11 +17,11 @@ public class Baseballschlaeger implements Weapon{
 
     @Override
     public void function() {
-        if(!this.isEnchanted) {
+        if(this.isEnchanted) {
             System.out.println("╔════════════════════════════════════╗");
             System.out.println("║              ITEM INFO             ║");
             System.out.println("╠════════════════════════════════════╣");
-            System.out.println("║ Name: Baseballschlaeger(Verzaubert)║");
+            System.out.println("║ Name: Baseballschlaeger"+ ConsoleColors.PURPLE_BOLD_BRIGHT +"(Verzaubert)"+ConsoleColors.RESET+"║");
             System.out.println("║ Typ:  Waffe                        ║");
             System.out.println("║ Schaden: "+ConsoleColors.PURPLE_BOLD_BRIGHT+damage+ConsoleColors.RESET+"                         ║");   //Platz hinter nummer: "                         "
             System.out.println("║                                    ║");
@@ -46,14 +47,14 @@ public class Baseballschlaeger implements Weapon{
 
     @Override
     public String getName() {
-        if (isEnchanted) {
-            return "★" + this.name + "★";
-        }
         return this.name;
     }
 
     @Override
     public String getColoredName() {
+        if (isEnchanted) {
+            return ConsoleColors.BLUE_BRIGHT + "★" + getName() + "★" + ConsoleColors.RESET;
+        }
         return ConsoleColors.BLUE_BRIGHT + getName() + ConsoleColors.RESET;
     }
 
@@ -84,7 +85,15 @@ public class Baseballschlaeger implements Weapon{
                 System.out.println("Du findest einen Upgradestein!");
                 player.addItemErfolgreich(new UpgradeStein());
             }
+        } else if(player.getCurrentRoom().getName().equals("Bibliothek")) {
+            System.out.println("Du zerschlägst das Fenster mit deinem "+ConsoleColors.BLUE_BRIGHT+"Baseballschläger"+ConsoleColors.RESET+ " das Fenster!");
+            Sleeper.sleep(1000);
+            System.out.println("Du lehnst dich aus dem Fenster und siehst das zum Osten der Ausgang ist!");
+            System.out.println("Jedoch siehst du auch das der Ausgang von einem Monster bewacht wird");
+            System.out.println(PlayerReady.checkIsReady(player));
+
         }
+
     }
 
     @Override

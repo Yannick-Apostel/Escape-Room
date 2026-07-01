@@ -130,6 +130,9 @@ public class Room {
         } else if (name == 'A') {
             Staerketrank staerketrank = new Staerketrank();
             items.add(staerketrank);
+        } else if (name == 'L') {
+            Lederrüstung lederruestung = new Lederrüstung();
+            items.add(lederruestung);
         }
     }
 

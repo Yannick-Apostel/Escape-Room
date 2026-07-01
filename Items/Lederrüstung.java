@@ -3,6 +3,8 @@ package Items;
 import Spieler.Player;
 import helper.ConsoleColors;
 
+import java.util.Scanner;
+
 public class Lederrüstung implements Armor {
     private final String name = "Lederruestung";
     private final boolean isWeapon = false;
@@ -15,30 +17,46 @@ public class Lederrüstung implements Armor {
     public void function() {
         System.out.println();
 
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("║               ITEM INFO                ║");
-        System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Lederruestung                     ║");
-        System.out.println("║ Typ:  Rüstung                          ║");
-        System.out.println("║ Schaden: "+defense+"                             ║");
-        System.out.println("║                                        ║");
-        System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Eine leichte Lederrüstung bietet       ║");
-        System.out.println("║ Schutz, ohne dich stark zu bremsen.    ║");
-        System.out.println("║ Sie ist abgenutzt, aber verlässlich.   ║");
-        System.out.println("╚════════════════════════════════════════╝");
+        if (!isEnchanted) {
+            System.out.println("╔════════════════════════════════════════╗");
+            System.out.println("║               ITEM INFO                ║");
+            System.out.println("╠════════════════════════════════════════╣");
+            System.out.println("║ Name: Lederruestung                    ║");
+            System.out.println("║ Typ:  Rüstung                          ║");
+            System.out.println("║ Rüstung: "+defense+"                             ║");
+            System.out.println("║                                        ║");
+            System.out.println("║ Beschreibung:                          ║");
+            System.out.println("║ Eine leichte Lederrüstung bietet       ║");
+            System.out.println("║ Schutz, ohne dich stark zu bremsen.    ║");
+            System.out.println("║ Sie ist abgenutzt, aber verlässlich.   ║");
+            System.out.println("╚════════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════════╗");
+            System.out.println("║               ITEM INFO                ║");
+            System.out.println("╠════════════════════════════════════════╣");
+            System.out.println("║ Name: Lederruestung"+ ConsoleColors.PURPLE_BOLD_BRIGHT +"(Verzaubert)"+ConsoleColors.RESET+"           ║");
+            System.out.println("║ Typ:  Rüstung                          ║");
+            System.out.println("║ Rüstung: "+ConsoleColors.PURPLE_BOLD_BRIGHT+defense+ConsoleColors.RESET+"                             ║");
+            System.out.println("║                                        ║");
+            System.out.println("║ Beschreibung:                          ║");
+            System.out.println("║ Eine leichte Lederrüstung bietet       ║");
+            System.out.println("║ Schutz, ohne dich stark zu bremsen.    ║");
+            System.out.println("║ Sie ist abgenutzt, aber verlässlich.   ║");
+            System.out.println("╚════════════════════════════════════════╝");
+
+        }
     }
 
     @Override
     public String getName() {
-        if (isEnchanted) {
-            return "★" + this.name + "★";
-        }
         return this.name;
     }
 
     @Override
     public String getColoredName() {
+        if (isEnchanted) {
+            return ConsoleColors.YELLOW_BRIGHT + "★" + getName() + "★" + ConsoleColors.RESET;
+        }
         return ConsoleColors.YELLOW_BRIGHT + getName() + ConsoleColors.RESET;
     }
 
@@ -59,7 +77,23 @@ public class Lederrüstung implements Armor {
 
     @Override
     public void use(Player player, Item useItem) {
+        if(player.getCurrentRoom().getName().equals("Büro")) {
+            System.out.println("Willst du deine "+ConsoleColors.YELLOW_BRIGHT+"Lederrüstung"+ConsoleColors.RESET+" wirklich auf den Rüstungsständer packen?");
+            System.out.println("Du wirst sie "+ConsoleColors.RED+"permanent"+ConsoleColors.RESET+" verlieren! [y/n]");
 
+            Scanner scanner = new Scanner(System.in);
+
+            if(scanner.nextLine().equals("y")) {
+                player.deleteItemFromInventar(useItem.getName());
+                Schwert schwert= new Schwert();
+
+                System.out.println("Du legst deine Rüstung auf den Rüstungsständer und wartest...");
+                System.out.println("Nach einigen Sekunden öffnet sich loch in der Wand!");
+                System.out.println("In dem Geheimraum befindet sich eine Schatztruhe!");
+                System.out.println("In der Kiste findest du ein " + schwert.getName() + "!");
+                player.addItemErfolgreich(schwert);
+            }
+        }
     }
 
     @Override

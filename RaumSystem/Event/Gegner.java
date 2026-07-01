@@ -9,7 +9,7 @@ import Spieler.Player;
 public class Gegner implements Enemy{
     private String name = "Zombie";
     private final boolean forcedEvent = true;
-    private int attackDamage = 2;
+    private int attackDamage = 3;
     private int leben = 15;
 
     @Override

@@ -15,30 +15,48 @@ public class Eisenrüstung implements Armor {
     public void function() {
         System.out.println();
 
-        System.out.println("╔════════════════════════════════════════╗");
-        System.out.println("║               ITEM INFO                ║");
-        System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Eisenruestung                    ║");
-        System.out.println("║ Typ:  Rüstung                          ║");
-        System.out.println("║ Schaden: "+defense+"                             ║");
-        System.out.println("║                                        ║");
-        System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Eine schwere Eisenrüstung schützt      ║");
-        System.out.println("║ dich mit stabilen Metallplatten vor    ║");
-        System.out.println("║ harten Treffern im Kampf.              ║");
-        System.out.println("╚════════════════════════════════════════╝");
+        if (!isEnchanted) {
+            System.out.println("╔════════════════════════════════════════╗");
+            System.out.println("║               ITEM INFO                ║");
+            System.out.println("╠════════════════════════════════════════╣");
+            System.out.println("║ Name: Eisenruestung                    ║");
+            System.out.println("║ Typ:  Rüstung                          ║");
+            System.out.println("║ Rüstung: "+defense+"                             ║");
+            System.out.println("║                                        ║");
+            System.out.println("║ Beschreibung:                          ║");
+            System.out.println("║ Eine schwere Eisenrüstung schützt      ║");
+            System.out.println("║ dich mit stabilen Metallplatten vor    ║");
+            System.out.println("║ harten Treffern im Kampf.              ║");
+            System.out.println("╚════════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════════╗");
+            System.out.println("║               ITEM INFO                ║");
+            System.out.println("╠════════════════════════════════════════╣");
+            System.out.println("║ Name: Eisenruestung"+ ConsoleColors.PURPLE_BOLD_BRIGHT +"(Verzaubert)"+ConsoleColors.RESET+"        ║");
+            System.out.println("║ Typ:  Rüstung                          ║");
+            System.out.println("║ Rüstung: "+ConsoleColors.PURPLE_BOLD_BRIGHT+defense+ConsoleColors.RESET+"                             ║");
+            System.out.println("║ Reflektion: 20%                        ║");
+            System.out.println("║                                        ║");
+            System.out.println("║ Beschreibung:                          ║");
+            System.out.println("║ Eine verzauberte Eisenrüstung, sie     ║");
+            System.out.println("║ schützt dich mit stabilen Metallplatten║");
+            System.out.println("║ vor harten Treffern im Kampf.          ║");
+            System.out.println("║ Reflektiert einen Teil des schadens    ║");
+            System.out.println("║ auf den Gegner zurück                  ║");
+            System.out.println("╚════════════════════════════════════════╝");
+        }
     }
 
     @Override
     public String getName() {
-        if (isEnchanted) {
-            return "★" + this.name + "★";
-        }
         return this.name;
     }
 
     @Override
     public String getColoredName() {
+        if (isEnchanted) {
+            return ConsoleColors.YELLOW_BRIGHT + "★" + getName() + "★" + ConsoleColors.RESET;
+        }
         return ConsoleColors.YELLOW_BRIGHT + getName() + ConsoleColors.RESET;
     }
 
