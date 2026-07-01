@@ -1,15 +1,10 @@
 package RaumSystem;
 
-import Items.Baseballschlaeger;
-import Items.Heilungstrank;
-import Items.Item;
-import Items.Schlussel;
-import RaumSystem.Event.BossGegner;
-import RaumSystem.Event.Event;
-import RaumSystem.Event.Gegner;
-import RaumSystem.Event.verletztePerson;
+import Items.*;
+import RaumSystem.Event.*;
 import helper.ConsoleColors;
 import Spieler.Player;
+import helper.Sleeper;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -56,16 +51,6 @@ public class Room {
         this.punkte = punkte;
         this.isEnde = isEnde;
     }
-
-    /*public Room(String name, String description, boolean isEnde) {
-        this.name = name;
-        this.description = description;
-
-        //Muss für den Startraum initialisiert werden, da sonst Nullpointer Exception geworfen wird
-        this.items = new ArrayList<>();
-        this.punkte=0;
-        this.isEnde = isEnde;
-    }*/
 
     public void setExits(Room north, Room south, Room east, Room west) {
         this.north = north;
@@ -136,6 +121,21 @@ public class Room {
         } else if (name == 'H') {
             Heilungstrank heilTrank = new Heilungstrank();
             items.add(heilTrank);
+        } else if (name == 'W') {
+            Schwert schwert = new Schwert();
+            items.add(schwert);
+        } else if (name == 'A') {
+            Staerketrank staerketrank = new Staerketrank();
+            items.add(staerketrank);
+        } else if (name == 'L') {
+            Lederrüstung lederruestung = new Lederrüstung();
+            items.add(lederruestung);
+        } else if (name == 'T') {
+            Staerketrank staerketrank = new Staerketrank();
+            items.add(staerketrank);
+        } else if (name == 'U') {
+            UpgradeStein upgradeStein = new UpgradeStein();
+            items.add(upgradeStein);
         }
     }
 
@@ -170,11 +170,28 @@ public class Room {
     public void createEvent(char event) {
         if (event == 'Z') {
             this.event = new Gegner();
+
+            Sleeper.sleep(1000);
+
             System.out.println("Zombie erstellt");
         } else if (event == 'V') {
             this.event = new verletztePerson();
-        } else if (event == 'B') {
+
+            Sleeper.sleep(1000);
+
+            System.out.println("NPC erstellt");
+        } else if(event == 'S') {
+            this.event = new NebenBoss();
+
+            Sleeper.sleep(1000);
+
+            System.out.println("Nebenboss erstellt");
+         }else if (event == 'B') {
             this.event = new BossGegner();
+
+            Sleeper.sleep(1000);
+
+            System.out.println("Boss erstellt");
         } else {
             this.event = null;
         }

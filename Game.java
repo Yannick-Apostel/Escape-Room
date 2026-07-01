@@ -1,9 +1,13 @@
 import HighScore.HighScoreController;
+import Items.Armor;
 import Items.Item;
+import Items.Weapon;
 import RaumSystem.Room;
+import RaumSystem.RoomExceptions;
 import Spieler.Player;
 import Karte.Karte;
 import helper.ConsoleColors;
+import helper.Sleeper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,7 +54,9 @@ public class Game {
 
         running = true;
 
+        Sleeper.sleep(1000);
         System.out.println("Willkommen bei" + ConsoleColors.PURPLE_BOLD );
+        Sleeper.sleep(1000);
         System.out.println();
         String escapeCampus = """
                  /        |/      \\ /      \\ /      \\/       \\/        |       /      \\ /      \\/  \\     /  /       \\/  |  /  |/      \\\s
@@ -67,11 +73,13 @@ public class Game {
                 """;
 
         System.out.println(escapeCampus);
+        Sleeper.sleep(1000);
         System.out.println(ConsoleColors.RESET+"Tippe" + ConsoleColors.GREEN_BOLD_BRIGHT + " 'hilfe'" + ConsoleColors.RESET + " für Befehle.");
         System.out.println(player.getCurrentRoom().getDescription());
 
         while (running) {
             try {
+                Karte.spielerKarte(player);
                 System.out.print("> ");
                 // Überprüfen, ob der Scanner noch offen ist
                 if (scanner.hasNextLine()) {
@@ -95,19 +103,51 @@ public class Game {
     }
 
     private void handleCommand(String command) {
+        command = command.trim();
         if (!command.isEmpty()) {
-
-
             if (command.equals("hilfe")) {
-                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'karte', 'leben'"+ ConsoleColors.RESET);
+                System.out.println("Folgende Eingaben sind valide:"+ ConsoleColors.GREEN_BOLD_BRIGHT+"'hilfe', 'schau', 'gehe n|s|o|w', 'inventar', 'inspect <Item>', 'benutze <Item>,' 'status'"+ ConsoleColors.RESET);
             } else if (command.equals("schau")) {
                 System.out.println(player.getCurrentRoom().getDescription());
-            } else if (command.equals("leben")) {
+            } else if (command.equals("status")) {
                 player.showLeben();
+                if(player.playerWeapon() == null) {
+                    System.out.println("Du machst gerade: " + ConsoleColors.ORANGE + player.getAttackDamage() + " Schaden pro Angriff." + ConsoleColors.RESET);
+                } else {
+                    System.out.println("Du machst gerade: " + ConsoleColors.ORANGE + player.getAttackDamage() + "(+" + player.playerWeapon().getDamage() + ")" + " Schaden pro Angriff." + ConsoleColors.RESET);
+                }
+                if(player.playerArmor() == null) {
+                    System.out.println("Du hast gerade: " + ConsoleColors.BLUE + player.getDefense() + " Rüstung." + ConsoleColors.RESET);
+                } else {
+                    System.out.println("Du hast gerade: " + ConsoleColors.BLUE + player.getDefense() + "(+" + player.playerArmor().getDefense() + ")" + " Rüstung." + ConsoleColors.RESET);
+                }
+
             } else if (command.equals("ende")) {
                 running = false;
-            } else if(command.equals("karte")) {
-                Karte.spielerKarte();
+            } else if (command.startsWith("benutze")) {
+                String itemName = command.substring(8).trim();
+
+                for (Item item : player.getInventar()) {
+                    if (item.getName().equals(itemName)) {
+                        item.use(player, item, highScoreController);
+                        if(!(item instanceof Weapon || item instanceof Armor)) {
+                            player.deleteItemFromInventar(itemName);
+                        }
+                        return;
+                    }
+                }
+
+            } else if(command.startsWith("inspect")) {
+                String itemName = command.substring(8).trim();
+
+                for (Item item : player.getInventar()) {
+                    if (item.getName().equals(itemName)) {
+                        item.function();
+                        return;
+                    }
+                }
+                System.out.println("Dieses Item existiert nicht.");
+
             } else if (command.equals("fullmap")) {
                 Karte.fullKarte();
             } else if (command.startsWith("gehe")) {
@@ -125,13 +165,13 @@ public class Game {
                     int y = player.getCurrentRoom().getY();
 
                     if (direction.toLowerCase().equals("n")) {
-                        Karte.setHidden(x, y + 1);
+                        Karte.setBlocked(x, y + 1);
                     } else if (direction.toLowerCase().equals("s")) {
-                        Karte.setHidden(x, y - 1);
+                        Karte.setBlocked(x, y - 1);
                     } else if (direction.toLowerCase().equals("o")) {
-                        Karte.setHidden(x + 1, y);
+                        Karte.setBlocked(x + 1, y);
                     } else if (direction.toLowerCase().equals("w")) {
-                        Karte.setHidden(x - 1, y);
+                        Karte.setBlocked(x - 1, y);
                     }
                 } else {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
@@ -140,8 +180,9 @@ public class Game {
                             endeErreicht();
                             running = false;
                         } else {
-                            System.out.println(player.getCurrentRoom().getDescription());
+                            RoomExceptions.main(player, nextRoom);
                             player.setCurrentRoom(nextRoom);
+                            System.out.println(player.getCurrentRoom().getDescription());
                             Karte.setExplored(player.getCurrentRoom());
 
                             highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
@@ -158,13 +199,19 @@ public class Game {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
 
+                            nextRoom.setIstVerschlossen();
+
+                            if(RoomExceptions.main(player, nextRoom) == RoomExceptions.roomReturn.ENTER) {
+                                player.setCurrentRoom(nextRoom);
+                                highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
+                            } else {
+                                player.setCurrentRoom(player.getCurrentRoom());
+                            }
+
                             System.out.println(player.getCurrentRoom().getDescription());
-                            player.setCurrentRoom(nextRoom);
 
                             Karte.setExplored(player.getCurrentRoom());
                             Karte.setUnknown(player.getCurrentRoom());
-
-                            player.getCurrentRoom().setIstVerschlossen();
 
                             if(player.getCurrentRoom().getIsEnde()){
                                 endeErreicht();
@@ -183,19 +230,11 @@ public class Game {
                 }
 
             } else if (command.equals("inventar")) {
-                System.out.print("Inventar: ");
-                for (Item item : this.player.getInventar()) {
-                    System.out.print(item.getName() + " ");
-                }
-                System.out.println();
+                player.zeigeInventar();
             } else {
-                if(!command.equals(highScoreController.getName())) {
-                    System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
-                }
+                System.out.println("Unbekannter Befehl! Tippe 'hilfe'");
             }
 
-        } else {
-            System.out.println("Unbekannter Fehler! Tippe 'hilfe'");
         }
 
 

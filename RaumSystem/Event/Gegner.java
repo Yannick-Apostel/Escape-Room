@@ -1,5 +1,6 @@
 package RaumSystem.Event;
 
+import HighScore.HighScoreController;
 import Items.Item;
 
 import java.util.ArrayList;
@@ -7,9 +8,9 @@ import helper.ConsoleColors;
 import Spieler.Player;
 
 public class Gegner implements Enemy{
-    private final String name = "Zombie";
+    private String name = "Zombie";
     private final boolean forcedEvent = true;
-    private int attackDamage = 2;
+    private int attackDamage = 3;
     private int leben = 15;
 
     @Override
@@ -21,6 +22,7 @@ public class Gegner implements Enemy{
     @Override
     public void aktion(ArrayList<Item> inventory, Player player) {
         new Kampf(player, this);
+
     }
 
     @Override
@@ -41,5 +43,9 @@ public class Gegner implements Enemy{
     @Override
     public int getEnemyHealth() {
         return this.leben;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

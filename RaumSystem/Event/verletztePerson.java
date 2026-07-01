@@ -1,8 +1,9 @@
 package RaumSystem.Event;
 
 import Items.Item;
-import Items.Schlussel;
+import Items.Staerketrank;
 import Spieler.Player;
+import helper.ConsoleColors;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,6 +23,7 @@ public class verletztePerson implements Event{
     public void aktion(ArrayList<Item> inventory, Player player) {
         boolean hasHealingItem = false;
         String itemName = "";
+        Item healingItem = null;
 
 
         System.out.println("Du: Halli Hallo!");
@@ -31,7 +33,8 @@ public class verletztePerson implements Event{
         for(Item item : inventory){
             if(item.getIsHealingItem()){
                 hasHealingItem = true;
-                itemName = item.getName();
+                itemName = item.getColoredName();
+                healingItem = item;
             }
         }
 
@@ -42,15 +45,15 @@ public class verletztePerson implements Event{
             String giveItem = scanner.nextLine();
 
             if(giveItem.equals("y")){
-                final String itemNameToRemove = itemName;
+                final Item itemToRemove = healingItem;
 
-                inventory.removeIf(item -> item.getName().equals(itemNameToRemove));
+                inventory.removeIf(item -> item == itemToRemove);
 
                 System.out.println("Danke bro, hier, ich hab das gefunden, du kannst es haben!");
 
-                inventory.add(new Schlussel());
+                inventory.add(new Staerketrank());
 
-                System.out.println("Du hast einen schlüssel bekommen!");
+                System.out.println("Du hast einen " + ConsoleColors.ORANGE + "Stärketrank" + ConsoleColors.RESET + " bekommen!");
             }
 
         } else {

@@ -1,12 +1,15 @@
 package Spieler;
 
+import Items.Armor;
 import Items.Item;
 import Items.Weapon;
 import RaumSystem.Room;
+import helper.ConsoleColors;
 
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.DoubleSummaryStatistics;
 import java.util.Scanner;
 
 public class Player {
@@ -17,6 +20,7 @@ public class Player {
     private Scanner input;
     private int Leben = 20;
     private int attackDamage = 2;
+    private int defense = 0;
 
     public Player(Room startRoom, Scanner input) {
         currentRoom = startRoom;
@@ -51,14 +55,42 @@ public class Player {
 
     public boolean addItemErfolgreich(Item newItem) {
         if (this.inventar.size() < maxSizeInventar) {
-            if (frageObItemInsInventar(newItem.getName())) {
+            if (frageObItemInsInventar(newItem.getColoredName())) {
                 if(newItem.getIsWeapon()) {
-                    if(playerWeapon() != null) {
+                    if (playerWeapon() != null) {
                         System.out.println("Du hast schon eine Waffe, willst du sie austauschen? [y/n]");
 
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+
+                        if (answer.equals("y")) {
+                            this.inventar.remove(playerWeapon());
+                            this.inventar.add(newItem);
+                        } else if (answer.equals("n")) {
+                            return false;
+                        }
+                    } else {
+                        this.inventar.add(newItem);
                     }
+                } else if (newItem instanceof Armor) {
+                    if(playerArmor() != null) {
+                        System.out.println("Du hast schon eine Rüstung, willst du sie austauschen? [y/n]");
+
+                        Scanner scanner = new Scanner(System.in);
+                        String answer = scanner.nextLine();
+
+                        if (answer.equals("y")) {
+                            this.inventar.remove(playerArmor());
+                            this.inventar.add(newItem);
+                        } else if (answer.equals("n")) {
+                            return false;
+                        }
+                    } else {
+                        this.inventar.add(newItem);
+                    }
+                } else {
+                    this.inventar.add(newItem);
                 }
-                this.inventar.add(newItem);
 
                 try {
                     FileWriter writer = new FileWriter("saveData.csv");
@@ -146,7 +178,7 @@ public class Player {
     public void zeigeInventar() {
         System.out.print("Dein Inventar beinhaltet: ");
         for (Item item : inventar) {
-            System.out.print(item.getName() + " ");
+            System.out.print("[" + item.getColoredName() + "]");
         }
         System.out.println();
     }
@@ -164,13 +196,26 @@ public class Player {
 
 
             for(int j =0; j<tempRoomItemsVorTausch.size(); j++){
-                System.out.print(getCurrentRoom().getItemsFromRoom().get(j).getName()+ " ");
+                System.out.print(getCurrentRoom().getItemsFromRoom().get(j).getColoredName()+ " ");
                 System.out.println();
                 if (addItemErfolgreich(getCurrentRoom().getItemsFromRoom().get(j))) {
                   tempRoomItemsVorTausch.remove(j);;
                 }
         }
     }
+
+    public void addItem(Item newItem) {
+        this.inventar.add(newItem);
+    }
+
+    public void addArmor(Armor newArmor) {
+        this.inventar.add(newArmor);
+    }
+
+    public void addWeapon(Weapon newWeapon) {
+        this.inventar.add(newWeapon);
+    }
+
     public int getLeben() { return this.Leben; }
 
     public void showLeben() {
@@ -180,6 +225,7 @@ public class Player {
             System.out.print("■");
         }
         System.out.println("]");
+        System.out.println( "Du hast " + ConsoleColors.RED + this.Leben + ConsoleColors.RESET + " Leben");
     }
     public void setLeben(int leben)  { this.Leben = leben; }
 
@@ -192,11 +238,28 @@ public class Player {
         return null;
     }
 
+    public Armor playerArmor() {
+        for (Item item : inventar) {
+            if (item instanceof Armor) {
+                return (Armor) item;
+            }
+        }
+        return null;
+    }
+
     public int getAttackDamage() {
         return attackDamage;
     }
 
     public void setAttackDamage(int attackDamage) {
         this.attackDamage = attackDamage;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 }

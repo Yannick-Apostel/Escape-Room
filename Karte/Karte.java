@@ -1,23 +1,30 @@
 package Karte;
 
 import RaumSystem.Room;
+import Spieler.Player;
+
 import java.util.ArrayList;
 
 public class Karte {
 
+    private static final int WIDTH = 6;
+    private static final int HEIGHT = 6;
+
     private String[][] karte;
     private String[][] spielerKarte;
+    private static final String HELL_GRUEN = "\u001B[92m";
+    private static final String RESET = "\u001B[0m";
 
     public Karte(ArrayList<Room> rooms) {
         createKarte(rooms);
     }
 
     private void createKarte(ArrayList<Room> rooms) {
-        karte = new String[6][6];
-        spielerKarte = new String[6][6];
+        karte = new String[WIDTH][HEIGHT];
+        spielerKarte = new String[WIDTH][HEIGHT];
 
-        for (int x = 0; x < 6; x++) {
-            for(int y = 0; y < 6; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            for(int y = 0; y < HEIGHT; y++) {
                 karte[x][y] = "NULL";
                 spielerKarte[x][y] = "hidden";
 
@@ -43,6 +50,12 @@ public class Karte {
         }
     }
 
+    public void setBlocked(int x, int y) {
+        if (x >= 0 && x < spielerKarte.length && y >= 0 && y < spielerKarte[x].length) {
+            spielerKarte[x][y] = "blocked";
+        }
+    }
+
     private void setUnknownAt(int x, int y) {
         if (x >= 0 && x < spielerKarte.length && y >= 0 && y < spielerKarte[x].length) {
             if(spielerKarte[x][y].equals("hidden")) {
@@ -61,15 +74,19 @@ public class Karte {
         setUnknownAt(x - 1, y);
     }
 
-    public void spielerKarte() {
+    private boolean isBlankField(String feld) {
+        return feld.equals("hidden") || feld.equals("blocked");
+    }
+
+    public void spielerKarte(Player player) {
         String trennlinie = "+---------------+";
         String leeresFeld = " ".repeat(17);
 
-        for (int y = 5; y >= 0; y--) {
-            for (int x = 0; x < 6; x++) {
+        for (int y = HEIGHT - 1; y >= 0; y--) {
+            for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     System.out.print(trennlinie);
@@ -78,10 +95,10 @@ public class Karte {
 
             System.out.println();
 
-            for (int x = 0; x < 6; x++) {
+            for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     String feldText = formatFeld(feld);
@@ -89,16 +106,21 @@ public class Karte {
                     int links = freiePlaetze / 2;
                     int rechts = freiePlaetze - links;
 
+                    if(player.getCurrentRoom().getName().equals(feld)) {
+                        feldText = HELL_GRUEN + feldText + RESET;
+                    }
+
+
                     System.out.print("|" + " ".repeat(links) + feldText + " ".repeat(rechts) + "|");
                 }
             }
 
             System.out.println();
 
-            for (int x = 0; x < 6; x++) {
+            for (int x = 0; x < WIDTH; x++) {
                 String feld = spielerKarte[x][y];
 
-                if (feld.equals("hidden")) {
+                if (isBlankField(feld)) {
                     System.out.print(leeresFeld);
                 } else {
                     System.out.print(trennlinie);
@@ -121,8 +143,8 @@ public class Karte {
         String trennlinie = "+---------------+";
         String leeresFeld = " ".repeat(17);
 
-        for (int y = 5; y >= 0; y--) {
-            for (int x = 0; x < 6; x++) {
+        for (int y = HEIGHT - 1; y >= 0; y--) {
+            for (int x = 0; x < WIDTH; x++) {
                 String roomName = karte[x][y];
 
                 if (roomName.equals("NULL")) {
@@ -134,7 +156,7 @@ public class Karte {
 
             System.out.println();
 
-            for (int x = 0; x < 6; x++) {
+            for (int x = 0; x < WIDTH; x++) {
                 String roomName = karte[x][y];
 
                 if (roomName.equals("NULL")) {
@@ -150,7 +172,7 @@ public class Karte {
 
             System.out.println();
 
-            for (int x = 0; x < 6; x++) {
+            for (int x = 0; x < WIDTH; x++) {
                 String roomName = karte[x][y];
 
                 if (roomName.equals("NULL")) {
@@ -164,5 +186,4 @@ public class Karte {
         }
     }
 }
-
 

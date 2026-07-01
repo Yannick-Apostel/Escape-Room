@@ -2,13 +2,14 @@ package Items;
 
 import HighScore.HighScoreController;
 import Spieler.Player;
-import helper.ConsoleColors;
 
-public class Schlussel implements Item{
-
-    private final String name = "Schlussel";
+public class Staerketrank implements Item {
+    private static final String ORANGE = "\033[38;5;208m";
+    private static final String RESET = "\033[0m";
+    private final String name = "Staerketrank";
     private final boolean isWeapon = false;
     private final boolean isHealingItem = false;
+    private int attackBoost = 5;
 
     @Override
     public void function() {
@@ -17,12 +18,13 @@ public class Schlussel implements Item{
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║               ITEM INFO                ║");
         System.out.println("╠════════════════════════════════════════╣");
-        System.out.println("║ Name: Schlüssel                        ║");
+        System.out.println("║ Name: Stärketrank                      ║");
         System.out.println("║ Typ:  Item                             ║");
+        System.out.println("║ Schaden: +"+attackBoost+"                            ║");
         System.out.println("║                                        ║");
         System.out.println("║ Beschreibung:                          ║");
-        System.out.println("║ Ein alter Metallschlüssel. Vielleicht  ║");
-        System.out.println("║ öffnet er eine verschlossene Tür.      ║");
+        System.out.println("║ Eine kleine Flasche mit grünem         ║");
+        System.out.println("║ Gebraeu. Erhöht deinen Angriff.        ║");
         System.out.println("╚════════════════════════════════════════╝");
     }
 
@@ -33,7 +35,7 @@ public class Schlussel implements Item{
 
     @Override
     public String getColoredName() {
-        return ConsoleColors.GREEN_BRIGHT + this.name + ConsoleColors.RESET;
+        return ORANGE + this.name + RESET;
     }
 
     @Override
@@ -42,10 +44,15 @@ public class Schlussel implements Item{
     }
 
     @Override
-    public boolean getIsHealingItem() {return this.isHealingItem;}
+    public boolean getIsHealingItem() {
+        return this.isHealingItem;
+    }
+
+    public int getAttackBoost() {return this.attackBoost;}
 
     @Override
     public void use(Player player, Item useItem, HighScoreController highScoreController) {
-
+        player.setAttackDamage(player.getAttackDamage() + attackBoost);
+        System.out.println("Du machst jetzt "+attackBoost+" mehr Schaden!");
     }
 }
