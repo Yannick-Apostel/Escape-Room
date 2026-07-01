@@ -7,17 +7,17 @@ import helper.ConsoleColors;
 import Spieler.Player;
 import helper.PlayerReady;
 
-public class BossGegner implements Enemy{
-    private final String name = "Eisenwächter";
+public class NebenBoss implements Enemy{
+    private final String name = "Nebenboss";
     private final boolean forcedEvent = true;
-    private int attackDamage = 15;
-    private int leben = 50;
+    private int attackDamage = 5;
+    private int leben = 30;
 
     @Override
     public void description() {
-        System.out.println("Ich bin der "+ ConsoleColors.YELLOW + "Eisenwächter!" + ConsoleColors.RESET);
+        System.out.println("Ich bin der "+ ConsoleColors.YELLOW + "Nebenboss!" + ConsoleColors.RESET);
         System.out.println("Ich mach dich platt, wenn du es nicht tust!");
-        
+
     }
 
     @Override

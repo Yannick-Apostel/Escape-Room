@@ -1,10 +1,7 @@
 package RaumSystem;
 
 import Items.*;
-import RaumSystem.Event.BossGegner;
-import RaumSystem.Event.Event;
-import RaumSystem.Event.Gegner;
-import RaumSystem.Event.verletztePerson;
+import RaumSystem.Event.*;
 import helper.ConsoleColors;
 import Spieler.Player;
 import helper.Sleeper;
@@ -177,7 +174,13 @@ public class Room {
             Sleeper.sleep(1000);
 
             System.out.println("NPC erstellt");
-        } else if (event == 'B') {
+        } else if(event == 'S') {
+            this.event = new NebenBoss();
+
+            Sleeper.sleep(1000);
+
+            System.out.println("Nebenboss erstellt");
+         }else if (event == 'B') {
             this.event = new BossGegner();
 
             Sleeper.sleep(1000);

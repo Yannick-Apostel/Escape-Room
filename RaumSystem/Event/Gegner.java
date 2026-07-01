@@ -1,5 +1,6 @@
 package RaumSystem.Event;
 
+import HighScore.HighScoreController;
 import Items.Item;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Gegner implements Enemy{
     @Override
     public void aktion(ArrayList<Item> inventory, Player player) {
         new Kampf(player, this);
+
     }
 
     @Override

@@ -3,6 +3,7 @@ import Items.Armor;
 import Items.Item;
 import Items.Weapon;
 import RaumSystem.Room;
+import RaumSystem.RoomExceptions;
 import Spieler.Player;
 import Karte.Karte;
 import helper.ConsoleColors;
@@ -179,6 +180,7 @@ public class Game {
                             endeErreicht();
                             running = false;
                         } else {
+                            RoomExceptions.main(player, nextRoom);
                             player.setCurrentRoom(nextRoom);
                             System.out.println(player.getCurrentRoom().getDescription());
                             Karte.setExplored(player.getCurrentRoom());
@@ -197,13 +199,18 @@ public class Game {
                             System.out.println("Du hast einen" + ConsoleColors.GREEN_UNDERLINED + " Schlüssel" + ConsoleColors.RESET+" - du schließt die Tür auf.");
                             this.player.deleteItemFromInventar("Schlussel");
 
-                            player.setCurrentRoom(nextRoom);
+                            nextRoom.setIstVerschlossen();
+
+                            if(RoomExceptions.main(player, nextRoom) == RoomExceptions.roomReturn.ENTER) {
+                                player.setCurrentRoom(nextRoom);
+                            } else {
+                                player.setCurrentRoom(player.getCurrentRoom());
+                            }
+
                             System.out.println(player.getCurrentRoom().getDescription());
 
                             Karte.setExplored(player.getCurrentRoom());
                             Karte.setUnknown(player.getCurrentRoom());
-
-                            player.getCurrentRoom().setIstVerschlossen();
 
                             if(player.getCurrentRoom().getIsEnde()){
                                 endeErreicht();

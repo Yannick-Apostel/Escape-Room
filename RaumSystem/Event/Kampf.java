@@ -3,6 +3,7 @@ package RaumSystem.Event;
 import Items.Armor;
 import Spieler.Player;
 import Items.Weapon;
+import helper.ConsoleColors;
 import helper.Sleeper;
 
 public class Kampf {
@@ -18,7 +19,9 @@ public class Kampf {
          int playerDefense = player.getDefense();
 
          int enemyDamage = gegner.getattackDamage();
-         int enemyHealth = gegner.getEnemyHealth();
+         double enemyHealth = gegner.getEnemyHealth();
+
+         double reflektion = enemyDamage*0.2;
 
          if (player.playerWeapon() != null) {
              Weapon spielerWaffe = player.playerWeapon();
@@ -42,7 +45,13 @@ public class Kampf {
              Sleeper.sleep(500);
 
              enemyHealth = enemyHealth - playerDamage;
+             if(player.playerWeapon().getName().equals("Schwert") && player.playerWeapon().isEnchanted() && playerHealth <= 18) {
+                 //System.out.println("Du raubst deinem Gegner " + ConsoleColors.PINK + "2" + ConsoleColors.RESET + " leben!");
+                 playerHealth = playerHealth + 2; //TODO PINK in consolecolors hinzufügen
+             }
+
              if (enemyHealth >= 0) {
+                 Sleeper.sleep(500);
                  System.out.println("Der " + YELLOW + gegner.getName() + RESET + " hat noch " + GREEN + enemyHealth + RESET + " leben.");
              }
 
@@ -50,17 +59,26 @@ public class Kampf {
                  System.out.println(YELLOW + gegner.getName() + RESET + " besiegt!");
                  break;
              }
+
              Sleeper.sleep(500);
 
              System.out.println("Der " + YELLOW + gegner.getName() + RESET + " greift an! Er macht " + RED + enemyDamage + RESET + " schaden!");
 
              Sleeper.sleep(500);
 
+             if(player.playerArmor().getName().equals("Eisenruestung") && player.playerArmor().isEnchanted()) {
+                 System.out.println("Du reflektierst " + ConsoleColors.YELLOW + reflektion + ConsoleColors.RESET + " schaden!");
+                 enemyHealth = enemyHealth - reflektion;
+                 Sleeper.sleep(500);
+             }
+
              System.out.println("Du blockst " + BLUE + playerDefense + RESET + " schaden!");
 
              Sleeper.sleep(500);
 
              playerHealth = playerHealth + playerDefense - enemyDamage;
+
+
 
              if (playerHealth >= 0) {
                  System.out.println("Du hast noch " + GREEN + playerHealth + RESET + " leben.");
