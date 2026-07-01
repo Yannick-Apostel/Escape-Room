@@ -177,6 +177,7 @@ public class Game {
                     //TODO Fallüberprüfung ob ein Event im Raum ist -> kein Raumwechsel möglich
                     if (!nextRoom.getIstVerschlossen()) {
                         if(nextRoom.getIsEnde()){
+                            highScoreController.addHighScoreOnce(player.getCurrentRoom().getName(), player.getCurrentRoom().getPunkte());
                             endeErreicht();
                             running = false;
                         } else {
@@ -185,7 +186,7 @@ public class Game {
                             System.out.println(player.getCurrentRoom().getDescription());
                             Karte.setExplored(player.getCurrentRoom());
 
-                            highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
+                            highScoreController.addHighScoreOnce(player.getCurrentRoom().getName(), player.getCurrentRoom().getPunkte());
 
                             player.getCurrentRoom().setMapState("explored");
                             Karte.setUnknown(player.getCurrentRoom());
@@ -203,7 +204,7 @@ public class Game {
 
                             if(RoomExceptions.main(player, nextRoom) == RoomExceptions.roomReturn.ENTER) {
                                 player.setCurrentRoom(nextRoom);
-                                highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
+                                highScoreController.addHighScoreOnce(player.getCurrentRoom().getName(), player.getCurrentRoom().getPunkte());
                             } else {
                                 player.setCurrentRoom(player.getCurrentRoom());
                             }
@@ -214,6 +215,7 @@ public class Game {
                             Karte.setUnknown(player.getCurrentRoom());
 
                             if(player.getCurrentRoom().getIsEnde()){
+                                highScoreController.addHighScoreOnce(player.getCurrentRoom().getName(), player.getCurrentRoom().getPunkte());
                                 endeErreicht();
                                 running = false;
                             }else {
@@ -371,7 +373,7 @@ public class Game {
     public void endeErreicht(){
         System.out.println(ConsoleColors.BLUE_BOLD_BRIGHT+ "DU HAST DEN AUSGANG GEFUNDEN!!!");
         System.out.println("GLÜCKWUNSCH");
-        System.out.println("DU HAST "+ highScoreController.getHighscore() +" PUNKTE ERREICHT"+ ConsoleColors.RESET);
+        System.out.println("DU HAST "+ highScoreController.getHighscore() +"/565 möglichen PUNKTEN ERREICHT"+ ConsoleColors.RESET);
         highScoreController.saveHighScore();
         highScoreController.loadHighscore();
     }
