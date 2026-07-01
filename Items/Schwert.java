@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
@@ -76,12 +77,13 @@ public class Schwert implements Weapon {
     }
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
         if(player.getCurrentRoom().getName().equals("Archiv")) {
             System.out.println("Du benutzt das Schwert um das Gitter offen zu hebeln.");
             System.out.println("Hinter dem Gitter befindet sich eine " +ConsoleColors.YELLOW_BRIGHT+"Eisenruestung!"+ ConsoleColors.RESET);
 
             player.addItem(new Eisenrüstung());
+            highScoreController.addHighScore(30);
         }
     }
 

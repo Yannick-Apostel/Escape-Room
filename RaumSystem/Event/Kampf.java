@@ -45,9 +45,11 @@ public class Kampf {
              Sleeper.sleep(500);
 
              enemyHealth = enemyHealth - playerDamage;
-             if(player.playerWeapon().getName().equals("Schwert") && player.playerWeapon().isEnchanted() && playerHealth <= 18) {
-                 //System.out.println("Du raubst deinem Gegner " + ConsoleColors.PINK + "2" + ConsoleColors.RESET + " leben!");
-                 playerHealth = playerHealth + 2; //TODO PINK in consolecolors hinzufügen
+             if (player.playerWeapon() != null) {
+                 if(player.playerWeapon().getName().equals("Schwert") && player.playerWeapon().isEnchanted() && playerHealth <= 18) {
+                     System.out.println("Du raubst deinem Gegner " + ConsoleColors.PINK + "2" + ConsoleColors.RESET + " leben!");
+                     playerHealth = playerHealth + 2;
+                 }
              }
 
              if (enemyHealth >= 0) {
@@ -66,25 +68,31 @@ public class Kampf {
 
              Sleeper.sleep(500);
 
-             if(player.playerArmor().getName().equals("Eisenruestung") && player.playerArmor().isEnchanted()) {
-                 System.out.println("Du reflektierst " + ConsoleColors.YELLOW + reflektion + ConsoleColors.RESET + " schaden!");
-                 enemyHealth = enemyHealth - reflektion;
-                 Sleeper.sleep(500);
+             if (player.playerArmor() != null) {
+                 if(player.playerArmor().getName().equals("Eisenruestung") && player.playerArmor().isEnchanted()) {
+                     System.out.println("Du reflektierst " + ConsoleColors.YELLOW + reflektion + ConsoleColors.RESET + " schaden!");
+                     enemyHealth = enemyHealth - reflektion;
+                     Sleeper.sleep(500);
+                 }
              }
 
              System.out.println("Du blockst " + BLUE + playerDefense + RESET + " schaden!");
 
              Sleeper.sleep(500);
 
-             playerHealth = playerHealth + playerDefense - enemyDamage;
+             int enemyTrueDamage = enemyDamage - playerDefense;
+             playerHealth = playerHealth - enemyTrueDamage;
 
 
 
              if (playerHealth >= 0) {
                  System.out.println("Du hast noch " + GREEN + playerHealth + RESET + " leben.");
-             } //TODO else game over funktion
+                 player.setLeben(playerHealth);
+             } else {
+                 System.out.println("Du hast " + RED + playerHealth + RESET + " leben.");
+                 System.out.println("GAME OVER!");
+                 System.exit(0);
+             }
          }
-
-         player.setLeben(playerHealth);
     }
 }

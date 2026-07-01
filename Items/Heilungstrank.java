@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
@@ -45,8 +46,13 @@ public class Heilungstrank implements Item{
     public int getHealing() { return this.healing; }
 
     @Override
-    public void use(Player player, Item useItem) {
-        player.setLeben(player.getLeben() + healing);
-        System.out.println("Du hast "+healing+" Leben geheilt!");
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
+        int lebenLimit = 20;
+        int aktuellesLeben = player.getLeben();
+        int neuesLeben = Math.min(aktuellesLeben + healing, lebenLimit);
+        int geheiltesLeben = Math.max(0, neuesLeben - aktuellesLeben);
+
+        player.setLeben(neuesLeben);
+        System.out.println("Du hast "+geheiltesLeben+" Leben geheilt!");
     }
 }

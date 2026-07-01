@@ -129,7 +129,7 @@ public class Game {
 
                 for (Item item : player.getInventar()) {
                     if (item.getName().equals(itemName)) {
-                        item.use(player, item);
+                        item.use(player, item, highScoreController);
                         if(!(item instanceof Weapon || item instanceof Armor)) {
                             player.deleteItemFromInventar(itemName);
                         }
@@ -203,6 +203,7 @@ public class Game {
 
                             if(RoomExceptions.main(player, nextRoom) == RoomExceptions.roomReturn.ENTER) {
                                 player.setCurrentRoom(nextRoom);
+                                highScoreController.addHighScore(player.getCurrentRoom().getPunkte());
                             } else {
                                 player.setCurrentRoom(player.getCurrentRoom());
                             }

@@ -1,10 +1,10 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 import helper.PlayerReady;
 import helper.Sleeper;
-import Items.Item;
 
 import java.util.Scanner;
 
@@ -70,7 +70,7 @@ public class Baseballschlaeger implements Weapon{
     public int getDamage() {return this.damage;}
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
         Scanner scanner = new Scanner(System.in);
 
         if (player.getCurrentRoom().getX() == 1 && player.getCurrentRoom().getY() == 1) {
@@ -84,6 +84,7 @@ public class Baseballschlaeger implements Weapon{
                 System.out.println("Du findest einen Gegenstand in seiner Tasche!");
                 System.out.println("Du findest einen Upgradestein!");
                 player.addItemErfolgreich(new UpgradeStein());
+                highScoreController.addHighScore(40);
             }
         } else if(player.getCurrentRoom().getName().equals("Bibliothek")) {
             System.out.println("Du zerschlägst das Fenster mit deinem "+ConsoleColors.BLUE_BRIGHT+"Baseballschläger"+ConsoleColors.RESET+ " das Fenster!");
@@ -91,7 +92,7 @@ public class Baseballschlaeger implements Weapon{
             System.out.println("Du lehnst dich aus dem Fenster und siehst das zum Osten der Ausgang ist!");
             System.out.println("Jedoch siehst du auch das der Ausgang von einem Monster bewacht wird");
             System.out.println(PlayerReady.checkIsReady(player));
-
+            highScoreController.addHighScore(25);
         }
 
     }

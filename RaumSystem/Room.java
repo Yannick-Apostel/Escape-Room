@@ -130,6 +130,12 @@ public class Room {
         } else if (name == 'L') {
             Lederrüstung lederruestung = new Lederrüstung();
             items.add(lederruestung);
+        } else if (name == 'T') {
+            Staerketrank staerketrank = new Staerketrank();
+            items.add(staerketrank);
+        } else if (name == 'U') {
+            UpgradeStein upgradeStein = new UpgradeStein();
+            items.add(upgradeStein);
         }
     }
 

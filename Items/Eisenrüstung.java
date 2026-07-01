@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
@@ -76,7 +77,7 @@ public class Eisenrüstung implements Armor {
     }
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
 
     }
 

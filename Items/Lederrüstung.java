@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
@@ -76,7 +77,7 @@ public class Lederrüstung implements Armor {
     }
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
         if(player.getCurrentRoom().getName().equals("Büro")) {
             System.out.println("Willst du deine "+ConsoleColors.YELLOW_BRIGHT+"Lederrüstung"+ConsoleColors.RESET+" wirklich auf den Rüstungsständer packen?");
             System.out.println("Du wirst sie "+ConsoleColors.RED+"permanent"+ConsoleColors.RESET+" verlieren! [y/n]");
@@ -92,6 +93,7 @@ public class Lederrüstung implements Armor {
                 System.out.println("In dem Geheimraum befindet sich eine Schatztruhe!");
                 System.out.println("In der Kiste findest du ein " + schwert.getName() + "!");
                 player.addItemErfolgreich(schwert);
+                highScoreController.addHighScore(20);
             }
         }
     }

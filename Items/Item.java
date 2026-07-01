@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 
 public interface Item {
@@ -14,5 +15,5 @@ public interface Item {
     public String getColoredName();
     public boolean getIsWeapon();
     public boolean getIsHealingItem();
-    public void use(Player player, Item useItem);
+    public void use(Player player, Item useItem, HighScoreController highScoreController);
 }

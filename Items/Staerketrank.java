@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 
 public class Staerketrank implements Item {
@@ -50,7 +51,7 @@ public class Staerketrank implements Item {
     public int getAttackBoost() {return this.attackBoost;}
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
         player.setAttackDamage(player.getAttackDamage() + attackBoost);
         System.out.println("Du machst jetzt "+attackBoost+" mehr Schaden!");
     }

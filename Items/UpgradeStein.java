@@ -1,9 +1,9 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class UpgradeStein implements Item{
@@ -48,7 +48,7 @@ public class UpgradeStein implements Item{
     public boolean getIsHealingItem() {return this.isHealingItem;}
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Du bist dabei einen " + ConsoleColors.PURPLE_BOLD_BRIGHT + this.name + ConsoleColors.RESET + " zu benutzen! Willst du das wirklich? [y/n]");
@@ -59,14 +59,22 @@ public class UpgradeStein implements Item{
 
             String answer2 = scanner.nextLine();
 
-
-
             for (Item item : player.getInventar()) {
                 if (item.getName().equals(answer2)) {
                     if (item instanceof Weapon weapon) {
                         weapon.setEnchanted();
+                        if(weapon.getName().equals("Schwert")) {
+                            highScoreController.addHighScore(20);
+                        } else {
+                            highScoreController.addHighScore(10);
+                        }
                     } else if (item instanceof Armor armor) {
                         armor.setEnchanted();
+                        if(armor.getName().equals("Eisenruestung")) {
+                            highScoreController.addHighScore(20);
+                        } else {
+                            highScoreController.addHighScore(10);
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package Items;
 
+import HighScore.HighScoreController;
 import Spieler.Player;
 import helper.ConsoleColors;
 
@@ -44,7 +45,7 @@ public class Schlussel implements Item{
     public boolean getIsHealingItem() {return this.isHealingItem;}
 
     @Override
-    public void use(Player player, Item useItem) {
+    public void use(Player player, Item useItem, HighScoreController highScoreController) {
 
     }
 }
