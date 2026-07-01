@@ -10,7 +10,7 @@ import helper.PlayerReady;
 public class NebenBoss implements Enemy{
     private final String name = "Nebenboss";
     private final boolean forcedEvent = true;
-    private int attackDamage = 5;
+    private int attackDamage = 10;
     private int leben = 30;
 
     @Override
