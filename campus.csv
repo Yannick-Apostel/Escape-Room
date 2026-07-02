@@ -16,10 +16,10 @@ ROOM;Flur07;Ein kalter Flur. Hier gibt es nichts zu sehen.;false;N;N;5;1;5;
 
 ROOM;Lager1;Ein Lagerraum mit alten Kisten.;false;H;Z;1;4;20;
 ROOM;Lager2;Ein zweiter Lagerraum.;false;U;S;0;4;50;
-ROOM;Büro;Ein kleines Büro. Ein Rüstungsstander steht in der Ecke. Jedoch ist keine Rüstung zu sehen...;false;B;N;2;5;20;
-ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher. Ein Fenster zeigt in den Osten. Es ist zu dreckig um durch zu schauen.;false;T;N;4;3;15;
-ROOM;Krankenstation;Eine verlassene Krankenstation.;false;L;V;1;1;20;
-ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente. Ein Gitterkäfig ist am ende des Raumes. Vielleicht hilft eine Metallstange oder etwas ähnliches... ;false;S;Z;4;0;25;
+ROOM;Büro;Ein kleines Büro. Ein Rüstungsstander steht in der Ecke. Jedoch ist keine Rüstung zu sehen...;false;B;N;2;5;10;
+ROOM;Bibliothek;Eine alte Bibliothek voller staubiger Bücher. Ein Fenster zeigt in den Osten. Es ist zu dreckig um durch zu schauen.;false;T;N;4;3;10;
+ROOM;Krankenstation;Eine verlassene Krankenstation.;false;L;V;1;1;10;
+ROOM;Archiv;Ein staubiges Archiv voller alter Dokumente. Ein Gitterkäfig ist am ende des Raumes. Vielleicht hilft eine Metallstange oder etwas ähnliches... ;false;S;Z;4;0;20;
 ROOM;Bossraum;Ein gefährlicher Raum. Hier wartet der Boss.;true;N;B;5;2;100;
 
 ENDE;Ausgang;Du hast den Ausgang erreicht.;false;N;N;5;3;150;

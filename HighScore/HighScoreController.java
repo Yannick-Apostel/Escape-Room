@@ -6,13 +6,16 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class HighScoreController {
 
     private int highscore;
     private final String name;
     private final String dateiName = "highscore.csv";
+    private final Set<String> scoredKeys = new HashSet<>();
 
     public HighScoreController(Scanner input) {
         System.out.print("Bitte tippe deinen " + ConsoleColors.WHITE_UNDERLINED + "Namen" + ConsoleColors.RESET + " ein: ");
@@ -90,6 +93,12 @@ public class HighScoreController {
 
     public void addHighScore(int add) {
         this.highscore += add;
+    }
+
+    public void addHighScoreOnce(String key, int add) {
+        if (scoredKeys.add(key)) {
+            addHighScore(add);
+        }
     }
 
     public int getHighscore() {
